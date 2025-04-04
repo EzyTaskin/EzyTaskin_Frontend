@@ -7,7 +7,7 @@ export default function Hero() {
     <section className="bg-(--color-tertiary) h-[575] py-16 border-b border-black-100">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 mx-6 my-6">
         <div className="text-center md:text-left space-y-6">
-          <h1 className="text-[64px] font-bold text-gray-900">
+          <h1 className="text-[64px] font-bold text-gray-900 leading-20">
             Get any task done,{" "}
             <span className="text-primary">effortlessly</span>
           </h1>
