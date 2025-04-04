@@ -2,18 +2,19 @@
 
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import React from "react";
+import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 h-[80px] flex justify-between items-center p-4 bg-white shadow-sm border-b border-black-100">
+    <header className="fixed top-0 left-0 right-0 h-[100px] flex justify-between items-center p-4 bg-white shadow-sm border-b border-black-100 px-20">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-[var(--color-primary)] clip-triangle"></div>
-        <span className="text-xl font-bold">EzyTaskin</span>
+        <Image src="/polygon.svg" alt="Polygon" width={32} height={32}></Image>
+        <span className="text-[32px] font-bold">EzyTaskin</span>
       </div>
 
       {/* Navigation Links */}
-      <div className="flex gap-6 text-black">
+      <div className="text-[22px] flex gap-25 text-[#000022]">
         <a
           href="#"
           className="text-[var(--color-primary)] font-medium hover:text-[var(--color-secondary)]"
@@ -32,7 +33,7 @@ const Header = () => {
       </div>
 
       {/* Button */}
-      <PrimaryButton />
+      <PrimaryButton width="w-[161px]" />
     </header>
   );
 };
