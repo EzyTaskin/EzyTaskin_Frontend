@@ -1,6 +1,7 @@
 "use client";
 
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Hero() {
   return (
@@ -16,11 +17,25 @@ export default function Hero() {
             quotes, and hire trusted professionals.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
-            <PrimaryButton />
-            <PrimaryButton />
+            <PrimaryButton
+              label={
+                <span className="flex items-center gap-2">
+                  Post a task <FaArrowRight />
+                </span>
+              }
+              width="w-[273px]"
+              borderRadius="rounded-[15px]"
+            />
+            <PrimaryButton
+              label="Become a provider"
+              width="w-[273px]"
+              borderRadius="rounded-[15px]"
+              bgColor="bg-white"
+              textColor="text-[var(--color-primary)]"
+            />
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="ml-15 flex justify-center">
           <img
             src="/hero-image.png"
             alt="Task Assistance"
