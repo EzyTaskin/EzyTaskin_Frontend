@@ -1,53 +1,83 @@
+"use client";
+
+import { useState } from "react";
+import { MdOutlineMail } from "react-icons/md";
+import { CiLock } from "react-icons/ci";
+import { GoEye, GoEyeClosed } from "react-icons/go";
+import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-(--color-tertiary) p-8 rounded-2xl shadow-lg w-2/5">
-        <h2 className="text-2xl font-bold text-center text-gray-900">Log in</h2>
-        <p className="text-center text-gray-500 text-sm mb-6">
+      <div className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6 h-[600px]">
+        <h2 className="text-[48px] font-bold text-center">Log in</h2>
+        <p className="text-center text-gray-700 text-[20px] mb-6">
           Enter your credentials to access your account
         </p>
 
+        {/* Email Field */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-medium mb-1">
-            Email
-          </label>
+          <label className="block text-[22px] font-medium mb-1">Email</label>
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
-            <span className="text-gray-500">📧e</span>
+            <MdOutlineMail className="text-gray-500 text-[22px]" />
             <input
               type="email"
               placeholder="example@gmail.com"
-              className="ml-2 w-full outline-none bg-transparent"
+              className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
             />
           </div>
         </div>
 
+        {/* Password Field */}
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-medium mb-1">
-            Password
-          </label>
+          <label className="block text-[22px] font-medium mb-1">Password</label>
           <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
-            <span className="text-gray-500">🔒</span>
+            <CiLock className="text-gray-600 text-[25px]" />
             <input
-              type="password"
-              className="ml-2 w-full outline-none bg-transparent"
+              type={showPassword ? "text" : "password"}
+              className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
             />
-            <span className="cursor-pointer text-gray-500">👁</span>
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="focus:outline-none"
+            >
+              {showPassword ? (
+                <GoEyeClosed className="text-gray-600 text-[22px]" />
+              ) : (
+                <GoEye className="text-gray-700 text-[22px]" />
+              )}
+            </button>
           </div>
         </div>
 
-        <button className="w-full bg-(--color-primary) text-white font-semibold py-2 rounded-lg hover:bg-blue-700">
-          Log in
-        </button>
+        {/* Button */}
+        <div className="my-10 flex justify-center">
+          <PrimaryButton
+            label="Log in"
+            width="w-[150px]"
+            borderRadius="rounded-[10px]"
+          />
+        </div>
 
+        {/* Links */}
         <div className="text-center mt-4">
-          <a href="#" className="text-sm text-blue-500 hover:underline">
+          <a
+            href="#"
+            className="text-[18px] text-[var(--color-primary)] hover:underline"
+          >
             Forgot your password?
           </a>
         </div>
 
-        <div className="text-center mt-2 text-sm text-gray-600">
+        <div className="text-[18px] text-center mt-2">
           Don't have an account?{" "}
-          <a href="#" className="text-blue-600 font-medium hover:underline">
+          <a
+            href="#"
+            className="text-[var(--color-primary)] font-medium hover:underline"
+          >
             Sign up
           </a>
         </div>

@@ -1,59 +1,163 @@
-'use client'
+"use client";
+import React from "react";
+import Image from "next/image";
 
-function CategoriesCard() {
-    return (
-        <div className="max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200">
-            <div className="flex justify-center items-center mb-4">
-                <div className="p-3 bg-violet-100 rounded-full">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-8 h-8 text-violet-600"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15.232 5.232a2.828 2.828 0 114 4L7.5 21H3v-4.5l12.232-12.268z"
-                        />
-                    </svg>
-                </div>
-            </div>
-            <h2 className="text-xl font-semibold text-gray-900">Home Renovation</h2>
-            <p className="text-gray-600 mt-2">
-                Painting, flooring, kitchen, bathroom renovations
-            </p>
-        </div>
-    )
-}
+const CategoriesCard = ({
+  image,
+  category,
+  description,
+}: {
+  image: React.ReactNode;
+  category: string;
+  description: string;
+}) => {
+  return (
+    <div className="w-[300px] h-[239px] max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300 ">
+      <div className="flex justify-center items-center mb-4 bg-[#F3F3FF] rounded-full w-[50px] h-[50px] mx-auto">
+        {image}
+      </div>
+      <h2 className="text-[20px] font-semibold text-gray-900">{category}</h2>
+      <p className="text-[16px] text-gray-600 mt-2">{description}</p>
+    </div>
+  );
+};
 
 export default function PopularCategories() {
-    return (
-        <section className="py-16">
-            <div className="text-center md:text-left space-y-6 flex flex-col">
-                <div className="flex justify-center">
-                    <h1 className="text-4xl font-bold text-gray-900">
-                        Popular categories
-                    </h1>
-                </div>
-                <div className="flex justify-center">
-                    <p className="text-lg text-gray-600">
-                        Browse through our most popular service categories
-                    </p>
-                </div>
-            </div>
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 items-center gap-8 px-6 pt-12">
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-                <CategoriesCard/>
-            </div>
-        </section>
-    );
+  const categories = [
+    {
+      image: (
+        <Image
+          src="/home-cleaning.svg"
+          alt="Home Cleaning"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Home Cleaning",
+      description: "House cleaning, carpet cleaning, window washing",
+    },
+    {
+      image: (
+        <Image
+          src="/handyman.svg"
+          alt="Handyman"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Handyman",
+      description: "Repairs, assembly, installations, maintenance",
+    },
+    {
+      image: (
+        <Image
+          src="/removalist.svg"
+          alt="Removalist"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Removalist",
+      description: "Moving, furniture delivery, junk removal",
+    },
+    {
+      image: (
+        <Image
+          src="/home-renovation.svg"
+          alt="Home Renovation"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Home Renovation",
+      description: "Painting, flooring, kitchen, bathroom renovations",
+    },
+    {
+      image: (
+        <Image
+          src="/business-services.svg"
+          alt="Business Services"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Business Services",
+      description: "Accounting, legal, consulting, marketing",
+    },
+    {
+      image: (
+        <Image
+          src="/tech-help.svg"
+          alt="Tech Help"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Tech Help",
+      description: "Computer repair, IT support, website developement",
+    },
+    {
+      image: (
+        <Image
+          src="/delivery.svg"
+          alt="Delivery"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Delivery",
+      description: "Food delivery, package delivery, grocery shopping",
+    },
+    {
+      image: (
+        <Image
+          src="/other.svg"
+          alt="Other"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      category: "Other",
+      description: "Anything else you need help with",
+    },
+  ];
+
+  return (
+    <section className="py-16 mb-12">
+      <div className="text-center space-y-6 flex flex-col items-center">
+        <h1 className="text-[48px] font-bold text-gray-900">
+          Popular categories
+        </h1>
+        <p className="text-[32px] text-gray-600 text-center">
+          Browse through our most popular service categories
+        </p>
+      </div>
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-6 pt-12">
+        {categories.map((item, idx) => (
+          <CategoriesCard
+            key={idx}
+            image={item.image}
+            category={item.category}
+            description={item.description}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }

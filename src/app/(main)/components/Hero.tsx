@@ -5,29 +5,29 @@ import { FaArrowRight } from "react-icons/fa";
 
 export default function Hero() {
   return (
-    <section className="bg-(--color-tertiary) h-[575] py-16 border-b border-black-100">
+    <section className="bg-[#EEEEFF]/70 h-[600] py-20 border-b border-black-100">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8 mx-6 my-6">
         <div className="text-center md:text-left space-y-6">
           <h1 className="text-[64px] font-bold text-gray-900 leading-20">
             Get any task done,{" "}
             <span className="text-primary">effortlessly</span>
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-600 text-[28px]">
             Connect with skilled providers for all your needs. Post a task, get
             quotes, and hire trusted professionals.
           </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center md:justify-start">
+          <div className="flex flex-col md:flex-row gap-20 justify-center md:justify-start">
             <PrimaryButton
               label={
                 <span className="flex items-center gap-2">
-                  Post a task <FaArrowRight />
+                  Post A Task <FaArrowRight />
                 </span>
               }
               width="w-[273px]"
               borderRadius="rounded-[15px]"
             />
             <PrimaryButton
-              label="Become a provider"
+              label="Become A Provider"
               width="w-[273px]"
               borderRadius="rounded-[15px]"
               bgColor="bg-white"

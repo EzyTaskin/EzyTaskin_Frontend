@@ -1,59 +1,120 @@
-'use client'
+"use client";
+import Image from "next/image";
 
-function StepsCard() {
-    return (
-        <div className="w-64 p-6 shadow-lg rounded-2xl border border-gray-200">
-            <div className="flex flex-col items-center text-center space-y-3">
-                <div className="flex items-center justify-center w-12 h-12 bg-gray-100 rounded-full">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-8 h-8 text-violet-600"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15.232 5.232a2.828 2.828 0 114 4L7.5 21H3v-4.5l12.232-12.268z"
-                        />
-                    </svg>
-                </div>
-                <div
-                    className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full text-lg font-bold">
-                    1
-                </div>
-                <h2 className="text-lg font-semibold">Post a task</h2>
-                <p className="text-gray-500 text-sm">
-                    Describe what you need done, when and where you need it, and provide your budget.
-                </p>
-            </div>
-        </div>
-    )
-}
+const StepsCard = ({
+  image,
+  order,
+  step,
+  description,
+}: {
+  image: React.ReactNode;
+  order: string;
+  step: string;
+  description: string;
+}) => {
+  return (
+    <div className="w-[300px] h-[310px] max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center justify-center w-[60px] h-[60px] bg-[#F3F3FF] rounded-full mx-auto mb-6">
+        {image}
+      </div>
+      <div className="w-[45px] h-[45px] flex items-center justify-center bg-[#3A37C6] text-white rounded-full text-[24px] font-bold mx-auto mb-5">
+        {order}
+      </div>
+      <h2 className="text-lg font-semibold mb-5">{step}</h2>
+      <p className="text-gray-500 text-sm">{description}</p>
+    </div>
+  );
+};
 
 export default function HowEzyTaskinWorks() {
-    return (
-        <section className="bg-(--color-tertiary) py-16">
-            <div className="text-center md:text-left space-y-6 flex flex-col">
-                <div className="flex justify-center">
-                    <h1 className="text-4xl font-bold text-gray-900">
-                        How EzyTaskin works
-                    </h1>
-                </div>
-                <div className="flex justify-center">
-                    <p className="text-lg text-gray-600">
-                        A simple, reliable way to get your tasks done
-                    </p>
-                </div>
-            </div>
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 items-center gap-8 px-6 pt-12">
-                <StepsCard/>
-                <StepsCard/>
-                <StepsCard/>
-                <StepsCard/>
-            </div>
-        </section>
-    );
+  const steps = [
+    {
+      image: (
+        <Image
+          src="/post-a-task.svg"
+          alt="Post A Task"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      order: "1",
+      step: "Post A Task",
+      description:
+        "Describe what you need done, when and where you need it, and provide your budget.",
+    },
+    {
+      image: (
+        <Image
+          src="/get-offers.svg"
+          alt="Get Offers"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      order: "2",
+      step: "Get Offers",
+      description:
+        "Qualified service providers will make their offers to complete your task.",
+    },
+    {
+      image: (
+        <Image
+          src="/chat-agree.svg"
+          alt="Chat Agree"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      order: "3",
+      step: "Chat & Agree",
+      description:
+        "Discuss details with providers, agree on terms, and select your preferred provider.",
+    },
+    {
+      image: (
+        <Image
+          src="/task-completed.svg"
+          alt="Task Completed"
+          width={0}
+          height={0}
+          style={{ width: "auto", height: "auto" }}
+          unoptimized
+        />
+      ),
+      order: "4",
+      step: "Task Completed",
+      description:
+        "Your provider completes the task, and you can leave a review of their service.",
+    },
+  ];
+
+  return (
+    <section className="bg-[#D3CED6]/15 py-16">
+      <div className="text-center md:text-left space-y-6 flex flex-col items-center">
+        <h1 className="text-[48px] font-bold text-gray-900">
+          How EzyTaskin works
+        </h1>
+        <p className="text-[32px] text-gray-600 text-center max-w-3xl">
+          A simple, reliable way to get your tasks done
+        </p>
+      </div>
+      <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-start gap-8 px-6 pt-12">
+        {steps.map((item, idx) => (
+          <StepsCard
+            key={idx}
+            image={item.image}
+            order={item.order}
+            step={item.step}
+            description={item.description}
+          />
+        ))}
+      </div>
+    </section>
+  );
 }

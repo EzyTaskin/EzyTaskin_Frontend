@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Header = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 h-[100px] flex justify-between items-center p-4 bg-white shadow-sm border-b border-black-100 px-20">
+    <header className="fixed top-0 left-0 right-0 h-[85px] flex justify-between items-center p-4 bg-white shadow-sm border-b border-black-100 px-20">
       {/* Logo */}
       <div className="flex items-center gap-2">
         <Image src="/polygon.svg" alt="Polygon" width={32} height={32}></Image>
@@ -33,7 +33,7 @@ const Header = () => {
       </div>
 
       {/* Button */}
-      <PrimaryButton width="w-[161px]" />
+      <PrimaryButton width="w-[161px]" fontStyle="font-bold" />
     </header>
   );
 };
