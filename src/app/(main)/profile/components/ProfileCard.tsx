@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProfileCard = () => {
     return (
-        <div className="max-w-sm mx-auto bg-white rounded-2xl shadow-md p-6 border border-gray-200">
+        <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border border-gray-200">
             <div className="flex flex-col items-center">
                 <div className="w-24 h-24 bg-gray-300 rounded-full mb-4"/>
                 <h2 className="text-xl font-semibold">Mike Thomas</h2>

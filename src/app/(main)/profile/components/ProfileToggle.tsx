@@ -1,29 +1,34 @@
 'use client'
 
-import React, { useState } from "react";
+import React, {useState} from "react";
+import {ProfileType} from "src/app/constants/type";
 
-const ProfileToggle = () => {
-    const [activeTab, setActiveTab] = useState("provider");
-
+const ProfileToggle = ({
+                           profileType,
+                           onProfileTypeChange
+                       }: {
+    profileType: ProfileType
+    onProfileTypeChange: (profileType: ProfileType) => void
+}) => {
     return (
         <div className="inline-flex bg-gray-300 rounded-full p-1">
             <button
                 className={`px-6 py-2 text-sm font-medium rounded-full transition-colors duration-200 ${
-                    activeTab === "consumer"
+                    profileType === "consumer"
                         ? "bg-white text-black"
                         : "text-gray-700"
                 }`}
-                onClick={() => setActiveTab("consumer")}
+                onClick={() => onProfileTypeChange("consumer")}
             >
                 Consumer Profile
             </button>
             <button
                 className={`px-6 py-2 text-sm font-medium rounded-full transition-colors duration-200 ${
-                    activeTab === "provider"
+                    profileType === "provider"
                         ? "bg-white text-black"
                         : "text-gray-700"
                 }`}
-                onClick={() => setActiveTab("provider")}
+                onClick={() => onProfileTypeChange("provider")}
             >
                 Provider Profile
             </button>
