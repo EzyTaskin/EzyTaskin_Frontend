@@ -1,62 +1,79 @@
 export default function JobListing() {
     return (
-        <div className="bg-gray-100 p-6 rounded-xl shadow-lg max-w-lg mx-auto">
-            {/* Job Title and Status */}
+        <div className="bg-[#f5f5fa] p-6 rounded-xl shadow-md max-w-lg mx-auto font-sans">
+            {/* Header */}
             <div className="flex justify-between items-start">
-                <h2 className="text-2xl font-bold">Install Kitchen Sink Basin</h2>
-                <span className="bg-purple-200 text-purple-800 px-4 py-1 rounded-full text-sm font-semibold">OPEN</span>
+                <h1 className="text-2xl font-bold text-black">Install kitchen sink basin</h1>
+                <span
+                    className="bg-[#dcd8ff] text-black font-semibold text-sm rounded-full px-4 py-1 shadow-sm">OPEN</span>
             </div>
 
-            {/* Job Details */}
-            <div className="mt-4 text-gray-700">
-                <div className="flex items-center gap-2">
-                    <span className="font-semibold">📍 Location:</span> Wollongong
+            {/* Info + Budget */}
+            <div className="flex justify-between mt-4">
+                <div className="text-sm text-black space-y-2">
+                    <div>
+                        <span className="block font-bold text-xs">LOCATION</span>
+                        <p>Wollongong</p>
+                    </div>
+                    <div>
+                        <span className="block font-bold text-xs">TO BE DONE ON</span>
+                        <p>Tues 8th, 2025</p>
+                    </div>
+                    <div>
+                        <span className="block font-bold text-xs">TIME</span>
+                        <p>Morning</p>
+                    </div>
+                    <div>
+                        <span className="block font-bold text-xs">POSTED BY</span>
+                        <p>Tracy N.</p>
+                    </div>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="font-semibold">📅 To Be Done On:</span> Tues 8th, 2025
-                </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="font-semibold">⏰ Time:</span> Morning
-                </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="font-semibold">👤 Posted By:</span> Tracy N.
+                <div className="bg-[#eae9f3] p-4 rounded-xl text-center shadow-sm">
+                    <span className="text-sm text-gray-600 font-medium block">BUDGET</span>
+                    <h2 className="text-2xl font-bold text-black mt-1">$500</h2>
+                    <button
+                        className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md">Make
+                        an offer
+                    </button>
                 </div>
             </div>
 
-            {/* Budget Section */}
-            <div className="bg-gray-200 p-4 rounded-lg mt-4 flex justify-between items-center">
-                <div>
-                    <span className="text-gray-500 text-sm">BUDGET</span>
-                    <h3 className="text-xl font-bold">$500</h3>
+            {/* Hiring person */}
+            <div className="mt-8">
+                <h2 className="font-semibold text-black text-base mb-2">Meet the hiring person</h2>
+                <div className="bg-[#eae9f3] rounded-xl p-4 flex justify-between items-center">
+                    <span className="font-semibold text-black">Tracy N.</span>
+                    <button
+                        className="bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md">Message
+                    </button>
                 </div>
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                    Make an Offer
-                </button>
             </div>
 
-            {/* Hiring Person */}
-            <div className="mt-6 p-4 bg-gray-200 rounded-lg flex justify-between items-center">
-                <span className="font-semibold">Tracy N.</span>
-                <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
-                    Message
-                </button>
-            </div>
-
-            {/* About the Job */}
-            <div className="mt-6">
-                <h3 className="text-lg font-semibold">About the Job</h3>
-                <p className="text-gray-700 text-sm mt-2">
-                    Seeking a skilled and detail-oriented Kitchen Sink Basin Installer to join our team. The ideal candidate will be
-                    responsible for the installation, alignment, and sealing of kitchen sink basins in residential and/or commercial
-                    settings. You will ensure each sink is installed according to plumbing codes and client specifications, with a
+            {/* About the job */}
+            <div className="mt-8">
+                <h2 className="font-semibold text-black text-base mb-2">About the job</h2>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                    Seeking a skilled and detail-oriented Kitchen Sink Basin Installer to join our team. The ideal
+                    candidate will be
+                    responsible for the installation, alignment, and sealing of kitchen sink basins in residential
+                    and/or commercial
+                    settings. You will ensure each sink is installed according to plumbing codes and client
+                    specifications, with a
                     strong focus on quality and customer satisfaction.
                 </p>
+
+                {/* Placeholder images */}
+                <div className="flex gap-4 mt-4">
+                    <div className="w-20 h-20 bg-[#dcd8ff] rounded-lg"></div>
+                    <div className="w-20 h-20 bg-[#dcd8ff] rounded-lg"></div>
+                    <div className="w-20 h-20 bg-[#dcd8ff] rounded-lg"></div>
+                </div>
             </div>
 
             {/* Responsibilities */}
-            <div className="mt-6">
-                <h3 className="text-lg font-semibold">Responsibilities</h3>
-                <ul className="list-disc text-gray-700 text-sm mt-2 pl-4 space-y-1">
+            <div className="mt-8">
+                <h2 className="font-bold text-black text-lg mb-2">Responsibilities</h2>
+                <ul className="list-disc text-sm text-gray-800 pl-5 space-y-1">
                     <li>Remove old sinks and prepare surfaces for new installations.</li>
                     <li>Install a variety of sink types (undermount, top-mount, farmhouse, etc.).</li>
                     <li>Secure and seal sink basins to countertops using appropriate materials.</li>
@@ -69,11 +86,12 @@ export default function JobListing() {
             </div>
 
             {/* Requirements */}
-            <div className="mt-6">
-                <h3 className="text-lg font-semibold">Requirements</h3>
-                <ul className="list-disc text-gray-700 text-sm mt-2 pl-4 space-y-1">
+            <div className="mt-8">
+                <h2 className="font-bold text-black text-lg mb-2">Requirements</h2>
+                <ul className="list-disc text-sm text-gray-800 pl-5 space-y-1">
                     <li>Proven experience in plumbing or kitchen fixture installation preferred.</li>
-                    <li>Knowledge of different sink types and countertop materials (granite, quartz, laminate, etc.).</li>
+                    <li>Knowledge of different sink types and countertop materials (granite, quartz, laminate, etc.).
+                    </li>
                     <li>Ability to use tools such as wrenches, silicone guns, sealants, and pipe cutters.</li>
                     <li>Attention to detail and strong problem-solving skills.</li>
                     <li>Ability to lift and maneuver heavy sink basins and materials.</li>
