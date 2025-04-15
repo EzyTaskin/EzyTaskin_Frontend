@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Star, MapPin, CheckCircle, Circle } from "lucide-react";
+import { MapPin, CheckCircle, Circle } from "lucide-react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 
 const categories = [
