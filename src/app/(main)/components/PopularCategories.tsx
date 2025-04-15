@@ -12,12 +12,12 @@ const CategoriesCard = ({
   description: string;
 }) => {
   return (
-    <div className="w-[300px] h-[239px] max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300 ">
+    <div className="w-2xs h-[15rem] max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300 ">
       <div className="flex justify-center items-center mb-4 bg-[#F3F3FF] rounded-full w-[50px] h-[50px] mx-auto">
         {image}
       </div>
-      <h2 className="text-[20px] font-semibold text-gray-900">{category}</h2>
-      <p className="text-[16px] text-gray-600 mt-2">{description}</p>
+      <h2 className="text-xl font-semibold text-gray-900">{category}</h2>
+      <p className="text-base text-gray-600 mt-2">{description}</p>
     </div>
   );
 };
@@ -141,10 +141,8 @@ export default function PopularCategories() {
   return (
     <section className="py-16 mb-12">
       <div className="text-center space-y-6 flex flex-col items-center">
-        <h1 className="text-[48px] font-bold text-gray-900">
-          Popular categories
-        </h1>
-        <p className="text-[32px] text-gray-600 text-center">
+        <h1 className="text-5xl font-bold text-gray-900">Popular categories</h1>
+        <p className="text-2xl text-gray-600 text-center">
           Browse through our most popular service categories
         </p>
       </div>

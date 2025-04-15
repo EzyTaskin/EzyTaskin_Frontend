@@ -16,7 +16,7 @@ const ProvidersCard = ({
   description: string;
 }) => {
   return (
-    <div className="w-[320px] h-[320px] max-w-xs p-4 border border-[#D9D9D9] rounded-[10px] shadow-lg flex flex-col justify-between">
+    <div className="w-xs h-[20rem] max-w-xs p-4 border border-[#D9D9D9] rounded-[10px] shadow-lg flex flex-col justify-between">
       <div className="flex flex-col items-center text-center">
         <div className="w-[274px] flex gap-3 mb-4">
           <div className="w-16 h-16 bg-gray-300 rounded-full mb-3" />

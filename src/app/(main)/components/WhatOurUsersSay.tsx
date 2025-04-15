@@ -55,15 +55,13 @@ export default function WhatOurUsersSay() {
   return (
     <section className="bg-[#F8F8F9] py-16">
       <div className="text-center md:text-left space-y-6 flex flex-col items-center">
-        <h1 className="text-[48px] font-bold text-gray-900">
-          What Our Users Say
-        </h1>
-        <p className="text-[36px] text-gray-600 text-center max-w-5xl">
+        <h1 className="text-5xl font-bold text-gray-900">What Our Users Say</h1>
+        <p className="text-2xl text-gray-600 text-center max-w-5xl">
           Real experiences from people who’ve used EzyTaskin
         </p>
       </div>
 
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center px-6 pt-12">
+      <div className="container mx-auto flex justify-center items-center gap-20 px-6 pt-12">
         {reviews.map((review, idx) => (
           <CategoriesCard
             key={idx}
