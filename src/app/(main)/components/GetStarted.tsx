@@ -7,12 +7,12 @@ export default function GetStarted() {
     <section className="bg-(--color-primary) py-16">
       <div className="text-center md:text-left space-y-6 flex flex-col">
         <div className="flex justify-center">
-          <h1 className="text-[48px] font-bold text-white">
+          <h1 className="text-5xl font-bold text-white">
             Ready to get started with EzyTaskin?
           </h1>
         </div>
         <div className="flex justify-center">
-          <p className="text-[32px] text-white">
+          <p className="text-2xl text-white">
             Join thousands of satisfied users who are getting things done with
             our platform everyday.
           </p>
@@ -21,15 +21,13 @@ export default function GetStarted() {
       <div className="flex flex-col sm:flex-row justify-center items-center gap-30 pt-12">
         <PrimaryButton
           bgColor="bg-white"
-          width="w-[173px]"
+          width="w-3xs"
           textColor="text-[var(--color-primary)]"
-          borderRadius="rounded-[15px]"
           fontStyle="font-bold"
         />
         <PrimaryButton
           label="Become A Provider"
-          width="w-[273px]"
-          borderRadius="rounded-[15px]"
+          width="w-3xs"
           bgColor="bg-[var(--color-primary)]"
           borderStyle="border border-white"
           textColor="text-white"

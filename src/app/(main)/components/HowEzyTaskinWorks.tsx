@@ -13,11 +13,11 @@ const StepsCard = ({
   description: string;
 }) => {
   return (
-    <div className="w-[300px] h-[310px] max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300">
-      <div className="flex items-center justify-center w-[60px] h-[60px] bg-[#F3F3FF] rounded-full mx-auto mb-6">
+    <div className="w-2xs h-auto max-w-sm p-6 bg-white rounded-2xl shadow-md text-center border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+      <div className="flex items-center justify-center w-[4rem] h-[4rem] bg-[#F3F3FF] rounded-full mx-auto mb-6">
         {image}
       </div>
-      <div className="w-[45px] h-[45px] flex items-center justify-center bg-[#3A37C6] text-white rounded-full text-[24px] font-bold mx-auto mb-5">
+      <div className="w-[2rem] h-[2rem] flex items-center justify-center bg-[#3A37C6] text-white rounded-full text-xl font-bold mx-auto mb-5">
         {order}
       </div>
       <h2 className="text-lg font-semibold mb-5">{step}</h2>
@@ -97,10 +97,10 @@ export default function HowEzyTaskinWorks() {
   return (
     <section className="bg-[#D3CED6]/15 py-16">
       <div className="text-center md:text-left space-y-6 flex flex-col items-center">
-        <h1 className="text-[48px] font-bold text-gray-900">
+        <h1 className="text-5xl font-bold text-gray-900">
           How EzyTaskin works
         </h1>
-        <p className="text-[32px] text-gray-600 text-center max-w-3xl">
+        <p className="text-2xl text-gray-600 text-center max-w-3xl">
           A simple, reliable way to get your tasks done
         </p>
       </div>
