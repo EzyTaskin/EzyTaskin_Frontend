@@ -5,6 +5,6 @@ import Review from "src/app/(main)/post/components/Review";
 export default function PostTask() {
     return (
         <section className="py-28 border-b border-black-100">
-            <Review/>
+            <LocationBudget/>
         </section>)
 }
