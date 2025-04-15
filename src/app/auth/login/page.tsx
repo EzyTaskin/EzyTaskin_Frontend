@@ -5,13 +5,14 @@ import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import Link from "next/link";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6 h-[600px]">
+      <div className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6">
         <h2 className="text-[48px] font-bold text-center">Log in</h2>
         <p className="text-center text-gray-700 text-[20px] mb-6">
           Enter your credentials to access your account
@@ -64,18 +65,18 @@ export default function Login() {
 
         {/* Links */}
         <div className="text-center mt-4">
-          <a
-            href="#"
+          <Link
+            href="/auth/forgot-password"
             className="text-[18px] text-[var(--color-primary)] hover:underline"
           >
             Forgot your password?
-          </a>
+          </Link>
         </div>
 
         <div className="text-[18px] text-center mt-2">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a
-            href="#"
+            href="/auth/signup"
             className="text-[var(--color-primary)] font-medium hover:underline"
           >
             Sign up

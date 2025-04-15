@@ -1,5 +1,3 @@
-"use client";
-import React, {useState} from "react";
 import {Calendar, MapPin} from "lucide-react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import dayjs from 'dayjs';
@@ -73,7 +71,7 @@ export default function LocationBudget(
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Task location
                         </label>
-                        <div className="relative">
+                        <div>
                             <input
                                 type="text"
                                 value={location}
@@ -108,7 +106,7 @@ export default function LocationBudget(
                         <label className="block text-sm font-medium text-gray-700 mb-1">
                             Due date (optional)
                         </label>
-                        <div className="relative">
+                        <div>
                             <input
                                 type="text"
                                 placeholder="DD/MM/YYYY"

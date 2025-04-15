@@ -27,22 +27,22 @@ const Header = () => {
                     Home
                 </Link>
                 <Link
-                    href="/provider/browse"
+                    href="#"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
-                    Browse task
+                    How it works
                 </Link>
                 <Link
-                    href="/my-tasks"
+                    href="/auth/login"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
-                    My task
+                    Login
                 </Link>
                 <Link
-                    href="/find-providers"
+                    href="/auth/signup"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
-                    Find Providers
+                    Sign up
                 </Link>
             </div>
 
@@ -50,35 +50,6 @@ const Header = () => {
             <Link href="/post">
                 <PrimaryButton width="w-4xs" fontStyle="font-bold"/>
             </Link>
-            <div className="text-xl flex gap-8 items-center">
-                <Image
-                    src="/bell-notifications.svg"
-                    alt="Icon Notification"
-                    width={0}
-                    height={0}
-                    className="w-8 h-8"
-                    unoptimized
-                />
-
-                <Image
-                    src="/chat.svg"
-                    alt="Chat"
-                    width={0}
-                    height={0}
-                    className="w-10 h-10"
-                    unoptimized
-                />
-                <Link href="/profile">
-                <Image
-                    src="/icon-user.svg"
-                    alt="User Icon "
-                    width={0}
-                    height={0}
-                    className="w-8 h-8"
-                    unoptimized
-                />
-                </Link>
-            </div>
         </header>
     );
 };

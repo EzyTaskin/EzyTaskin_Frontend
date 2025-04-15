@@ -6,6 +6,7 @@ import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import Link from "next/link";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -107,12 +108,12 @@ export default function Signup() {
         {/* Login link */}
         <div className="text-center mt-4 text-[18px] text-gray-600">
           Already have an account?{" "}
-          <a
-            href="#"
+          <Link
+            href="/auth/login"
             className="text-[var(--color-primary)] font-medium hover:underline"
           >
             Log in
-          </a>
+          </Link>
         </div>
       </div>
     </div>

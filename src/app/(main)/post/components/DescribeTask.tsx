@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 

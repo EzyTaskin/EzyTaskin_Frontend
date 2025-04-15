@@ -2,6 +2,7 @@
 
 import { MdOutlineMail } from "react-icons/md";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import Link from "next/link";
 
 export default function ForgotPassword() {
   return (
@@ -35,12 +36,12 @@ export default function ForgotPassword() {
 
         <div className="text-center mt-2 text-[18px] text-gray-600">
           Remember your password?{" "}
-          <a
-            href="#"
+          <Link
+            href="/auth/login"
             className="text-[var(--color-primary)] font-medium hover:underline"
           >
             Back to login
-          </a>
+          </Link>
         </div>
       </div>
     </div>
