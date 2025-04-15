@@ -2,65 +2,48 @@
 import React, { useState } from "react";
 import { Calendar, MapPin } from "lucide-react";
 
-const tasks = [
+const completedTasks = [
   {
     title: "Install kitchen sink basin",
     price: "$500",
     location: "Wollongong",
     date: "Tues 8th, 2025",
-    status: "Assigned",
-    statusColor: "text-green-600",
   },
   {
-    title: "Gardening",
-    price: "$100",
+    title: "Install kitchen sink basin",
+    price: "$500",
     location: "Wollongong",
-    date: "Thu 4th, 2025",
-    status: "Pending",
-    statusColor: "text-yellow-500",
+    date: "Tues 8th, 2025",
   },
   {
-    title: "House Cleaning",
-    price: "$200",
+    title: "Install kitchen sink basin",
+    price: "$500",
     location: "Wollongong",
-    date: "Mon 12th, 2025",
-    status: "Assigned",
-    statusColor: "text-green-600",
+    date: "Tues 8th, 2025",
   },
   {
-    title: "Removal",
-    price: "$50",
+    title: "Install kitchen sink basin",
+    price: "$500",
     location: "Wollongong",
-    date: "Sat 1st, 2025",
-    status: "Overdue",
-    statusColor: "text-red-600",
-  },
-  // Add more tasks if needed
-  {
-    title: "Window Cleaning",
-    price: "$120",
-    location: "Wollongong",
-    date: "Wed 18th, 2025",
-    status: "Pending",
-    statusColor: "text-yellow-500",
+    date: "Tues 8th, 2025",
   },
   {
-    title: "Lawn Mowing",
-    price: "$90",
+    title: "Install kitchen sink basin",
+    price: "$500",
     location: "Wollongong",
-    date: "Fri 20th, 2025",
-    status: "Assigned",
-    statusColor: "text-green-600",
+    date: "Tues 8th, 2025",
   },
 ];
 
-export default function OpenTasks() {
+export default function CompletedTasks() {
   const [showAll, setShowAll] = useState(false);
-  const visibleTasks = showAll ? tasks : tasks.slice(0, 4);
+  const visibleTasks = showAll ? completedTasks : completedTasks.slice(0, 4);
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold text-indigo-600 mb-4">OPEN TASKS</h2>
+      <h2 className="text-2xl font-bold text-indigo-600 mb-4">
+        COMPLETED TASKS
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {visibleTasks.map((task, index) => (
           <div key={index} className="bg-white rounded-2xl shadow-md p-6">
@@ -71,13 +54,10 @@ export default function OpenTasks() {
                   <MapPin size={16} className="mr-1" />
                   {task.location}
                 </div>
-                <div className="flex items-center text-sm text-gray-600 mb-2">
+                <div className="flex items-center text-sm text-gray-600">
                   <Calendar size={16} className="mr-1" />
                   {task.date}
                 </div>
-                <span className={`text-sm font-medium ${task.statusColor}`}>
-                  {task.status}
-                </span>
               </div>
               <div className="text-lg font-bold">{task.price}</div>
             </div>
@@ -89,17 +69,8 @@ export default function OpenTasks() {
           </div>
         ))}
       </div>
-      {!showAll && tasks.length > 4 && (
-        <div className="text-right mt-4">
-          <button
-            className="text-indigo-600 font-medium underline"
-            onClick={() => setShowAll(true)}
-          >
-            View more
-          </button>
-        </div>
-      )}
-      {visibleTasks.length > 4 && (
+
+      {completedTasks.length > 4 && (
         <div className="text-right mt-4">
           <button
             className="text-indigo-600 font-medium underline"
@@ -109,7 +80,6 @@ export default function OpenTasks() {
           </button>
         </div>
       )}
-      <hr className="my-12 border-t border-gray-300" />
     </div>
   );
 }
