@@ -46,9 +46,7 @@ export default function LocationBudget(
                             className="text-white w-6 h-6 flex items-center justify-center bg-[var(--color-primary)] border- rounded-full">
                             2
                         </div>
-                        <span className="text-[var(--color-primary)]">
-              Location & Budget
-            </span>
+                        <span className="text-[var(--color-primary)]"> Location & Budget </span>
                     </div>
                     <div className="h-px flex-1 bg-gray-300 mx-2"/>
                     <div className="flex items-center gap-2">

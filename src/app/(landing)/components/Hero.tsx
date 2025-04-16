@@ -2,7 +2,6 @@
 
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import {FaArrowRight} from "react-icons/fa";
-import HeroImage from 'public/hero-image.png'
 
 import Image from 'next/image'
 
@@ -40,7 +39,9 @@ export default function Hero() {
                 </div>
                 <div className="ml-15 flex justify-center">
                     <Image
-                        src={HeroImage}
+                        width={444}
+                        height={444}
+                        src="/hero-image.png"
                         alt="Task Assistance"
                         className="max-w-full h-auto"
                     />

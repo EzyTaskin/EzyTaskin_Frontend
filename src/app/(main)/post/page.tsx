@@ -10,12 +10,12 @@ export default function PostTask() {
     const [description, setDescription] = useState<string>("");
     const [category, setCategory] = useState<string>("");
 
-    const [location, setLocation] = useState<string>("")
-    const [budget, setBudget] = useState<number>(50)
+    const [location, setLocation] = useState<string>("");
+    const [budget, setBudget] = useState<number>(50);
     const [remote, setRemote] = useState<boolean>(false);
-    const [date, setDate] = useState<string>("")
+    const [date, setDate] = useState<string>("");
 
-    const [step, setStep] = useState<number>(0)
+    const [step, setStep] = useState<number>(0);
 
     const handleContinue = () => {
         setStep(step + 1);
