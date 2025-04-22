@@ -3,8 +3,16 @@ import { Star } from "lucide-react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 
 const ITEMS_PER_PAGE = 9;
+interface Provider {
+  name: string;
+  rating: number;
+  reviews: number;
+  location: string;
+  tags: string[];
+  description: string;
+}
 
-export default function ServiceCards({ providers }: { providers: any[] }) {
+export default function ServiceCards({ providers }: { providers: Provider[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(providers.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
