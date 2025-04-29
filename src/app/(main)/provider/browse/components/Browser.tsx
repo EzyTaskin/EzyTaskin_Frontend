@@ -68,7 +68,7 @@ const jobDetails = {
 //     </section>
 //   );
 // }
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Browser() {
   const [searchQuery, setSearchQuery] = useState("");

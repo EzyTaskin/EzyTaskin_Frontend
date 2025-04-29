@@ -51,6 +51,8 @@
 //   );
 // }
 
+import React from "react";
+
 export default function SearchBar({
   searchQuery,
   onSearch,

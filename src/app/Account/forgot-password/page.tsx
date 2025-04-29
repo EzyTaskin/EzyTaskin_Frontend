@@ -37,7 +37,7 @@ export default function ForgotPassword() {
         <div className="text-center mt-2 text-[18px] text-gray-600">
           Remember your password?{" "}
           <Link
-            href="/auth/login"
+            href="/Account/Login"
             className="text-[var(--color-primary)] font-medium hover:underline"
           >
             Back to login

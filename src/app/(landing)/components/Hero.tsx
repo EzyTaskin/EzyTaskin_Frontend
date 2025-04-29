@@ -28,13 +28,6 @@ export default function Hero() {
                             width="w-w-4xs"
                             borderRadius="rounded-2xl"
                         />
-                        <PrimaryButton
-                            label="Become A Provider"
-                            width="w-w-4xs"
-                            borderRadius="rounded-2xl"
-                            bgColor="bg-white"
-                            textColor="text-[var(--color-primary)]"
-                        />
                     </div>
                 </div>
                 <div className="ml-15 flex justify-center">
