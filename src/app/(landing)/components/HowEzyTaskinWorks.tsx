@@ -95,7 +95,7 @@ export default function HowEzyTaskinWorks() {
   ];
 
   return (
-    <section className="bg-[#D3CED6]/15 py-16">
+    <section className="bg-[#D3CED6]/15 py-16" id="how-it-works">
       <div className="text-center md:text-left space-y-6 flex flex-col items-center">
         <h1 className="text-5xl font-bold text-gray-900">
           How EzyTaskin works

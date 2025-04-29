@@ -27,19 +27,19 @@ const Header = () => {
                     Home
                 </Link>
                 <Link
-                    href="#"
+                    href="#how-it-works"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
                     How it works
                 </Link>
                 <Link
-                    href="/auth/login"
+                    href="/Account/Login"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
                     Login
                 </Link>
                 <Link
-                    href="/auth/signup"
+                    href="/Account/Signup"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
                     Sign up
