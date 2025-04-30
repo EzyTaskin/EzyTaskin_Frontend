@@ -13,16 +13,16 @@ export default function Browser() {
     );
     const [subpage, setSubpage] = useState<string>("")
 
-    useEffect(() => {
-        async function fetchPosts() {
-            const res = await fetch('https://ishar.tail35ead.ts.net/api/Profile/Provider')
-            const data = await res.json()
-            console.log("RES:")
-            console.log(data)
-        }
-
-        fetchPosts()
-    }, [])
+    // useEffect(() => {
+    //     async function fetchPosts() {
+    //         const res = await fetch('https://ishar.tail35ead.ts.net/api/Profile/Provider')
+    //         const data = await res.json()
+    //         console.log("RES:")
+    //         console.log(data)
+    //     }
+    //
+    //     fetchPosts()
+    // }, [])
 
     return (
         <section className="py-28 border-b border-black-100">

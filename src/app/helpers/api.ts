@@ -1,7 +1,7 @@
 const API_BASE = process.env.NODE_ENV === "development" ?
     "https://ishar.tail35ead.ts.net/api/" : "/api/"
 
-export function getApiUrl(path: string, query: URLSearchParams | undefined): string {
+export function getApiUrl(path: string, query): string {
     const base = new URL(API_BASE, window.location.href);
     const url = new URL(path, base);
 
