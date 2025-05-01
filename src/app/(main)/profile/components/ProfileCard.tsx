@@ -6,6 +6,7 @@ import {Star, ClipboardList, CheckCircle} from "lucide-react";
 import Link from "next/link";
 import {ProfileType} from "src/app/constants/type";
 import {logOut} from "src/app/helpers/api/auth";
+import {redirect} from "next/navigation";
 
 const ProfileCard = (
     {
@@ -54,6 +55,7 @@ const ProviderContent = (
 
     const handleLogout = () => {
         logOut()
+        redirect(('/'))
     }
 
     return (

@@ -39,7 +39,7 @@ const Header = () => {
                     Login
                 </Link>
                 <Link
-                    href="/Account/Signup"
+                    href="/Account/Register"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
                     Sign up
