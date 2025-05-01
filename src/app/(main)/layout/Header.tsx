@@ -11,7 +11,7 @@ const Header = () => {
 
     const navLinks = [
         {href: "/home", label: "Home"},
-        {href: "/provider/browse", label: "Browse task"},
+        {href: "/browse-task", label: "Browse task"},
         {href: "/my-tasks", label: "My task"},
         {href: "/find-providers", label: "Find Providers"},
     ];
