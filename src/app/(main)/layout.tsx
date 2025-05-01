@@ -1,13 +1,15 @@
 import Header from "src/app/(main)/layout/Header";
 import Footer from "src/app/(main)/layout/Footer";
+import AuthGuard from "src/app/(main)/layout/AuthGuard";
 
 export default function MainLayout({children}) {
     return (
         <>
-
-            <Header/>
-            {children}
-            <Footer/>
+            <AuthGuard>
+                <Header/>
+                {children}
+                <Footer/>
+            </AuthGuard>
         </>
     );
 }

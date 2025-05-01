@@ -10,6 +10,7 @@ import {useSearchParams} from "next/navigation";
 import {getApiUrl} from "src/app/helpers/api/url"
 
 export default function Login() {
+    const [url, setUrl] = useState<string>("")
     const [showPassword, setShowPassword] = useState(false);
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -22,6 +23,7 @@ export default function Login() {
             setErrorMessage(decodeURIComponent(error));
             setShowErrorModal(true);
         }
+        setUrl(getApiUrl("Account/Login", {returnUrl: "/"}));
     }, [searchParams]);
 
     return (
@@ -30,7 +32,7 @@ export default function Login() {
             <form
                 method="POST"
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6 z-10"
-                action={getApiUrl("Account/Login", {returnUrl: "/"})}
+                action={"https://ishar.tail35ead.ts.net/api/Account/Login?returnUrl=/"}
             >
                 <h2 className="text-[48px] font-bold text-center">Log in</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">

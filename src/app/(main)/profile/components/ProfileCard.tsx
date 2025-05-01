@@ -5,6 +5,7 @@ import Image from "next/image";
 import {Star, ClipboardList, CheckCircle} from "lucide-react";
 import Link from "next/link";
 import {ProfileType} from "src/app/constants/type";
+import {logOut} from "src/app/helpers/api/auth";
 
 const ProfileCard = (
     {
@@ -50,6 +51,11 @@ const ProviderContent = (
         subpage: string,
         onSubpageChange: (value: string) => void
     }) => {
+
+    const handleLogout = () => {
+        logOut()
+    }
+
     return (
         <>
             <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full mt-10 gap-2">
@@ -75,6 +81,7 @@ const ProviderContent = (
                 </a>
                 <div className="text-gray-700">Premium Subscriptions</div>
                 <div className="text-gray-700">Performance</div>
+                <div className="text-gray-700" onClick={handleLogout}>Log out</div>
             </div>
 
             <div className="mt-6 flex flex-col gap-2 w-full mt-10">
@@ -135,8 +142,12 @@ const ConsumerContent = (
 
             <div className="mt-4 text-base text-gray-700 flex flex-col items-start w-full mt-10 gap-4">
                 <div className="text-gray-700 cursor-pointer" onClick={() => onSubpageChange("profile")}>Profile</div>
-                <div className="text-gray-700 cursor-pointer" onClick={() => onSubpageChange("payment-methods")}>Payment methods</div>
-                <div className="text-gray-700 cursor-pointer" onClick={() => onSubpageChange("notifications")}>Notifications</div>
+                <div className="text-gray-700 cursor-pointer" onClick={() => onSubpageChange("payment-methods")}>Payment
+                    methods
+                </div>
+                <div className="text-gray-700 cursor-pointer"
+                     onClick={() => onSubpageChange("notifications")}>Notifications
+                </div>
             </div>
 
             <div className="mt-6 flex flex-col gap-2 w-full mt-10">
