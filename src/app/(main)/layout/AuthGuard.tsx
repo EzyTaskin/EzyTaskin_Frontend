@@ -1,6 +1,6 @@
 'use client'
 
-import {useAuth} from "src/app/hooks/useAuth";
+import useAuth from "src/app/hooks/useAuth";
 import {redirect} from 'next/navigation'
 
 export default function AuthGuard({children}) {

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {checkLoggedIn} from "src/app/helpers/api/auth";
 
-export function useAuth() {
+export default function useAuth() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
 
     useEffect(() => {
