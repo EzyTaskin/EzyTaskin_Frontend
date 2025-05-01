@@ -1,3 +1,5 @@
+'use client'
+
 import {getApiUrl} from "src/app/helpers/api/url";
 
 export async function fetchApi({path, method, returnUrl}: {
@@ -5,11 +7,13 @@ export async function fetchApi({path, method, returnUrl}: {
     method: string,
     returnUrl?: string
 }) {
-    const res = await fetch(getApiUrl(path, {
-        returnUrl
-    }), {
-        method: method,
-        credentials: "include"
+    const url = getApiUrl(path, {
+        returnUrl: returnUrl ? returnUrl : "/"
     })
+    const res = await fetch(url, {
+            method: method,
+            credentials: "include",
+        }
+    )
     return res;
 }
