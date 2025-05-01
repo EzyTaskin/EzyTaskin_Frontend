@@ -8,6 +8,7 @@ import { GoEye, GoEyeClosed } from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import {getApiUrl} from "src/app/helpers/api/url";
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
@@ -30,8 +31,8 @@ export default function Signup() {
             {/* Signup Form */}
             <form
                 method="POST"
-                action="https://ishar.tail35ead.ts.net/api/Account/Register?returnUrl=/"
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2/5 z-10"
+                action={getApiUrl("Account/Login", {returnUrl: "/"})}
             >
                 <h2 className="text-[48px] font-bold text-center">Create an account</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
