@@ -1,8 +1,8 @@
 // "use client";
 
-import SearchBar from "src/app/(main)/provider/browse/components/SearchBar";
-import TaskCard from "src/app/(main)/provider/browse/components/TaskCard";
-import JobListing from "src/app/(main)/provider/browse/components/JobListing";
+import SearchBar from "src/app/(main)/browse-task/components/SearchBar";
+import TaskCard from "src/app/(main)/browse-task/components/TaskCard";
+import JobListing from "src/app/(main)/browse-task/components/JobListing";
 
 // export default function Browser() {
 //   const tasks = [
