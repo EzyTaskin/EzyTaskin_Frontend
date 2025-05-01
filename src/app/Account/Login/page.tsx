@@ -32,7 +32,7 @@ export default function Login() {
             <form
                 method="POST"
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6 z-10"
-                action={"https://ishar.tail35ead.ts.net/api/Account/Login?returnUrl=/"}
+                action={getApiUrl("Account/Login", {returnUrl: "/home"})}
             >
                 <h2 className="text-[48px] font-bold text-center">Log in</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
@@ -91,7 +91,7 @@ export default function Login() {
                 {/* Links */}
                 <div className="text-center mt-4">
                     <Link
-                        href="/auth/forgot-password"
+                        href="/Account/forgot-password"
                         className="text-[18px] text-[var(--color-primary)] hover:underline"
                     >
                         Forgot your password?
@@ -101,7 +101,7 @@ export default function Login() {
                 <div className="text-[18px] text-center mt-2">
                     Don&apos;t have an account?{" "}
                     <Link
-                        href="/Account/Signup"
+                        href="/Account/Register"
                         className="text-[var(--color-primary)] font-medium hover:underline"
                     >
                         Sign up
