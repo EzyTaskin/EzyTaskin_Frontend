@@ -7,7 +7,7 @@ import {GoEye, GoEyeClosed} from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import Link from "next/link";
 import {useSearchParams} from "next/navigation";
-import {getApiUrl} from "src/app/helpers/api"
+import {getApiUrl} from "src/app/helpers/api/url"
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
