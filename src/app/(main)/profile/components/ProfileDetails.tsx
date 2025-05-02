@@ -8,6 +8,7 @@ import {
 import { MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchApi } from "src/app/helpers/api/request";
 
 const ProfileDetails = ({
   providerProfile,
@@ -26,9 +27,8 @@ const ProfileDetails = ({
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
-  if (providerProfile == null || commonDetail == null) {
-    return <h1>Wait</h1>;
-  }
+  if (profileType === "provider" && !providerProfile) return <h1>Wait</h1>;
+  if (profileType === "consumer" && !commonDetail) return <h1>Wait</h1>;
 
   if (profileType === "provider") {
     return (
@@ -65,29 +65,16 @@ const ConsumerProfile = ({
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
-  console.log(commonDetail);
+  console.log("commonDetail in consumer", commonDetail);
 
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    address: "",
+    fullName: commonDetail.fullName ?? "",
+    email: commonDetail.email ?? "",
+    phone: commonDetail.phoneNumber ?? "",
+    address: commonDetail.address ?? "",
     bio: "I'm a professional looking for reliable service providers for my projects. I value quality work and timely delivery.",
   });
 
-  // Update form data when commonDetail is loaded
-  useEffect(() => {
-    if (commonDetail) {
-      setFormData((prev) => ({
-        ...prev,
-        fullName: commonDetail.fullName ?? "",
-        email: commonDetail.email ?? "",
-        phone: commonDetail.phoneNumber ?? "",
-        address: commonDetail.address ?? "",
-      }));
-    }
-  }, [commonDetail]);
-  console.log(formData);
   const notifications = [
     {
       user: "vane Y.",
@@ -108,8 +95,19 @@ const ConsumerProfile = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    console.log("Profile saved:", formData);
+  const handleSave = async () => {
+    const response = await fetchApi({
+      path: "/Account",
+      method: "PATCH",
+    });
+
+    if (response.ok) {
+      console.log("Profile saved successfully!");
+      // Optionally redirect to the returnUrl
+    } else {
+      // Handle error
+      console.error("Error saving profile:", response.statusText);
+    }
   };
 
   const handleDelete = () => {

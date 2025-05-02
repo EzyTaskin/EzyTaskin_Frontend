@@ -24,3 +24,4 @@ export function getApiUrl(path: string, query: Record<string, string>): string {
 
     return url.toString();
 }
+

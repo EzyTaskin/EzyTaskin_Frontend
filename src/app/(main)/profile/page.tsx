@@ -20,14 +20,14 @@ export default function Browser() {
     useState<ConsumerProfileType>(null);
   const [commonDetail, setCommonDetail] = useState<CommonDetailType>(null);
   const [profileType, setProfileType] = useState<ProfileType>("consumer");
-  const [subpage, setSubpage] = useState<string>("");
+  const [subpage, setSubpage] = useState<string>("profile");
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchAllData() {
       setLoading(true);
       try {
-        const [provider, consumer, common] = await Promise.all([
+        const [provider, consumer, commonDetail] = await Promise.all([
           fetchApi({ path: "/Profile/Provider", method: "GET" }).then((res) =>
             res.json()
           ),
@@ -41,7 +41,8 @@ export default function Browser() {
         console.log("Initial profileType:", profileType);
         setProviderProfile(provider);
         setConsumerProfile(consumer);
-        setCommonDetail(common);
+        setCommonDetail(commonDetail);
+        console.log("commonDetail ", commonDetail);
       } finally {
         setLoading(false);
       }
