@@ -16,6 +16,8 @@ export default function Signup() {
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [ password, setPassword ] = useState("");
+
     const searchParams = useSearchParams();
 
     useEffect(() => {
@@ -79,6 +81,8 @@ export default function Signup() {
                         <input
                             type={showPassword ? "text" : "password"}
                             name="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
                             className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                         />
@@ -106,6 +110,9 @@ export default function Signup() {
                         <input
                             type={showConfirmPassword ? "text" : "password"}
                             name="confirmPassword"
+                            onChange={(e) => e.target.setCustomValidity(
+                                e.target.value === password ? "" : "Passwords do not match."
+                            )}
                             required
                             className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                         />
