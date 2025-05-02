@@ -5,6 +5,7 @@ import ProfileCard from "src/app/(main)/profile/components/ProfileCard";
 import ProfileDetails from "src/app/(main)/profile/components/ProfileDetails";
 import { useEffect, useState } from "react";
 import {
+  CommonDetailType,
   ConsumerProfileType,
   ProfileType,
   ProviderProfileType,
@@ -17,42 +18,36 @@ export default function Browser() {
     useState<ProviderProfileType>(null);
   const [consumerProfile, setConsumerProfile] =
     useState<ConsumerProfileType>(null);
-  const [profileType, setProfileType] = useState<ProfileType>("provider");
+  const [commonDetail, setCommonDetail] = useState<CommonDetailType>(null);
+  const [profileType, setProfileType] = useState<ProfileType>("consumer");
   const [subpage, setSubpage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function fetchProviderProfile() {
-    setLoading(true);
-    fetchApi({ path: "/Profile/Provider", method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        setProviderProfile(data);
-        setProfileType("provider");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-  async function fetchConsumerProfile() {
-    setLoading(true);
-    fetchApi({ path: "/Profile/Consumer", method: "GET" })
-      .then((res) => res.json())
-      .then((data) => {
-        setConsumerProfile(data);
-        setProfileType("consumer");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }
-
   useEffect(() => {
-    if (profileType === "provider") {
-      fetchProviderProfile();
-    } else if (profileType === "consumer") {
-      fetchConsumerProfile();
+    async function fetchAllData() {
+      setLoading(true);
+      try {
+        const [provider, consumer, common] = await Promise.all([
+          fetchApi({ path: "/Profile/Provider", method: "GET" }).then((res) =>
+            res.json()
+          ),
+          fetchApi({ path: "/Profile/Consumer", method: "GET" }).then((res) =>
+            res.json()
+          ),
+          fetchApi({ path: "/Account", method: "GET" }).then((res) =>
+            res.json()
+          ),
+        ]);
+        setProviderProfile(provider);
+        setConsumerProfile(consumer);
+        setCommonDetail(common);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [profileType]);
+
+    fetchAllData();
+  }, []);
 
   if (loading) {
     return <div>Loading profile...</div>; // Placeholder for loading state
@@ -82,7 +77,7 @@ export default function Browser() {
         <div className="col-span-2">
           <ProfileDetails
             providerProfile={providerProfile}
-            consumerProfile={consumerProfile}
+            commonDetail={commonDetail}
             profileType={profileType}
             isEditing={isEditing}
             onIsEditingChange={setIsEditing}

@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Star, ClipboardList, CheckCircle } from "lucide-react";
+import { CheckCircle, ClipboardList, Star } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { logOut } from "src/app/helpers/api/auth";
@@ -31,25 +31,34 @@ const ProfileCard = ({
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
+  if (providerProfile == null || consumerProfile == null)
+    return <h1> Wait </h1>;
   return (
     <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border border-gray-200">
       <div className="flex flex-col items-center">
         <div className="w-24 h-24 bg-gray-300 rounded-full mb-4" />
         <h2 className="text-xl font-semibold">Mike Thomas</h2>
-        <p className="text-gray-500 text-sm">Member since January 2025</p>
-        <span className="mt-2 px-4 py-1 text-sm bg-indigo-200 text-indigo-800 rounded-full font-medium">
-          {" "}
-          Premium Provider{" "}
-        </span>
-        {profileType == "provider" && (
+        <p className="text-gray-500 text-sm">
+          Member since {providerProfile.subscriptionDate}
+        </p>
+
+        {providerProfile && providerProfile.subscriptionDate && (
+          <p className="text-gray-500 text-sm">
+            Member since {providerProfile.subscriptionDate}
+          </p>
+        )}
+
+        {profileType === "provider" && (
           <ProviderContent
+            providerProfile={providerProfile}
             isEditing={isEditing}
             onIsEditingChange={onIsEditingChange}
             subpage={subpage}
             onSubpageChange={onSubpageChange}
           />
         )}
-        {profileType == "consumer" && (
+
+        {profileType === "consumer" && (
           <ConsumerContent
             isEditing={isEditing}
             onIsEditingChange={onIsEditingChange}
@@ -63,11 +72,13 @@ const ProfileCard = ({
 };
 
 const ProviderContent = ({
+  providerProfile,
   isEditing,
   onIsEditingChange,
   subpage,
   onSubpageChange,
 }: {
+  providerProfile: ProviderProfileType;
   isEditing: boolean;
   onIsEditingChange: (value: boolean) => void;
   subpage: string;
@@ -77,14 +88,22 @@ const ProviderContent = ({
     logOut();
     redirect("/");
   };
+
   return (
     <>
-      <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full mt-10 gap-2">
-        <div className="flex items-center mb-1 justify-center gap-1">
-          <Star size={18} fill="#FFDC56" stroke="none" />
-          <span>4.8 Average rating</span>
-        </div>
+      <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full gap-2">
         <div className="flex items-center gap-1">
+          <Star size={18} fill="#FFDC56" stroke="none" />
+          <span>
+            {providerProfile.averageRating === undefined ||
+            providerProfile.averageRating === 0
+              ? "0 Average rating"
+              : providerProfile.averageRating === 1
+              ? "1 Average rating"
+              : `${providerProfile.averageRating} Average ratings`}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5">
           <Image
             src="/review.svg"
             alt="Review"
@@ -92,24 +111,30 @@ const ProviderContent = ({
             height={16}
             unoptimized
           />
-          <span>12 Reviews</span>
+          <span>
+            {providerProfile.reviewCount === 0
+              ? "0 Review"
+              : providerProfile.reviewCount === 1
+              ? "1 Review"
+              : `${providerProfile.reviewCount} R   eviews`}
+          </span>
         </div>
       </div>
 
-      <div className="mt-4 text-base text-gray-700 flex flex-col items-start w-full mt-10 gap-4">
+      <div className="mt-6 text-base text-gray-700 flex flex-col items-start w-full gap-4">
         <a href="#" className="text-indigo-600 font-medium hover:underline">
           My dashboard
         </a>
-        <div className="text-gray-700">Premium Subscriptions</div>
-        <div className="text-gray-700">Performance</div>
-        <div className="text-gray-700" onClick={handleLogout}>
+        <div>Premium Subscriptions</div>
+        <div>Performance</div>
+        <div onClick={handleLogout} className="cursor-pointer">
           Log out
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col gap-2 w-full mt-10">
+      <div className="mt-6 flex flex-col gap-2 w-full">
         <button
-          onClick={(e) => onIsEditingChange(true)}
+          onClick={() => onIsEditingChange(true)}
           className="border border-gray-300 rounded-xl py-2 hover:bg-gray-50 text-[var(--color-primary)] flex items-center justify-center gap-2"
         >
           <Image
@@ -122,7 +147,10 @@ const ProviderContent = ({
           <span className="font-medium">Edit profile</span>
         </button>
 
-        <button className="border border-gray-300 rounded-xl py-2 hover:bg-gray-50 flex items-center justify-center gap-2 text-black">
+        <Link
+          href="/profile/public"
+          className="border border-gray-300 rounded-xl py-2 hover:bg-gray-50 flex items-center justify-center gap-2 text-black"
+        >
           <Image
             src="/view.svg"
             alt="View"
@@ -130,10 +158,8 @@ const ProviderContent = ({
             height={16}
             unoptimized
           />
-          <Link href={"/profile/public"}>
-            <span className="font-medium">View public profile</span>
-          </Link>
-        </button>
+          <span className="font-medium">View public profile</span>
+        </Link>
       </div>
     </>
   );
