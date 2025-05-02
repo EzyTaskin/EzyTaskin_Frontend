@@ -2,18 +2,30 @@
 
 import {getApiUrl} from "src/app/helpers/api/url";
 
-export async function fetchApi({path, method, returnUrl}: {
-    path: string,
-    method?: string,
-    returnUrl?: string
+export async function fetchApi({
+                                   path,
+                                   method = "GET",
+                                   returnUrl = "/",
+                                   data,
+                               }: {
+    path: string;
+    method?: string;
+    returnUrl?: string;
+    data: Record<string, string>;
 }) {
-    const url = getApiUrl(path, {
-        returnUrl: returnUrl ? returnUrl : "/"
-    })
+    const url = getApiUrl(path, {returnUrl});
+
+    const formData = new FormData();
+    for (const key in data) {
+        formData.append(key, data[key]);
+    }
+
     const res = await fetch(url, {
-            method: method ? method : "GET",
-            credentials: "include",
-        }
-    )
+        method,
+        credentials: "include",
+        body: method !== "GET" ? formData : undefined,
+    });
+
     return res;
 }
+

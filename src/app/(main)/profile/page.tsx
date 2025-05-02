@@ -38,11 +38,9 @@ export default function Browser() {
             res.json()
           ),
         ]);
-        console.log("Initial profileType:", profileType);
         setProviderProfile(provider);
         setConsumerProfile(consumer);
         setCommonDetail(commonDetail);
-        console.log("commonDetail ", commonDetail);
       } finally {
         setLoading(false);
       }
