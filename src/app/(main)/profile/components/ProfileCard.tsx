@@ -7,6 +7,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { logOut } from "src/app/helpers/api/auth";
 import {
+  CommonDetailType,
   ConsumerProfileType,
   ProfileType,
   ProviderProfileType,
@@ -14,6 +15,7 @@ import {
 
 const ProfileCard = ({
   providerProfile,
+  commonDetail,
   consumerProfile,
   profileType,
   onProfileTypeChange,
@@ -23,6 +25,7 @@ const ProfileCard = ({
   onSubpageChange,
 }: {
   providerProfile: ProviderProfileType;
+  commonDetail: CommonDetailType;
   consumerProfile: ConsumerProfileType;
   profileType: ProfileType;
   onProfileTypeChange: (profileType: ProfileType) => void;
@@ -33,11 +36,15 @@ const ProfileCard = ({
 }) => {
   if (providerProfile == null || consumerProfile == null)
     return <h1> Wait </h1>;
+  console.log(
+    "providerProfile.subscriptionDate ",
+    providerProfile.subscriptionDate
+  );
   return (
     <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border border-gray-200">
       <div className="flex flex-col items-center">
         <div className="w-24 h-24 bg-gray-300 rounded-full mb-4" />
-        <h2 className="text-xl font-semibold">Mike Thomas</h2>
+        <h2 className="text-xl font-semibold">{commonDetail.fullName}</h2>
         <p className="text-gray-500 text-sm">
           Member since {providerProfile.subscriptionDate}
         </p>
@@ -125,7 +132,14 @@ const ProviderContent = ({
         <a href="#" className="text-indigo-600 font-medium hover:underline">
           My dashboard
         </a>
-        <div>Premium Subscriptions</div>
+        <Link
+          href={{
+            pathname: "/profile/your-plan",
+            query: { isPremium: providerProfile.isPremium?.toString() }, // optional: convert to string
+          }}
+        >
+          <div>Premium Subscriptions</div>
+        </Link>
         <div>Performance</div>
         <div onClick={handleLogout} className="cursor-pointer">
           Log out

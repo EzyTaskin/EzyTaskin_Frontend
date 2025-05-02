@@ -19,7 +19,7 @@ export default function Browser() {
   const [consumerProfile, setConsumerProfile] =
     useState<ConsumerProfileType>(null);
   const [commonDetail, setCommonDetail] = useState<CommonDetailType>(null);
-  const [profileType, setProfileType] = useState<ProfileType>("consumer");
+  const [profileType, setProfileType] = useState<ProfileType>("provider");
   const [subpage, setSubpage] = useState<string>("profile");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -39,6 +39,7 @@ export default function Browser() {
           ),
         ]);
         setProviderProfile(provider);
+        console.log("provider ", provider);
         setConsumerProfile(consumer);
         setCommonDetail(commonDetail);
       } finally {
@@ -65,6 +66,7 @@ export default function Browser() {
           <ProfileCard
             providerProfile={providerProfile}
             consumerProfile={consumerProfile}
+            commonDetail={commonDetail}
             profileType={profileType}
             onProfileTypeChange={setProfileType}
             isEditing={isEditing}

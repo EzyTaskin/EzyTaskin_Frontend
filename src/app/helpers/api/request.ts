@@ -11,7 +11,7 @@ export async function fetchApi({
     path: string;
     method?: string;
     returnUrl?: string;
-    data: Record<string, string>;
+    data?: Record<string, string>;
 }) {
     const url = getApiUrl(path, {returnUrl});
 
