@@ -1,5 +1,3 @@
-const API_BASE = process.env.NODE_ENV == "development" ? "https://ishar.tail35ead.ts.net/api/" : "/api";
-
 function joinPaths(...segments: string[]) {
     return segments
         .filter(Boolean) // remove empty/null segments
@@ -11,9 +9,8 @@ function joinPaths(...segments: string[]) {
 }
 
 export function getApiUrl(path: string, query: Record<string, string>): string {
+    const API_BASE = process.env.NODE_ENV == "development" ? "https://ishar.tail35ead.ts.net" : window.location.href;
     const url = new URL(joinPaths('/api', path), API_BASE);
-
-    console.log(url.toString())
 
     const searchParams = new URLSearchParams(query);
 

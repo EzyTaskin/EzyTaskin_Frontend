@@ -22,3 +22,11 @@ export type ConsumerProfileType = {
   requestsPosted: number;
   requestsCompleted: number;
 };
+
+export type CommonDetailType = {
+  id: string;
+  email: string;
+  fullName: string;
+  phoneNumber: string;
+  address: string;
+};

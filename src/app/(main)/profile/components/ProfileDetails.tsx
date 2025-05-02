@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  ConsumerProfileType,
+  CommonDetailType,
   ProfileType,
   ProviderProfileType,
 } from "src/app/constants/type";
@@ -11,7 +11,7 @@ import Image from "next/image";
 
 const ProfileDetails = ({
   providerProfile,
-  consumerProfile,
+  commonDetail,
   profileType,
   isEditing,
   onIsEditingChange,
@@ -19,13 +19,17 @@ const ProfileDetails = ({
   onSubpageChange,
 }: {
   providerProfile: ProviderProfileType;
-  consumerProfile: ConsumerProfileType;
+  commonDetail: CommonDetailType;
   profileType: ProfileType;
   isEditing: boolean;
   onIsEditingChange: (value: boolean) => void;
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
+  if (providerProfile == null || commonDetail == null) {
+    return <h1>Wait</h1>;
+  }
+
   if (profileType === "provider") {
     return (
       <ProviderProfile
@@ -38,6 +42,7 @@ const ProfileDetails = ({
   } else {
     return (
       <ConsumerProfile
+        commonDetail={commonDetail}
         isEditing={isEditing}
         onIsEditingChange={onIsEditingChange}
         subpage={subpage}
@@ -48,24 +53,41 @@ const ProfileDetails = ({
 };
 
 const ConsumerProfile = ({
+  commonDetail,
   isEditing,
   onIsEditingChange,
   subpage,
   onSubpageChange,
 }: {
+  commonDetail: CommonDetailType;
   isEditing: boolean;
   onIsEditingChange: (value: boolean) => void;
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
+  console.log(commonDetail);
+
   const [formData, setFormData] = useState({
-    fullName: "Mike Thomas",
-    email: "mike.thomas@example.com",
-    phone: "(+61) 0412345678",
-    address: "123 Keira St, Wollongong, 2500",
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
     bio: "I'm a professional looking for reliable service providers for my projects. I value quality work and timely delivery.",
   });
 
+  // Update form data when commonDetail is loaded
+  useEffect(() => {
+    if (commonDetail) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: commonDetail.fullName ?? "",
+        email: commonDetail.email ?? "",
+        phone: commonDetail.phoneNumber ?? "",
+        address: commonDetail.address ?? "",
+      }));
+    }
+  }, [commonDetail]);
+  console.log(formData);
   const notifications = [
     {
       user: "vane Y.",
@@ -121,6 +143,7 @@ const ConsumerProfile = ({
               onChange={handleChange}
               className="w-full mt-1 px-4 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none"
               type="email"
+              disabled
             />
           </div>
 

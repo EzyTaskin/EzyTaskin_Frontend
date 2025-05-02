@@ -32,7 +32,7 @@ export default function Signup() {
             <form
                 method="POST"
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2/5 z-10"
-                action={getApiUrl("Account/Login", {returnUrl: "/"})}
+                action={getApiUrl("Account/Register", {returnUrl: "/Account/Login"})}
             >
                 <h2 className="text-[48px] font-bold text-center">Create an account</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
