@@ -61,7 +61,15 @@ export type CommonDetailType = {
   phoneNumber: string;
   address: string;
 };
-export type PaymentCardType = {
+export type PaymentSendCardType = {
+  number: string;
+  expiry: string;
+  cvv: string;
+  name: string;
+};
+
+export type PaymentReceiveCardType = {
+  id: string;
   number: string;
   expiry: string;
   cvv: string;

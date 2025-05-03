@@ -135,7 +135,10 @@ const ProviderContent = ({
         <Link
           href={{
             pathname: "/profile/your-plan",
-            query: { isPremium: providerProfile.isPremium?.toString() }, // optional: convert to string
+            query: {
+              isSubscriptionActive:
+                providerProfile.isSubscriptionActive?.toString(),
+            }, // optional: convert to string
           }}
         >
           <div>Premium Subscriptions</div>

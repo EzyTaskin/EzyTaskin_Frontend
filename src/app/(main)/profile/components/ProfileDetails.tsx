@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {
   CommonDetailType,
+  PaymentReceiveCardType,
   ProfileType,
   ProviderProfileType,
 } from "src/app/constants/type";
@@ -87,6 +88,20 @@ const ConsumerProfile = ({
       taskLink: "#",
     },
   ];
+  const [cards, setCards] = useState<PaymentReceiveCardType[]>([]);
+
+  useEffect(() => {
+    if (subpage === "payment-methods") {
+      fetchApi({ path: "/Payment", method: "GET" })
+        .then((res) => res.json())
+        .then((data) => setCards(data))
+        .catch((err) => console.error("Failed to fetch cards", err));
+    }
+  }, [subpage]);
+
+  const maskCardNumber = (cardNumber: string) => {
+    return `•••• ${cardNumber.slice(-4)}`;
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -201,25 +216,32 @@ const ConsumerProfile = ({
     );
   }
 
-  if (subpage == "payment-methods") {
+  if (subpage === "payment-methods") {
     return (
       <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
         <h2 className="text-2xl font-bold mb-1">Payment methods</h2>
         <p className="text-gray-500 mb-6">How you will pay and get money</p>
 
-        {/* Existing Payment Method */}
-        <div className="flex items-center justify-between bg-gray-100 rounded-lg p-4 mb-4 hover:bg-gray-200 cursor-pointer transition">
-          <div className="flex items-center space-x-3">
-            <Image
-              src="./mastercard-logo.svg"
-              alt="Mastercard"
-              width={25}
-              height={25}
-            />
-            <span className="text- font-medium">Mastercard ••••123</span>
+        {/* Render each fetched card */}
+        {cards.map((card, index) => (
+          <div
+            key={index}
+            className="flex items-center justify-between bg-gray-100 rounded-lg p-4 mb-4 hover:bg-gray-200 cursor-pointer transition"
+          >
+            <div className="flex items-center space-x-3">
+              <Image
+                src="./mastercard-logo.svg"
+                alt="Card"
+                width={25}
+                height={25}
+              />
+              <span className="text font-medium">
+                {card.name} {maskCardNumber(card.number)}
+              </span>
+            </div>
+            <ChevronRight className="text-gray-400" />
           </div>
-          <ChevronRight className="text-gray-400" />
-        </div>
+        ))}
 
         {/* Add Payment Method */}
         <Link href="/add-payment-method">

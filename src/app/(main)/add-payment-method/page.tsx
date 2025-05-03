@@ -6,18 +6,21 @@ import { CiLock } from "react-icons/ci";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import { fetchApi } from "src/app/helpers/api/request";
-import { PaymentCardType } from "src/app/constants/type";
+import { PaymentSendCardType } from "src/app/constants/type";
 
 export default function AddPaymentMethod() {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState<PaymentCardType>({
+  const [formData, setFormData] = useState<PaymentSendCardType>({
     number: "",
     expiry: "",
     cvv: "",
     name: "",
   });
 
-  const handleInputChange = (field: keyof PaymentCardType, value: string) => {
+  const handleInputChange = (
+    field: keyof PaymentSendCardType,
+    value: string
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
