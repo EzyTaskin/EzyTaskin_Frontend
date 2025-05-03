@@ -28,41 +28,34 @@ export default function YourPlan() {
   const [isPremium, setIsPremium] = useState(false);
   const [providerProfile, setProviderProfile] =
     useState<ProviderProfileType>(null);
-
-  // Fetch provider profile data on load
-  useEffect(() => {
-    async function fetchProviderProfile() {
+  const handlePlanChange = async (newPremiumStatus: boolean) => {
+    try {
       const response = await fetchApi({
         path: "/Profile/Provider",
         method: "GET",
+      }).then((res) => res.json());
+      const currentProfile = response;
+      console.log(currentProfile);
+
+      // Use `data` instead of `body` to match the expected format
+      await fetchApi({
+        path: "/Profile/Provider",
+        method: "PATCH",
+        data: {
+          ...currentProfile,
+          isPremium: newPremiumStatus,
+        }, // Change body to data
       });
-      const data = await response.json();
-      setProviderProfile(data);
+
+      setProviderProfile({
+        ...currentProfile,
+        isPremium: newPremiumStatus,
+      });
+      setIsPremium(newPremiumStatus);
+    } catch (error) {
+      console.error("Error updating plan", error);
     }
-
-    fetchProviderProfile();
-  }, []);
-
-  // Update providerProfile when isPremium changes
-  useEffect(() => {
-    if (providerProfile) {
-      setProviderProfile((prevProfile) => ({
-        ...prevProfile,
-        isPremium: isPremium, // Update the isPremium value
-      }));
-
-      // Optionally, you can make an API request to update the profile on the server
-      // const updateProfile = async () => {
-      //   await fetchApi({
-      //     path: "/Profile/Provider/Update", // Update endpoint
-      //     method: "POST",
-      //     body: JSON.stringify({ ...providerProfile, isPremium }), // Send updated profile data
-      //   });
-      // };
-
-      updateProfile();
-    }
-  }, [isPremium, providerProfile]); // This runs whenever isPremium or providerProfile changes
+  };
 
   // Logic to set the isPremium state based on the URL parameter
   useEffect(() => {
@@ -72,6 +65,7 @@ export default function YourPlan() {
       setIsPremium(false);
     }
   }, [queryPremium]);
+
   const renderFeatures = (features: string[]) =>
     features.map((item, index) => {
       const [title, desc] = item.split("\n");
@@ -133,7 +127,7 @@ export default function YourPlan() {
                 bgColor="bg-[var(--color-primary)]"
                 textColor="text-white"
                 fontStyle="font-bold"
-                onClick={() => setIsPremium(false)}
+                onClick={async () => await handlePlanChange(false)}
               />
             )}
           </div>
@@ -169,12 +163,12 @@ export default function YourPlan() {
               />
             ) : (
               <PrimaryButton
-                label="Upgrade"
+                label="Subscribe"
                 width="w-3xs"
                 bgColor="bg-[var(--color-primary)]"
                 textColor="text-white"
                 fontStyle="font-bold"
-                onClick={() => setIsPremium(true)}
+                onClick={async () => await handlePlanChange(true)}
               />
             )}
           </div>

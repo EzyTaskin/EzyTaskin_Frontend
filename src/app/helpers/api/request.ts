@@ -14,6 +14,9 @@ export async function fetchApi({
     data?: Record<string, string>;
 }) {
     const url = getApiUrl(path, {returnUrl});
+  console.log("🔍 Request URL:", url);
+  console.log("📦 Request Method:", method);
+  console.log("🧾 Form Data:", data);
 
     const formData = new FormData();
     for (const key in data) {

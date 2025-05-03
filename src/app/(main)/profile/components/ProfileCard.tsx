@@ -205,19 +205,31 @@ const ConsumerContent = ({
 
       <div className="mt-4 text-base text-gray-700 flex flex-col items-start w-full mt-10 gap-4">
         <div
-          className="text-gray-700 cursor-pointer"
+          className={`cursor-pointer ${
+            subpage === "profile"
+              ? "text-[var(--color-primary)]"
+              : "text-gray-700"
+          }`}
           onClick={() => onSubpageChange("profile")}
         >
           Profile
         </div>
         <div
-          className="text-gray-700 cursor-pointer"
+          className={`cursor-pointer ${
+            subpage === "payment-methods"
+              ? "text-[var(--color-primary)]"
+              : "text-gray-700"
+          }`}
           onClick={() => onSubpageChange("payment-methods")}
         >
           Payment methods
         </div>
         <div
-          className="text-gray-700 cursor-pointer"
+          className={`cursor-pointer ${
+            subpage === "notifications"
+              ? "text-[var(--color-primary)]"
+              : "text-gray-700"
+          }`}
           onClick={() => onSubpageChange("notifications")}
         >
           Notifications
