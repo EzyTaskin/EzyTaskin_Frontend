@@ -63,7 +63,7 @@ export default function CompletedTasks() {
             </div>
             <div className="mt-4">
               <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-full shadow">
-                View more
+                Task details
               </button>
             </div>
           </div>
