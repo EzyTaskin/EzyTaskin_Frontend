@@ -10,6 +10,7 @@ import { MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchApi } from "src/app/helpers/api/request";
+import { CategoryType } from "src/app/constants/type";
 
 const ProfileDetails = ({
   providerProfile,
@@ -51,6 +52,195 @@ const ProfileDetails = ({
       />
     );
   }
+};
+const ProviderProfile = ({
+  isEditing,
+  onIsEditingChange,
+  subpage,
+  onSubpageChange,
+}: {
+  isEditing: boolean;
+  onIsEditingChange: (value: boolean) => void;
+  subpage: string;
+  onSubpageChange: (value: string) => void;
+}) => {
+  const [showAll, setShowAll] = useState(false);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [newCategory, setNewCategory] = useState("");
+
+  // 👉 Fetch from /Category API on mount
+  useEffect(() => {
+    fetchApi({ path: "/Category", method: "GET" })
+      .then((res) => res.json())
+      .then((data: CategoryType[]) => {
+        const names = data.map((category) => category.name);
+        setCategories(names);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch categories:", err);
+      });
+  }, []);
+
+  const tasks = [
+    {
+      task: "Home Cleaning Service",
+      client: "Emma Johnson",
+      date: "15/02/2025",
+      category: "Home Cleaning",
+      rating: 5,
+      earnings: "$100",
+    },
+    {
+      task: "Garden Landscaping",
+      client: "Michael Smith",
+      date: "20/03/2025",
+      category: "Move-In-Out Cleaning",
+      rating: 4,
+      earnings: "$220",
+    },
+    {
+      task: "Furniture Assembly",
+      client: "Sarah Williams",
+      date: "30/03/2025",
+      category: "Furniture",
+      rating: 5,
+      earnings: "$85",
+    },
+    {
+      task: "Window Cleaning",
+      client: "James Lee",
+      date: "05/04/2025",
+      category: "Window Cleaning",
+      rating: 5,
+      earnings: "$95",
+    },
+  ];
+
+  const visibleTasks = showAll ? tasks : tasks.slice(0, 3);
+
+  const addCategory = () => {
+    const trimmed = newCategory.trim();
+    if (trimmed && !categories.includes(trimmed)) {
+      setCategories([...categories, trimmed]);
+    }
+    setNewCategory("");
+  };
+
+  const removeCategory = (category: string) => {
+    setCategories(categories.filter((c) => c !== category));
+  };
+
+  return (
+    <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
+      {/* Completed Tasks */}
+      <div className="border border-gray-200 rounded-xl p-4 shadow-sm">
+        <h3 className="font-semibold text-lg mb-4">Completed tasks</h3>
+        <div className="w-full overflow-x-auto">
+          <table className="table-auto w-full text-sm text-left">
+            <thead className="text-gray-600 border-b">
+              <tr>
+                <th className="p-2">Task</th>
+                <th className="p-2">Client</th>
+                <th className="p-2">Date</th>
+                <th className="p-2">Category</th>
+                <th className="p-2">Rating</th>
+                <th className="p-2">Earnings</th>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleTasks.map((item, index) => (
+                <tr key={index} className="border-b last:border-0">
+                  <td className="py-3">{item.task}</td>
+                  <td>{item.client}</td>
+                  <td>{item.date}</td>
+                  <td>
+                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full whitespace-nowrap">
+                      {item.category}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="text-yellow-500">⭐</span> {item.rating}
+                  </td>
+                  <td className="font-medium">{item.earnings}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {tasks.length > 3 && (
+          <div className="text-center mt-3">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="text-sm text-gray-700 hover:underline font-bold cursor-pointer"
+            >
+              {showAll ? "▲ Show less" : "▼ Show more"}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Service Categories */}
+      {isEditing ? (
+        <div className="max-w-lg mx-auto p-4 space-y-6 bg-white rounded-xl shadow-lg">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <span
+                key={category}
+                className="flex items-center bg-gray-200 font-bold text-sm px-3 py-1 rounded-full"
+              >
+                {category}
+                <button
+                  onClick={() => removeCategory(category)}
+                  className="ml-2 text-black hover:text-red-500"
+                >
+                  ✕
+                </button>
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Add a service category"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              className="flex-1 px-4 py-2 rounded-md bg-gray-100 placeholder-gray-700 focus:outline-none"
+            />
+            <button
+              onClick={addCategory}
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+            >
+              Add
+            </button>
+          </div>
+
+          <button
+            onClick={() => onIsEditingChange(false)}
+            className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          >
+            Update Profile
+          </button>
+        </div>
+      ) : (
+        <div>
+          <h3 className="font-semibold text-lg mb-2 flex items-center">
+            <span className="mr-2">🏷️</span>Service categories
+          </h3>
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category, index) => (
+              <span
+                key={index}
+                className="bg-gray-100 px-3 py-1 text-sm rounded-full font-medium text-gray-700"
+              >
+                {category}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 const ConsumerProfile = ({
@@ -283,194 +473,6 @@ const ConsumerProfile = ({
       </div>
     );
   }
-};
-
-const ProviderProfile = ({
-  isEditing,
-  onIsEditingChange,
-  subpage,
-  onSubpageChange,
-}: {
-  isEditing: boolean;
-  onIsEditingChange: (value: boolean) => void;
-  subpage: string;
-  onSubpageChange: (value: string) => void;
-}) => {
-  const [showAll, setShowAll] = useState(false);
-
-  const tasks = [
-    {
-      task: "Home Cleaning Service",
-      client: "Emma Johnson",
-      date: "15/02/2025",
-      category: "Home Cleaning",
-      rating: 5,
-      earnings: "$100",
-    },
-    {
-      task: "Garden Landscaping",
-      client: "Michael Smith",
-      date: "20/03/2025",
-      category: "Move-In-Out Cleaning",
-      rating: 4,
-      earnings: "$220",
-    },
-    {
-      task: "Furniture Assembly",
-      client: "Sarah Williams",
-      date: "30/03/2025",
-      category: "Furniture",
-      rating: 5,
-      earnings: "$85",
-    },
-    {
-      task: "Window Cleaning",
-      client: "James Lee",
-      date: "05/04/2025",
-      category: "Window Cleaning",
-      rating: 5,
-      earnings: "$95",
-    },
-  ];
-
-  const visibleTasks = showAll ? tasks : tasks.slice(0, 3);
-
-  const [categories, setCategories] = useState([
-    "Home Cleaning",
-    "Holiday Rental Cleaning",
-    "Move-In-Out Cleaning",
-    "Gardening",
-    "Regular Cleaning",
-    "Furniture",
-  ]);
-
-  const [newCategory, setNewCategory] = useState("");
-
-  const addCategory = () => {
-    const trimmed = newCategory.trim();
-    if (trimmed && !categories.includes(trimmed)) {
-      setCategories([...categories, trimmed]);
-    }
-    setNewCategory("");
-  };
-
-  const removeCategory = (category) => {
-    setCategories(categories.filter((c) => c !== category));
-  };
-
-  return (
-    <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
-      {/* Completed Tasks */}
-      <div className="border border-gray-200 rounded-xl p-4 shadow-sm">
-        <h3 className="font-semibold text-lg mb-4">Completed tasks</h3>
-        <div className="w-full overflow-x-visible">
-          <table className="table-auto w-full text-sm text-left">
-            <thead className="text-gray-600 border-b">
-              <tr>
-                <th className="p-2">Task</th>
-                <th className="p-2">Client</th>
-                <th className="p-2">Date</th>
-                <th className="p-2">Category</th>
-                <th className="p-2">Rating</th>
-                <th className="p-2">Earnings</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleTasks.map((item, index) => (
-                <tr key={index} className="border-b last:border-0">
-                  <td className="py-3">{item.task}</td>
-                  <td>{item.client}</td>
-                  <td>{item.date}</td>
-                  <td>
-                    <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                      {item.category}
-                    </span>
-                  </td>
-                  <td>
-                    <span className="text-yellow-500">⭐</span> {item.rating}
-                  </td>
-                  <td className="font-medium">{item.earnings}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {tasks.length > 3 && (
-          <div className="text-center mt-3">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="text-sm text-gray-700 hover:underline font-bold cursor-pointer"
-            >
-              {showAll ? "▲ Show less" : "▼ Show more"}
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Service Categories */}
-      {isEditing ? (
-        <div className="max-w-lg mx-auto p-4 space-y-6 bg-white rounded-xl shadow-lg">
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <span
-                key={category}
-                className="flex items-center bg-(--color-secondary) font-bold text-sm px-3 py-1 rounded-full"
-              >
-                {" "}
-                {category}
-                <button
-                  onClick={() => removeCategory(category)}
-                  className="ml-2 text-black hover:text-red-500"
-                >
-                  {" "}
-                  ×{" "}
-                </button>
-              </span>
-            ))}
-          </div>
-
-          <div className="flex gap-2">
-            <input
-              type="text"
-              placeholder="Add a service category"
-              value={newCategory}
-              onChange={(e) => setNewCategory(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-md bg-gray-100 placeholder-gray-700 focus:outline-none"
-            />
-            <button
-              onClick={addCategory}
-              className="px-4 py-2 bg-(--color-primary) text-white rounded-md hover:bg-indigo-700"
-            >
-              Add
-            </button>
-          </div>
-
-          <button
-            onClick={(e) => onIsEditingChange(false)}
-            className="w-full py-2 bg-(--color-primary) text-white rounded-md hover:bg-indigo-700"
-          >
-            Update Profile
-          </button>
-        </div>
-      ) : (
-        <div>
-          <h3 className="font-semibold text-lg mb-2 flex items-center">
-            <span className="mr-2">🏷️</span>Service categories
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            {categories.map((category, index) => (
-              <span
-                key={index}
-                className="bg-gray-100 px-3 py-1 text-sm rounded-full font-medium text-gray-700"
-              >
-                {category}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
 };
 
 export default ProfileDetails;
