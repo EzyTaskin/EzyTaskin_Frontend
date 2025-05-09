@@ -12,7 +12,7 @@ import {
 } from "src/app/constants/type";
 import { fetchApi } from "src/app/helpers/api/request";
 
-export default function Browser() {
+export default function Profile() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [providerProfile, setProviderProfile] =
     useState<ProviderProfileType>(null);
