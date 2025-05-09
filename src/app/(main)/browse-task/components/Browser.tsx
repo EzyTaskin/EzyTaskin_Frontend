@@ -3,56 +3,17 @@
 import SearchBar from "src/app/(main)/browse-task/components/SearchBar";
 import TaskCard from "src/app/(main)/browse-task/components/TaskCard";
 import JobListing from "src/app/(main)/browse-task/components/JobListing";
-import {getTasks} from "src/app/helpers/api/tasks";
-
-const jobDetails = {
-    title: "Install kitchen sink basin",
-    status: "OPEN",
-    location: "Wollongong",
-    date: "Tues 8th, 2025",
-    time: "Morning",
-    postedBy: "Tracy N.",
-    budget: 500,
-    about:
-        "Seeking a skilled and detail-oriented Kitchen Sink Basin Installer to join our team. The ideal candidate will be responsible for the installation, alignment, and sealing of kitchen sink basins in residential and/or commercial settings.",
-    responsibilities:
-        "Remove old sinks and prepare surfaces for new installations. Install a variety of sink types (undermount, top-mount, farmhouse, etc.). Secure and seal sink basins to countertops using appropriate materials. Connect plumbing fixtures including drainpipes, garbage disposals, and faucets. Perform leak tests and ensure watertight sealing.",
-    requirements:
-        "Proven experience in plumbing or kitchen fixture installation preferred.  Knowledge of different sink types and countertop materials. Ability to lift and maneuver heavy sink basins. Strong problem-solving skills and customer service.",
-};
 
 import React, {useEffect, useState} from "react";
-import useTasks from "src/app/hooks/useTasks";
+import useQueryTasks from "src/app/hooks/useQueryTasks";
+import {TaskResponseType} from "src/app/constants/type";
 
 export default function Browser() {
     const [searchQuery, setSearchQuery] = useState("");
     const [resultsVisible, setResultsVisible] = useState(false);
-    const tasks = useTasks();
-
-    useEffect(() => {
-        console.log("tasks: ", tasks);
-    }, [tasks])
-
-    const sampleTasks = [
-        {
-            title: "Install kitchen sink basin",
-            location: "Wollongong",
-            date: "Tues 8th, 2025",
-            budget: 500,
-        },
-        {
-            title: "Bathroom tap replacement",
-            location: "Surry Hills",
-            date: "Wed 10th, 2025",
-            budget: 120,
-        },
-        {
-            title: "Dishwasher installation",
-            location: "Parramatta",
-            date: "Fri 12th, 2025",
-            budget: 200,
-        },
-    ];
+    const [selectTaskIndex, setSelectedTaskIndex] = useState(0)
+    const tasker = useQueryTasks();
+    const tasks = tasker.tasks;
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
@@ -65,14 +26,21 @@ export default function Browser() {
         }
     };
 
-    const filteredTasks =
+    const filteredTasks: TaskResponseType[] =
         searchQuery && resultsVisible
-            ? sampleTasks.filter(
+            ? tasks.filter(
                 (task) =>
                     task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     task.location.toLowerCase().includes(searchQuery.toLowerCase())
             )
-            : sampleTasks; // Show all sampleTasks if no search query or resultsVisible is false
+            : tasks; // Show all sampleTasks if no search query or resultsVisible is false
+
+    if (tasks == null) return <h1> Loading </h1>
+    if (tasks.length == 0) return <h1> No task found </h1>
+
+    const handleSelectTask = (index) => {
+        setSelectedTaskIndex(index);
+    }
 
     return (
         <section className="py-28 border-b border-black-100">
@@ -92,17 +60,17 @@ export default function Browser() {
                                 key={idx}
                                 title={task.title}
                                 location={task.location}
-                                date={task.date}
+                                date={task.dueDate}
                                 budget={task.budget}
-                                onClick={() => console.log(`Clicked ${task.title}`)}
+                                onClick={() => handleSelectTask(idx)}
                             />
                         ))
                     )}
                 </div>
 
                 {/* Right Column - Job Listing */}
-                <div>
-                    <JobListing {...jobDetails} />
+                <div className="hidden md:block sticky top-32 self-start">
+                    <JobListing task={tasks[selectTaskIndex]}/>
                 </div>
             </div>
         </section>

@@ -1,9 +1,10 @@
 import React from "react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import useMutateTasks from "src/app/hooks/useMutateTasks";
 
 export default function Review(
     {
-        title, category, location, budget, date, description, onBack
+        title, category, location, budget, date, description, onBack, onSubmit
     }: {
         title: string,
         category: string,
@@ -11,7 +12,8 @@ export default function Review(
         budget: number,
         date: string,
         description: string,
-        onBack: () => void
+        onBack: () => void,
+        onSubmit: () => void
     }) {
     return (
         <div className="bg-white p-3">
@@ -85,6 +87,7 @@ export default function Review(
                             borderStyle="border border-gray-300"
                         />
                         <PrimaryButton
+                            onClick={onSubmit}
                             label="Post"
                             width="w-4xs"
                             textSize="text-sm"
