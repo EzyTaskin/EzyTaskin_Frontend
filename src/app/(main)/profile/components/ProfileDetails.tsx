@@ -10,7 +10,7 @@ import { MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { fetchApi } from "src/app/helpers/api/request";
-import { CategoryType } from "src/app/constants/type";
+import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 
 const ProfileDetails = ({
   providerProfile,
@@ -35,6 +35,7 @@ const ProfileDetails = ({
   if (profileType === "provider") {
     return (
       <ProviderProfile
+        providerProfile={providerProfile}
         isEditing={isEditing}
         onIsEditingChange={onIsEditingChange}
         subpage={subpage}
@@ -54,32 +55,24 @@ const ProfileDetails = ({
   }
 };
 const ProviderProfile = ({
+  providerProfile,
   isEditing,
   onIsEditingChange,
   subpage,
   onSubpageChange,
 }: {
+  providerProfile: ProviderProfileType;
   isEditing: boolean;
   onIsEditingChange: (value: boolean) => void;
   subpage: string;
   onSubpageChange: (value: string) => void;
 }) => {
   const [showAll, setShowAll] = useState(false);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState(
+    providerProfile.categories.map((category) => category.name)
+  );
   const [newCategory, setNewCategory] = useState("");
-
-  // 👉 Fetch from /Category API on mount
-  useEffect(() => {
-    fetchApi({ path: "/Category", method: "GET" })
-      .then((res) => res.json())
-      .then((data: CategoryType[]) => {
-        const names = data.map((category) => category.name);
-        setCategories(names);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch categories:", err);
-      });
-  }, []);
+  const [description, setDescription] = useState(providerProfile.description); // assuming initial load
 
   const tasks = [
     {
@@ -121,21 +114,58 @@ const ProviderProfile = ({
   const addCategory = () => {
     const trimmed = newCategory.trim();
     if (trimmed && !categories.includes(trimmed)) {
-      setCategories([...categories, trimmed]);
+      setCategories((prevCategories) => {
+        const newCategories = [...prevCategories, trimmed];
+        console.log("Categories after adding:", newCategories); // Check the array
+        return newCategories;
+      });
     }
     setNewCategory("");
   };
-
   const removeCategory = (category: string) => {
-    setCategories(categories.filter((c) => c !== category));
+    setCategories((prevCategories) =>
+      prevCategories.filter((cat) => cat !== category)
+    );
   };
-
   return (
     <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
+      <div className="flex flex-col">
+        <h3 className="font-semibold text-lg mb-4">About me</h3>
+
+        <div className="border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col justify-between relative">
+          {isEditing ? (
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Write something about yourself..."
+              className="w-full resize-none border-none focus:outline-none text-sm text-gray-800 bg-transparent"
+              rows={2}
+            />
+          ) : (
+            <p className="text-sm text-gray-700 whitespace-pre-wrap">
+              {providerProfile.description || "No description added yet."}
+            </p>
+          )}
+
+          <div className="self-end mt-4">
+            {!isEditing ? (
+              <PrimaryButton
+                label="Edit"
+                bgColor="bg-white"
+                textColor="text-[var(--color-primary)]"
+                width="w-6xs"
+                onClick={() => onIsEditingChange(true)}
+                textSize="xs"
+              />
+            ) : null}
+          </div>
+        </div>
+      </div>
+
       {/* Completed Tasks */}
-      <div className="border border-gray-200 rounded-xl p-4 shadow-sm">
+      <div className="lex flex-col">
         <h3 className="font-semibold text-lg mb-4">Completed tasks</h3>
-        <div className="w-full overflow-x-auto">
+        <div className="border border-gray-200 rounded-xl p-4 shadow-sm w-full overflow-x-auto">
           <table className="table-auto w-full text-sm text-left">
             <thead className="text-gray-600 border-b">
               <tr>
@@ -216,7 +246,27 @@ const ProviderProfile = ({
           </div>
 
           <button
-            onClick={() => onIsEditingChange(false)}
+            onClick={async () => {
+              try {
+                const response = await fetchApi({
+                  path: "/Profile/Provider",
+                  method: "PATCH",
+                  data: {
+                    description: description,
+                    category: categories,
+                  },
+                });
+
+                if (response.ok) {
+                  console.log("Profile saved successfully!");
+                  // window.location.reload();
+                } else {
+                  console.error("Error saving profile:", response.statusText);
+                }
+              } catch (error) {
+                console.error("Network or server error:", error);
+              }
+            }}
             className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
             Update Profile
@@ -312,6 +362,7 @@ const ConsumerProfile = ({
     if (response.ok) {
       console.log("Profile saved successfully!");
       // Optionally redirect to the returnUrl
+      window.location.reload();
     } else {
       // Handle error
       console.error("Error saving profile:", response.statusText);
