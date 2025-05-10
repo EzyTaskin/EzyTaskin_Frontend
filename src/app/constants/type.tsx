@@ -76,8 +76,24 @@ export type PaymentReceiveCardType = {
     name: string;
 };
 
-export type TaskResponseType = {
+export type TasksResponseType = {
     id: string;
+    title: string;
+    location: string;
+    description: string;
+    dueDate: string;
+    budget: number;
+    remoteEligible: boolean;
+    consumer: {
+        id: string;
+        account: string;
+        name: string;
+        requestPosted: number;
+        requestsCompleted: number;
+    }
+}
+
+export type TasksRequestType = {
     title: string;
     location: string;
     description: string;
@@ -87,15 +103,55 @@ export type TaskResponseType = {
 }
 
 export type TaskRequestType = {
+    requestId: string;
+}
+
+export type TaskResponseType = {
+    id: string;
     title: string;
     location: string;
     description: string;
     dueDate: string;
     budget: number;
     remoteEligible: boolean;
+    offers: {
+        id: string,
+        provider: {
+            id: string,
+            account: string,
+            description: string,
+            totalRating: number,
+            reviewCount: number,
+            isPremium: boolean,
+            isSubscriptionActive: boolean,
+        },
+        request: string,
+        price: number | null
+    }[]
 }
 
-export type OfferType = {
+export type OfferRequestType = {
     requestId: string;
     price?: number;
 }
+
+export type SelectOfferRequestType = {
+    requestId: string;
+    offerId: string;
+}
+
+export type CompleteRequestRequestType = {
+    requestId: string;
+}
+
+export type MessageRequestType = {
+    peerId: string;
+}
+
+export type MessagesResponseType = {
+    id: string;
+    timestamp: string;
+    sender: string;
+    receiver: string;
+    content: string;
+}[]

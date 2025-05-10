@@ -8,7 +8,7 @@ function joinPaths(...segments: string[]) {
         .join('/');
 }
 
-export function getApiUrl(path: string, query: Record<string, string>): string {
+export function getApiUrl(path: string, query?: Record<string, string>): string {
     const API_BASE = process.env.NODE_ENV == "development" ? "https://ishar.tail35ead.ts.net" : window.location.href;
     const url = new URL(joinPaths('/api', path), API_BASE);
 

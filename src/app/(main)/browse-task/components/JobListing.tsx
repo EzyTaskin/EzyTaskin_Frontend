@@ -1,10 +1,11 @@
 "use client";
 import {useState} from "react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
-import {TaskResponseType} from "src/app/constants/type";
+import {TasksResponseType} from "src/app/constants/type";
 import useMutateOffers from "src/app/hooks/useMutateOffers";
+import Link from "next/link";
 
-const JobListing = ({task}: { task: TaskResponseType }) => {
+const JobListing = ({task}: { task: TasksResponseType }) => {
     const [showOfferModal, setShowOfferModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [offerValue, setOfferValue] = useState(task.budget);
@@ -59,7 +60,9 @@ const JobListing = ({task}: { task: TaskResponseType }) => {
 
             {/* Hiring person */}
             <div className="mt-8">
-                <h2 className="font-semibold text-black text-lg mb-2">Meet the hiring person</h2>
+                <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
+                    <h2 className="font-semibold text-blue-600 text-lg mb-2">Meet the hiring person</h2>
+                </Link>
                 {/* Placeholder */}
             </div>
 

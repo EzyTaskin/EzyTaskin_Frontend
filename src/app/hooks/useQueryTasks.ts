@@ -1,16 +1,16 @@
 import {useEffect, useState} from "react";
 import {getTasks} from "src/app/helpers/api/tasks";
-import {TaskResponseType} from "src/app/constants/type";
+import {TasksResponseType} from "src/app/constants/type";
 
 export default function useQueryTasks() {
-    const [tasks, setTasks] = useState<TaskResponseType[]>()
+    const [tasks, setTasks] = useState<TasksResponseType[]>()
 
     useEffect(() => {
         loadTasks();
     }, [])
 
     async function loadTasks() {
-        const tasks: TaskResponseType[] = await getTasks();
+        const tasks: TasksResponseType[] = await getTasks();
         setTasks(tasks);
     }
 
