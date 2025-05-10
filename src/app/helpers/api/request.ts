@@ -14,10 +14,9 @@ export async function fetchApi({
     data?: Record<string, any> | string;
 }) {
     const url = getApiUrl(path, {returnUrl});
-
     console.log("🔍 Request URL:", url);
     console.log("📦 Request Method:", method);
-    console.log("🧾 Form Data or Text:", data);
+    console.log("🧾 Form Data:", data);
 
     let body: BodyInit | undefined;
     const headers: HeadersInit = {};
