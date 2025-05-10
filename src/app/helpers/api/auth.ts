@@ -1,6 +1,6 @@
 import {fetchApi} from "src/app/helpers/api/request";
 
-export async function checkLoggedIn() {
+export async function getProfile() {
     const res = await fetchApi({
         path: "/Account",
         method: "GET",
