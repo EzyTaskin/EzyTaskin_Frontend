@@ -14,13 +14,19 @@ export async function fetchApi({
     data?: Record<string, any>;
 }) {
     const url = getApiUrl(path, {returnUrl});
-    console.log("🔍 Request URL:", url);
-    console.log("📦 Request Method:", method);
-    console.log("🧾 Form Data:", data);
 
     const formData = new FormData();
-    for (const key in data) {
-        formData.append(key, data[key]);
+    if (data) {
+        for (const key in data) {
+        const value = data[key];
+        if (Array.isArray(value)) {
+            value.forEach((item) => {
+            formData.append(key, item);
+            });
+        } else {
+            formData.append(key, value);
+        }
+        }
     }
 
     const res = await fetch(url, {

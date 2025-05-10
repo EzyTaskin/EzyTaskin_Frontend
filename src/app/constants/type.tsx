@@ -100,3 +100,14 @@ export type OfferType = {
   requestId: string;
   price?: number;
 };
+
+export type UpdateProfilePayloadType = {
+  description: string;
+  categories: string[];
+};
+
+export type UpdateAccountType = {
+  fullName: string;
+  phoneNumber: string;
+  address: string;
+};

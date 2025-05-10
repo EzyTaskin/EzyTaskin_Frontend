@@ -5,8 +5,8 @@ import { MdOutlineMail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
-import { fetchApi } from "src/app/helpers/api/request";
 import { PaymentSendCardType } from "src/app/constants/type";
+import useMutateCard from "src/app/hooks/useMutateCard";
 
 export default function AddPaymentMethod() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +16,7 @@ export default function AddPaymentMethod() {
     cvv: "",
     name: "",
   });
+  const { handleAddPayment } = useMutateCard();
 
   const handleInputChange = (
     field: keyof PaymentSendCardType,
@@ -24,34 +25,10 @@ export default function AddPaymentMethod() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const isFormValid = () => {
-    return (
-      formData.number.trim() !== "" &&
-      formData.expiry.trim() !== "" &&
-      formData.cvv.trim() !== "" &&
-      formData.name.trim() !== ""
-    );
-  };
-
-  const handleAddPayment = async () => {
-    if (!isFormValid()) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    console.log("formData ", formData);
-    const response = await fetchApi({
-      path: "/Payment/Card",
-      method: "POST",
-      data: formData,
-    });
-
-    if (response.ok) {
-      console.log("Payment method added successfully!");
-      alert("Payment method added!");
-      // Optionally redirect or reset form
-    } else {
-      console.error("Failed to add payment method:", response.statusText);
-      alert("Failed to add payment method.");
+  const handleSubmit = async () => {
+    const success = await handleAddPayment(formData);
+    if (success) {
+      setFormData({ number: "", expiry: "", cvv: "", name: "" });
     }
   };
 
@@ -151,7 +128,7 @@ export default function AddPaymentMethod() {
             label="Add"
             width="w-[150px]"
             borderRadius="rounded-[10px]"
-            onClick={handleAddPayment}
+            onClick={handleSubmit}
           />
         </div>
       </div>

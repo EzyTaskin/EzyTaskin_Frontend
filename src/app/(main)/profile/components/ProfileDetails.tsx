@@ -9,8 +9,10 @@ import {
 import { MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { fetchApi } from "src/app/helpers/api/request";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import { useMutateProvider } from "src/app/hooks/useMutateProvider";
+import { useMutateAccount } from "src/app/hooks/useMutateAccount";
+import useQueryPayment from "src/app/hooks/useQueryPayment";
 
 const ProfileDetails = ({
   providerProfile,
@@ -54,6 +56,7 @@ const ProfileDetails = ({
     );
   }
 };
+
 const ProviderProfile = ({
   providerProfile,
   isEditing,
@@ -72,8 +75,10 @@ const ProviderProfile = ({
     providerProfile.categories.map((category) => category.name)
   );
   const [newCategory, setNewCategory] = useState("");
-  const [description, setDescription] = useState(providerProfile.description); // assuming initial load
-
+  const [description, setDescription] = useState(
+    providerProfile.description || ""
+  );
+  const updateProviderInfo = useMutateProvider();
   const tasks = [
     {
       task: "Home Cleaning Service",
@@ -127,6 +132,7 @@ const ProviderProfile = ({
       prevCategories.filter((cat) => cat !== category)
     );
   };
+
   return (
     <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
       <div className="flex flex-col">
@@ -244,28 +250,12 @@ const ProviderProfile = ({
               Add
             </button>
           </div>
-
           <button
-            onClick={async () => {
-              try {
-                const response = await fetchApi({
-                  path: "/Profile/Provider",
-                  method: "PATCH",
-                  data: {
-                    description: description,
-                    category: categories,
-                  },
-                });
-
-                if (response.ok) {
-                  console.log("Profile saved successfully!");
-                  // window.location.reload();
-                } else {
-                  console.error("Error saving profile:", response.statusText);
-                }
-              } catch (error) {
-                console.error("Network or server error:", error);
-              }
+            onClick={() => {
+              updateProviderInfo.updateProviderProfile({
+                description,
+                categories,
+              });
             }}
             className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
           >
@@ -328,16 +318,8 @@ const ConsumerProfile = ({
       taskLink: "#",
     },
   ];
-  const [cards, setCards] = useState<PaymentReceiveCardType[]>([]);
-
-  useEffect(() => {
-    if (subpage === "payment-methods") {
-      fetchApi({ path: "/Payment", method: "GET" })
-        .then((res) => res.json())
-        .then((data) => setCards(data))
-        .catch((err) => console.error("Failed to fetch cards", err));
-    }
-  }, [subpage]);
+  const updateAccount = useMutateAccount();
+  const { cards } = useQueryPayment("payment-methods");
 
   const maskCardNumber = (cardNumber: string) => {
     return `•••• ${cardNumber.slice(-4)}`;
@@ -348,25 +330,13 @@ const ConsumerProfile = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
-    const response = await fetchApi({
-      path: "/Account",
-      method: "PATCH",
-      data: {
-        fullName: formData.fullName,
-        phoneNumber: formData.phone,
-        address: formData.address,
-      },
+  const handleSave = () => {
+    updateAccount.updateAccountInfo({
+      fullName: formData.fullName,
+      phoneNumber: formData.phone,
+      address: formData.address,
+      // include `email` or `bio` if needed by your UpdateAccountType
     });
-
-    if (response.ok) {
-      console.log("Profile saved successfully!");
-      // Optionally redirect to the returnUrl
-      window.location.reload();
-    } else {
-      // Handle error
-      console.error("Error saving profile:", response.statusText);
-    }
   };
 
   const handleDelete = () => {
