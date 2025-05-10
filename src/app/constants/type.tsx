@@ -156,3 +156,14 @@ export type MessagesResponseType = {
     receiver: string;
     content: string;
 }[]
+
+export type UpdateProfilePayloadType = {
+    description: string;
+    categories: string[];
+};
+
+export type UpdateAccountType = {
+    fullName: string;
+    phoneNumber: string;
+    address: string;
+};
