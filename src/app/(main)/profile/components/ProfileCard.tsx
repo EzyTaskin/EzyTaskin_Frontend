@@ -45,15 +45,6 @@ const ProfileCard = ({
       <div className="flex flex-col items-center">
         <div className="w-24 h-24 bg-gray-300 rounded-full mb-4" />
         <h2 className="text-xl font-semibold">{commonDetail.fullName}</h2>
-        <p className="text-gray-500 text-sm">
-          Member since {providerProfile.subscriptionDate}
-        </p>
-
-        {providerProfile && providerProfile.subscriptionDate && (
-          <p className="text-gray-500 text-sm">
-            Member since {providerProfile.subscriptionDate}
-          </p>
-        )}
 
         {profileType === "provider" && (
           <ProviderContent
@@ -98,6 +89,13 @@ const ProviderContent = ({
 
   return (
     <>
+      <div className="mt-4 text-sm flex items-center justify-center">
+        {providerProfile.isPremium === true && (
+          <div className="font-bold rounded-full bg-[var(--color-primary)]/40 px-4 py-1 inline-block">
+            Premium Provider
+          </div>
+        )}
+      </div>
       <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full gap-2">
         <div className="flex items-center gap-1">
           <Star size={18} fill="#FFDC56" stroke="none" />
@@ -195,7 +193,7 @@ const ConsumerContent = ({
 }) => {
   return (
     <>
-      <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full mt-10 gap-2">
+      <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full mt-5 gap-2">
         <div className="flex items-center mb-1 justify-center gap-1">
           <ClipboardList size={18} className="text-yellow-500" />
           <span>3 task posted</span>

@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
-import {
-  ProviderProfileType,
-  PaymentReceiveCardType,
-} from "src/app/constants/type";
-import { fetchApi } from "src/app/helpers/api/request";
 import PaymentCardModal from "./modal/PaymentCardModal";
+import useQuerySubscription from "src/app/hooks/useQuerySubscription";
+import { useQueryCards } from "src/app/hooks/useQueryCards";
+import useMutateDeActivate from "src/app/hooks/useMutateDeActivate";
+import useActivatePremium from "src/app/hooks/useMutateActivate";
 
 const standardFeatures = [
   "Everything in free\nKeep 100% of what you earn. No surprise deductions when you complete a task.",
@@ -26,70 +24,25 @@ const premiumFeatures = [
 ];
 
 export default function YourPlan() {
-  const searchParams = useSearchParams();
-  const querySubscriptionActive = searchParams.get("isSubscriptionActive");
-
-  const [isSubscriptionActive, setIsSubscriptionActive] = useState(false);
-  const [providerProfile, setProviderProfile] =
-    useState<ProviderProfileType>(null);
   const [showModal, setShowModal] = useState(false);
-  const [cards, setCards] = useState<PaymentReceiveCardType[]>([]);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const { isSubscriptionActive } = useQuerySubscription();
+  const { cards } = useQueryCards();
+  const { handlePlanChange, shouldShowModal } = useMutateDeActivate();
+  const { handleCardSelect } = useActivatePremium();
 
-  const fetchProviderProfile = async () => {
-    try {
-      const response = await fetchApi({
-        path: "/Profile/Provider",
-        method: "GET",
-      });
-      const profileData = await response.json();
-      console.log(profileData);
-      setProviderProfile(profileData);
-      setIsSubscriptionActive(profileData.isSubscriptionActive);
-    } catch (error) {
-      console.error("Failed to fetch provider profile", error);
-    }
+  const onSubscribe = async () => {
+    await handlePlanChange(true);
   };
 
-  const handlePlanChange = async (newStatus: boolean) => {
-    if (newStatus) {
-      try {
-        const response = await fetchApi({ path: "/Payment", method: "GET" })
-          .then((res) => res.json())
-          .then((data) => setCards(data));
-        setShowModal(true);
-      } catch (error) {
-        console.error("Failed to fetch cards", error);
-      }
-    } else {
-      try {
-        await fetchApi({
-          path: "/Profile/Provider/DeactivatePremium",
-          method: "POST",
-        });
-        fetchProviderProfile();
-      } catch (error) {
-        console.error("Failed to downgrade plan", error);
-      }
-    }
-  };
-
-  const handleCardSelect = async (cardId: string) => {
-    try {
-      await fetchApi({
-        path: "/Profile/Provider/ActivatePremium",
-        method: "POST",
-        data: { cardId },
-      });
-      setShowModal(false);
-      fetchProviderProfile();
-    } catch (error) {
-      console.error("Failed to activate premium", error);
-    }
+  const onDowngrade = async () => {
+    await handlePlanChange(false);
+    setShowCancelModal(false); // hide cancel modal directly after deactivation
   };
 
   useEffect(() => {
-    fetchProviderProfile();
-  }, []);
+    setShowModal(shouldShowModal);
+  }, [shouldShowModal]);
 
   const renderFeatures = (features: string[]) =>
     features.map((item, index) => {
@@ -153,8 +106,33 @@ export default function YourPlan() {
                 bgColor="bg-[var(--color-primary)]"
                 textColor="text-white"
                 fontStyle="font-bold"
-                onClick={async () => await handlePlanChange(false)}
+                onClick={() => setShowCancelModal(true)}
               />
+            )}
+            {showCancelModal && (
+              <div className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+                <div className="bg-white rounded-2xl p-6 w-[90%] max-w-md shadow-xl">
+                  <h2 className="text-xl font-bold text-center mb-6 text-[#3136c1]">
+                    Are you sure to cancel your Premium Subscription?
+                  </h2>
+                  <div className="flex justify-end space-x-4">
+                    <button
+                      className="text-black font-medium"
+                      onClick={() => setShowCancelModal(false)}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="bg-[#3136c1] text-white px-4 py-2 rounded-xl"
+                      onClick={async () => {
+                        onDowngrade(); // your existing handler
+                      }}
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -194,7 +172,7 @@ export default function YourPlan() {
                 bgColor="bg-[var(--color-primary)]"
                 textColor="text-white"
                 fontStyle="font-bold"
-                onClick={async () => await handlePlanChange(true)}
+                onClick={async () => await onSubscribe()}
               />
             )}
           </div>

@@ -4,51 +4,26 @@ import ProfileToggle from "src/app/(main)/profile/components/ProfileToggle";
 import ProfileCard from "src/app/(main)/profile/components/ProfileCard";
 import ProfileDetails from "src/app/(main)/profile/components/ProfileDetails";
 import { useEffect, useState } from "react";
-import {
-  CommonDetailType,
-  ConsumerProfileType,
-  ProfileType,
-  ProviderProfileType,
-} from "src/app/constants/type";
-import { fetchApi } from "src/app/helpers/api/request";
+import { ProfileType } from "src/app/constants/type";
+import useQueryProfile from "src/app/hooks/useQueryProfile";
 
 export default function Profile() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [providerProfile, setProviderProfile] =
-    useState<ProviderProfileType>(null);
-  const [consumerProfile, setConsumerProfile] =
-    useState<ConsumerProfileType>(null);
-  const [commonDetail, setCommonDetail] = useState<CommonDetailType>(null);
-  const [profileType, setProfileType] = useState<ProfileType>("provider");
+  const [profileType, setProfileType] = useState<ProfileType>(() => {
+    if (typeof window !== "undefined") {
+      return (localStorage.getItem("profileType") as ProfileType) || "provider";
+    }
+    return "provider";
+  });
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("profileType", profileType);
+    }
+  }, [profileType]);
+
   const [subpage, setSubpage] = useState<string>("profile");
   const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    async function fetchAllData() {
-      setLoading(true);
-      try {
-        const [provider, consumer, commonDetail] = await Promise.all([
-          fetchApi({ path: "/Profile/Provider", method: "GET" }).then((res) =>
-            res.json()
-          ),
-          fetchApi({ path: "/Profile/Consumer", method: "GET" }).then((res) =>
-            res.json()
-          ),
-          fetchApi({ path: "/Account", method: "GET" }).then((res) =>
-            res.json()
-          ),
-        ]);
-        setProviderProfile(provider);
-        console.log("provider ", provider);
-        setConsumerProfile(consumer);
-        setCommonDetail(commonDetail);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchAllData();
-  }, []);
+  const { providerProfile, consumerProfile, commonDetail } = useQueryProfile();
 
   if (loading) {
     return <div>Loading profile...</div>; // Placeholder for loading state
