@@ -6,7 +6,7 @@ import JobListing from "src/app/(main)/browse-task/components/JobListing";
 
 import React, {useEffect, useState} from "react";
 import useQueryTasks from "src/app/hooks/useQueryTasks";
-import {TaskResponseType} from "src/app/constants/type";
+import {TasksResponseType} from "src/app/constants/type";
 
 export default function Browser() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -26,7 +26,7 @@ export default function Browser() {
         }
     };
 
-    const filteredTasks: TaskResponseType[] =
+    const filteredTasks: TasksResponseType[] =
         searchQuery && resultsVisible
             ? tasks.filter(
                 (task) =>
