@@ -5,7 +5,7 @@ export default function useMutateTasks() {
 
     async function postTask(data: TasksRequestType) {
         const res = await taskApi.postTask(data);
-        console.log("postTask: ", res)
+        return res;
     }
 
     return {

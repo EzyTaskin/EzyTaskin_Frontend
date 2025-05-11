@@ -4,10 +4,10 @@ import useMutateTasks from "src/app/hooks/useMutateTasks";
 
 export default function Review(
     {
-        title, category, location, budget, date, description, onBack, onSubmit
+        title, categories, location, budget, date, description, onBack, onSubmit
     }: {
         title: string,
-        category: string,
+        categories: string[],
         location: string,
         budget: number,
         date: string,
@@ -57,7 +57,7 @@ export default function Review(
                             <p>{title}</p>
 
                             <p className="font-medium text-gray-500">Category</p>
-                            <p>{category}</p>
+                            <p>{categories.join(", ")}</p>
 
                             <p className="font-medium text-gray-500">Location</p>
                             <p>{location}</p>

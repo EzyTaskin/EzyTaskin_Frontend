@@ -1,6 +1,6 @@
 // hooks/useUpdateProviderProfile.ts
 import { useState } from "react";
-import { UpdateAccountType } from "../constants/type";
+import { UpdateAccountType } from "src/app/constants/type";
 import  * as updateAccount from "../helpers/api/account";
 
 

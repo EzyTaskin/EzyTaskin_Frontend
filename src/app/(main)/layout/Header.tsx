@@ -13,7 +13,6 @@ const Header = () => {
         {href: "/home", label: "Home"},
         {href: "/browse-task", label: "Browse task"},
         {href: "/my-tasks", label: "My task"},
-        {href: "/find-providers", label: "Find Providers"},
     ];
 
     return (
@@ -59,16 +58,6 @@ const Header = () => {
                     className="w-8 h-8"
                     unoptimized
                 />
-                <Link href="/chat">
-                    <Image
-                        src="/chat.svg"
-                        alt="Chat"
-                        width={0}
-                        height={0}
-                        className="w-10 h-10"
-                        unoptimized
-                    />
-                </Link>
                 <Link href="/profile">
                     <Image
                         src="/icon-user.svg"

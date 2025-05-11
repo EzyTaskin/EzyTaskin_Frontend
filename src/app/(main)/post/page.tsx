@@ -3,13 +3,21 @@
 import DescribeTask from "src/app/(main)/post/components/DescribeTask";
 import LocationBudget from "src/app/(main)/post/components/LocationBudget";
 import Review from "src/app/(main)/post/components/Review";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import useMutateTasks from "src/app/hooks/useMutateTasks";
+import PrimaryModal from "src/app/components/modals/PrimaryModal";
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc'
+import {redirect} from "next/navigation";
+
+dayjs.extend(utc)
+dayjs.extend(customParseFormat)
 
 export default function PostTask() {
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const [category, setCategory] = useState<string>("");
+    const [categories, setCategories] = useState<string[]>([]);
 
     const [location, setLocation] = useState<string>("");
     const [budget, setBudget] = useState<number>(50);
@@ -17,6 +25,8 @@ export default function PostTask() {
     const [dueDate, setDueDate] = useState<string>("");
 
     const [step, setStep] = useState<number>(0);
+
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const tasker = useMutateTasks();
 
@@ -33,17 +43,24 @@ export default function PostTask() {
             title: title,
             location: location,
             description: description,
-            dueDate: dueDate,
+            dueDate: dayjs(dueDate, 'DD/MM/YYYY').toISOString(),
             budget: budget,
-            remoteEligible: remoteEligible
+            remoteEligible: remoteEligible,
+            categories: categories,
         })
+        setShowModal(true)
+    }
+
+    const handleCloseModal = () => {
+        redirect('/my-tasks');
     }
 
     return (
         <section className="py-28 ">
             {step == 0 &&
                 <DescribeTask title={title} onTitleChange={setTitle} description={description}
-                              onDescriptionChange={setDescription} category={category} onCategoryChange={setCategory}
+                              onDescriptionChange={setDescription} categories={categories}
+                              onCategoryChange={setCategories}
                               onContinue={handleContinue}/>
             }
             {step == 1 &&
@@ -52,8 +69,13 @@ export default function PostTask() {
                                 onContinue={handleContinue} onBack={handleBack} date={dueDate}
                                 onDateChange={setDueDate}/>}
             {step == 2 &&
-                <Review title={title} category={category} location={location} budget={budget} date={dueDate}
+                <Review title={title} categories={categories} location={location} budget={budget} date={dueDate}
                         description={description} onBack={handleBack} onSubmit={handleSubmit}/>}
+
+            {showModal &&
+                <PrimaryModal showModal={showModal} setShowModal={setShowModal} onCloseModal={handleCloseModal}>
+                    <h1> Post task success </h1>
+                </PrimaryModal>}
         </section>
     );
 }

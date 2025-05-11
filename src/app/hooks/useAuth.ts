@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
-import {getProfile} from "src/app/helpers/api/auth";
+import {getAccount} from "src/app/helpers/api/auth";
+import {getProviderProfile} from "src/app/helpers/api/profile";
 
 export default function useAuth() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
@@ -7,10 +8,10 @@ export default function useAuth() {
 
     useEffect(() => {
         async function loginStatus() {
-            const res = await getProfile();
-            if (res.status == 200) {
+            const accountRes = await getAccount();
+            if (accountRes.status == 200) {
                 setIsLoggedIn(true);
-                const data = await res.json();
+                const data = await accountRes.json();
                 setUserId(data.id)
             } else setIsLoggedIn(false);
         }
