@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {PaymentReceiveCardType} from "../constants/type";
+import {PaymentReceiveCardType} from "src/app/constants/type";
 import {getPaymentMethod} from "../helpers/api/payment";
 import {useQueryCards} from "./useQueryCards";
 
