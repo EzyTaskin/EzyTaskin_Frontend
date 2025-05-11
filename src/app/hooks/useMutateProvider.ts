@@ -1,6 +1,6 @@
 // hooks/useUpdateProviderProfile.ts
 import { useState } from "react";
-import { UpdateProfilePayloadType } from "../constants/type";
+import { UpdateProfilePayloadType } from "src/app/constants/type";
 import  * as updateProfile from "../helpers/api/profile";
 
 

@@ -16,10 +16,7 @@ export default function SearchBar({
     searchQuery: string;
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyPress: (e: React.KeyboardEvent) => void;
-    categories: {
-        id: string;
-        name: string;
-    }[];
+    categories: string[];
     category: string;
     onCategoryChange: (e: string) => void;
     locations: string[];
@@ -29,9 +26,9 @@ export default function SearchBar({
     onSortByChange: (e: string) => void;
 }) {
     return (
-        <div className="flex flex-wrap items-center gap-4 p-4 rounded-lg justify-center max-w-7xl mx-auto">
+        <div className="flex items-center space-x-4 p-4 rounded-lg justify-center max-w-5xl ml-40">
             {/* Search Input */}
-            <div className="flex items-center bg-[#767680]/12 px-4 py-2 rounded-full shadow-sm flex-grow min-w-[200px]">
+            <div className="flex items-center bg-[#767680]/12 px-4 py-2 rounded-full shadow-sm w-2xs mx-20">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 text-gray-500"
@@ -57,17 +54,17 @@ export default function SearchBar({
             </div>
 
             {/* Dropdown Filters */}
-            <div className="flex flex-wrap gap-4 justify-center shrink-0">
+            <div className="mx-7 flex gap-6">
                 {/* Category Filter */}
                 <select
                     value={category}
                     onChange={(e) => onCategoryChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50"
                 >
                     <option value="">Categories</option>
                     {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                            {cat.name}
+                        <option key={cat} value={cat}>
+                            {cat}
                         </option>
                     ))}
                 </select>
@@ -76,7 +73,7 @@ export default function SearchBar({
                 <select
                     value={location}
                     onChange={(e) => onLocationChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50"
                 >
                     <option value="">Location</option>
                     {locations.map((loc) => (
@@ -90,7 +87,7 @@ export default function SearchBar({
                 <select
                     value={sortBy}
                     onChange={(e) => onSortByChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50"
                 >
                     <option value="">Sort by</option>
                     <option value="newest">Newest</option>

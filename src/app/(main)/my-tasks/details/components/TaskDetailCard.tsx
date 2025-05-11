@@ -2,6 +2,10 @@ import React from "react";
 import {MapPin, Calendar, User, Eye, DollarSign} from "lucide-react";
 import {TaskResponseType} from "src/app/constants/type";
 import Link from "next/link";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTime);
 
 export default function TaskDetailCard({task}: { task: TaskResponseType }) {
     if (!task) return <h1>
@@ -30,7 +34,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <Calendar className="text-gray-500 mt-1" size={15}/>
                     <div>
                         <p className="text-base text-gray-500">TO BE DONE ON</p>
-                        <p className="font-semibold">{task.dueDate}</p>
+                        <p className="font-semibold">{dayjs(task.dueDate).fromNow()}</p>
                     </div>
                 </div>
 
