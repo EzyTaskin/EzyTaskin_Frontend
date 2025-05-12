@@ -50,14 +50,16 @@ const Header = () => {
 
             {/* Icons */}
             <div className="text-xl flex gap-8 items-center">
-                <Image
-                    src="/bell-notifications.svg"
-                    alt="Icon Notification"
-                    width={0}
-                    height={0}
-                    className="w-8 h-8"
-                    unoptimized
-                />
+                <Link href="/profile?subpage=notifications">
+                    <Image
+                        src="/bell-notifications.svg"
+                        alt="Icon Notification"
+                        width={0}
+                        height={0}
+                        className="w-8 h-8"
+                        unoptimized
+                    />
+                </Link>
                 <Link href="/profile">
                     <Image
                         src="/icon-user.svg"
