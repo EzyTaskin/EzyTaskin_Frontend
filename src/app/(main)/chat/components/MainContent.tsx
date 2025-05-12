@@ -194,7 +194,7 @@ export default function MainContent() {
                                 </div>
                                 {isSender && (
                                     <img
-                                        src="https://randomuser.me/api/portraits/women/*.jpg"
+                                        src="https://randomuser.me/api/portraits/women/22.jpg"
                                         alt="avatar"
                                         className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                                     />
