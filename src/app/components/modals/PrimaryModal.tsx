@@ -1,9 +1,10 @@
-import {ReactElement} from "react";
+import {ReactNode} from "react";
 
 export default function PrimaryModal({children, showModal, setShowModal}: {
-    children: ReactElement,
+    children: ReactNode,
     showModal: boolean,
-    setShowModal: (value: boolean) => void
+    setShowModal: (value: boolean) => void,
+    showCloseButton: boolean,
 }) {
 
     return (
