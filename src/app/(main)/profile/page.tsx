@@ -17,7 +17,7 @@ export default function Profile() {
         return "provider";
     });
 
-    const [subpage, setSubpage] = useState<string>("profile");
+    const [subpage, setSubpage] = useState<string>(profileType == "consumer" ? "profile" : "dashboard");
 
     const searchParams = useSearchParams();
 

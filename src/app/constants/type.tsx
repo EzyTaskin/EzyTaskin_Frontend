@@ -63,6 +63,7 @@ export type CommonDetailType = {
     phoneNumber: string;
     address: string;
 };
+
 export type PaymentSendCardType = {
     number: string;
     expiry: string;

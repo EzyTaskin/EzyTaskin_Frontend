@@ -6,14 +6,19 @@ import {
     ProfileType,
     ProviderProfileType,
 } from "src/app/constants/type";
-import {MapPin, ChevronRight} from "lucide-react";
+import {MapPin, ChevronRight, ArrowDownRight} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import {useMutateProvider} from "src/app/hooks/useMutateProvider";
 import {useMutateAccount} from "src/app/hooks/useMutateAccount";
 import useQueryPayment from "src/app/hooks/useQueryPayment";
+import {LineChart, Line, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
+import {ArrowUpRight} from 'lucide-react';
 import dayjs from "dayjs";
+import useQueryProfile from "src/app/hooks/useQueryProfile";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const ProfileDetails = ({
                             providerProfile,
@@ -101,8 +106,8 @@ const ProviderProfile = ({
         );
     };
 
-    return (
-        <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
+    if (subpage == "dashboard") {
+        return <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
             <div className="flex flex-col">
                 <h3 className="font-semibold text-lg mb-4">About me</h3>
 
@@ -244,7 +249,9 @@ const ProviderProfile = ({
                 </div>
             )}
         </div>
-    );
+    } else if (subpage === "performance") {
+        return <DashboardPerformance/>
+    }
 };
 
 const ConsumerProfile = ({
@@ -449,5 +456,156 @@ const ConsumerProfile = ({
         );
     }
 };
+
+function DashboardPerformance() {
+    const {providerProfile, consumerProfile, commonDetail} = useQueryProfile();
+
+    if (!providerProfile || !consumerProfile || !commonDetail) {
+        return <div>Loading performance data...</div>;
+    }
+
+    const completedRequests = providerProfile.completedRequests;
+
+    // ====== BOOKINGS BY MONTH ======
+    const bookingByMonth: Record<string, number> = {};
+    const revenueByMonth: Record<string, number> = {};
+
+    completedRequests.forEach(request => {
+        const monthKey = dayjs(request.completedDate).format('MMM YYYY'); // e.g., "Apr 2025"
+
+        // Count bookings
+        bookingByMonth[monthKey] = (bookingByMonth[monthKey] || 0) + 1;
+
+        // Sum revenue
+        revenueByMonth[monthKey] = (revenueByMonth[monthKey] || 0) + request.budget;
+    });
+
+    const sortedMonths = Object.keys(bookingByMonth).sort(
+        (a, b) => dayjs(a, 'MMM YYYY').unix() - dayjs(b, 'MMM YYYY').unix()
+    );
+
+    // Booking chart data
+    const bookingData = sortedMonths.map(month => ({
+        name: month,
+        value: bookingByMonth[month],
+    }));
+
+    // Revenue chart data
+    const revenueData = sortedMonths.map(month => ({
+        name: month,
+        value: revenueByMonth[month],
+    }));
+
+    // Growth Calculations
+    const currentMonth = sortedMonths[sortedMonths.length - 1];
+    const prevMonth = sortedMonths[sortedMonths.length - 2];
+
+    const currentBookings = bookingByMonth[currentMonth] || 0;
+    const prevBookings = bookingByMonth[prevMonth] || 0;
+
+    const currentRevenue = revenueByMonth[currentMonth] || 0;
+    const prevRevenue = revenueByMonth[prevMonth] || 0;
+
+    const bookingGrowth = prevBookings > 0
+        ? (((currentBookings - prevBookings) / prevBookings) * 100)
+        : 0;
+
+    const revenueGrowth = prevRevenue > 0
+        ? (((currentRevenue - prevRevenue) / prevRevenue) * 100)
+        : 0;
+
+    const totalRevenue = completedRequests.reduce((acc, req) => acc + req.budget, 0);
+    const totalBookings = completedRequests.length;
+
+    // const completionRate = consumerProfile.requestsPosted > 0
+    //     ? ((consumerProfile.requestsCompleted / consumerProfile.requestsPosted) * 100)
+    //     : 0;
+
+    const completionRate = 100;
+
+    return (
+        <div className="p-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Total Bookings */}
+                <div className="p-6 border rounded-xl shadow-sm space-y-2">
+                    <p className="text-sm text-gray-400">Statistics</p>
+                    <p className="text-lg font-medium">Total Booking</p>
+                    <div className="text-3xl font-bold">{totalBookings}</div>
+                    <div
+                        className={`flex items-center text-sm ${bookingGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        {bookingGrowth >= 0 ? <ArrowUpRight size={14} className="mr-1"/> :
+                            <ArrowDownRight size={14} className="mr-1"/>}
+                        <span>{bookingGrowth.toFixed(1)}%</span>
+                    </div>
+                    <ResponsiveContainer width="100%" height={60}>
+                        <LineChart data={bookingData}>
+                            <Line
+                                type="monotone"
+                                dataKey="value"
+                                stroke="#3b82f6"
+                                strokeWidth={2}
+                                dot={false}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
+
+                <div className="p-6 border rounded-xl shadow-sm space-y-2 flex flex-col items-center justify-center">
+                    <p className="text-sm text-gray-400">Statistics</p>
+                    <p className="text-lg font-medium">Completion rate</p>
+                    <div className="w-32 h-32 relative">
+                        <CircularProgressbar
+                            value={completionRate}
+                            text={`${completionRate}%`}
+                            circleRatio={0.75} // semicircle
+                            styles={buildStyles({
+                                rotation: 0.625, // 270 degrees rotated for bottom semicircle
+                                strokeLinecap: 'round',
+                                trailColor: '#e5e7eb', // light gray trail
+                                pathColor: '#3b82f6',   // blue path
+                                textColor: '#111827',   // dark text
+                                textSize: '24px',
+                            })}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Total Revenue */}
+            <div className="p-6 border rounded-xl shadow-sm space-y-4">
+                <p className="text-sm text-gray-400">Statistics</p>
+                <p className="text-lg font-medium">Total Revenue</p>
+                <div className="text-4xl font-bold flex items-center space-x-2">
+                    <span>${totalRevenue.toLocaleString()}</span>
+                    <span
+                        className={`text-base flex items-center ${revenueGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                        {revenueGrowth >= 0 ? <ArrowUpRight size={16} className="mr-1"/> :
+                            <ArrowDownRight size={16} className="mr-1"/>}
+                        {revenueGrowth.toFixed(1)}%
+                    </span>
+                </div>
+                <ResponsiveContainer width="100%" height={150}>
+                    <LineChart data={revenueData}>
+                        <XAxis
+                            dataKey="name"
+                            axisLine={false}
+                            tickLine={false}
+                            tick={{fontSize: 12, fill: '#6b7280'}}
+                        />
+                        <Tooltip contentStyle={{borderRadius: '0.5rem'}}/>
+                        <Line
+                            type="monotone"
+                            dataKey="value"
+                            stroke="#3b82f6"
+                            strokeWidth={2}
+                            dot={{r: 5, stroke: '#fff', strokeWidth: 2}}
+                            activeDot={{r: 7}}
+                        />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
+        </div>
+    );
+}
 
 export default ProfileDetails;
