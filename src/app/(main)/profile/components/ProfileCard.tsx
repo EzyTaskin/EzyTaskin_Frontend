@@ -76,6 +76,11 @@ const ProfileCard = ({
     );
 };
 
+const handleLogout = () => {
+    logOut();
+    redirect("/");
+};
+
 const ProviderContent = ({
                              providerProfile,
                              isEditing,
@@ -89,10 +94,6 @@ const ProviderContent = ({
     subpage: string;
     onSubpageChange: (value: string) => void;
 }) => {
-    const handleLogout = () => {
-        logOut();
-        redirect("/");
-    };
 
     return (
         <>
@@ -149,7 +150,12 @@ const ProviderContent = ({
                 >
                     <div>Premium Subscriptions</div>
                 </Link>
-                <div onClick={() => onSubpageChange("performance")}>Performance</div>
+                <div className={`cursor-pointer ${
+                    subpage === "performance"
+                        ? "text-[var(--color-primary)]"
+                        : "text-gray-700"
+                }`} onClick={() => onSubpageChange("performance")}>Performance
+                </div>
                 <div
                     className={`cursor-pointer ${
                         subpage === "payment-methods"
@@ -254,6 +260,9 @@ const ConsumerContent = ({
                     onClick={() => onSubpageChange("notifications")}
                 >
                     Notifications
+                </div>
+                <div onClick={handleLogout} className="cursor-pointer">
+                    Log out
                 </div>
             </div>
 

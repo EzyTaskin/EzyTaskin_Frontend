@@ -204,3 +204,11 @@ export type UpdateAccountType = {
     phoneNumber: string;
     address: string;
 };
+
+export type NotificationResponseType = {
+    id: string;
+    timestamp: string;
+    account: string;
+    title: string;
+    content: string;
+}
