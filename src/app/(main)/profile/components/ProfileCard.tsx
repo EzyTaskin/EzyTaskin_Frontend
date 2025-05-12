@@ -128,9 +128,10 @@ const ProviderContent = ({
             </div>
 
             <div className="mt-6 text-base text-gray-700 flex flex-col items-start w-full gap-4">
-                <a href="#" className="text-indigo-600 font-medium hover:underline">
+                <div onClick={() => onSubpageChange("dashboard")}
+                     className="text-indigo-600 font-medium hover:underline">
                     My dashboard
-                </a>
+                </div>
                 <Link
                     href={{
                         pathname: "/profile/your-plan",
@@ -142,7 +143,7 @@ const ProviderContent = ({
                 >
                     <div>Premium Subscriptions</div>
                 </Link>
-                <div onClick={() => onSubpageChange("Performance")}>Performance</div>
+                <div onClick={() => onSubpageChange("performance")}>Performance</div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log out
                 </div>
