@@ -1,4 +1,5 @@
 import React from "react";
+import {CategoryResponseType} from "src/app/constants/type";
 
 export default function SearchBar({
                                       searchQuery,
@@ -16,7 +17,7 @@ export default function SearchBar({
     searchQuery: string;
     onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyPress: (e: React.KeyboardEvent) => void;
-    categories: string[];
+    categories: CategoryResponseType[];
     category: string;
     onCategoryChange: (e: string) => void;
     locations: string[];
@@ -63,8 +64,8 @@ export default function SearchBar({
                 >
                     <option value="">Categories</option>
                     {categories.map((cat) => (
-                        <option key={cat} value={cat}>
-                            {cat}
+                        <option key={cat.id} value={cat.id}>
+                            {cat.name}
                         </option>
                     ))}
                 </select>

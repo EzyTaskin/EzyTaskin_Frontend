@@ -21,7 +21,7 @@ export default function Profile() {
         }
     }, [profileType]);
 
-    const [subpage, setSubpage] = useState<string>("profile");
+    const [subpage, setSubpage] = useState<string>(profileType == "consumer" ? "profile" : "dashboard");
     const {providerProfile, consumerProfile, commonDetail} = useQueryProfile();
 
     if (!providerProfile || !consumerProfile || !commonDetail) {

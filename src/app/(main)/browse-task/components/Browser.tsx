@@ -7,19 +7,33 @@ import JobListing from "src/app/(main)/browse-task/components/JobListing";
 import React, {useState} from "react";
 import useQueryTasks from "src/app/hooks/useQueryTasks";
 import {TasksResponseType} from "src/app/constants/type";
-import {CATEGORIES} from "src/app/constants/list";
+import {useQueryCategories} from "src/app/hooks/useQueryCategories";
 
 export default function Browser() {
     const [searchQuery, setSearchQuery] = useState("");
     const [resultsVisible, setResultsVisible] = useState(false);
     const [selectedTaskIndex, setSelectedTaskIndex] = useState(0);
 
-    const [category, setCategory] = useState("");
-    const [location, setLocation] = useState("");
-    const [sortBy, setSortBy] = useState("");
+    const [keywords, setKeywords] = useState(null);
+    const [categoryId, setCategoryId] = useState<string>(null);
+    const [category, setCategory] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [sortBy, setSortBy] = useState(null);
 
-    const tasker = useQueryTasks();
-    const tasks = tasker.tasks;
+    const {tasks, allTasks} = useQueryTasks({
+        keywords,
+        categoryId,
+        location,
+    });
+    const {categories} = useQueryCategories();
+    const categoryNames = categories.map(category => category.name);
+    const locations = [...new Set(allTasks?.map((task) => task.location).filter(Boolean))];
+
+    const handleCategoryChange = (selectedCategory: string) => {
+        // setCategory(selectedCategory);
+        // const categoryId = categories.find(cat => cat.name === selectedCategory)?.id;
+        setCategoryId(selectedCategory);
+    }
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
@@ -36,10 +50,6 @@ export default function Browser() {
         setSelectedTaskIndex(index);
     };
 
-    // Extract unique categories and locations from task list
-    // const categories = [...new Set(tasks?.map((task) => task.category).filter(Boolean))];
-    const locations = [...new Set(tasks?.map((task) => task.location).filter(Boolean))];
-
     const filteredTasks: TasksResponseType[] = tasks
         ?.filter((task) => {
             if (searchQuery && resultsVisible) {
@@ -51,8 +61,6 @@ export default function Browser() {
             }
             return true;
         })
-        // .filter((task) => (category ? task.category === category : true))
-        .filter((task) => (location ? task.location === location : true))
         .sort((a, b) => {
             if (sortBy === "price_low_high") return a.budget - b.budget;
             if (sortBy === "price_high_low") return b.budget - a.budget;
@@ -61,7 +69,6 @@ export default function Browser() {
         });
 
     if (tasks == null) return <h1>Loading...</h1>;
-    if (tasks.length === 0) return <h1>No task found</h1>;
 
     return (
         <section className="py-28 border-b border-black-100">
@@ -69,16 +76,17 @@ export default function Browser() {
                 searchQuery={searchQuery}
                 onSearch={handleSearch}
                 onKeyPress={handleKeyPress}
-                categories={CATEGORIES}
-                category={category}
-                onCategoryChange={setCategory}
+                categories={categories}
+                category={categoryId ?? ""}
+                onCategoryChange={handleCategoryChange}
                 locations={locations}
-                location={location}
+                location={location ?? ""}
                 onLocationChange={setLocation}
-                sortBy={sortBy}
+                sortBy={sortBy ?? ""}
                 onSortByChange={setSortBy}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-6xl mx-auto">
+
+            {filteredTasks.length != 0 ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-6xl mx-auto">
                 <div className="space-y-4">
                     {filteredTasks.length === 0 ? (
                         <p>No tasks found</p>
@@ -98,7 +106,7 @@ export default function Browser() {
                 <div className="hidden md:block sticky top-32 self-start">
                     <JobListing task={filteredTasks[selectedTaskIndex] || filteredTasks[0]}/>
                 </div>
-            </div>
+            </div> : <h1 className="pt-16 text-xl font-bold text-gray-900 text-center"> No task found </h1>}
         </section>
     );
 }
