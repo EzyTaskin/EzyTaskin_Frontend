@@ -147,10 +147,9 @@ export default function MainContent() {
             <div className="flex-1 flex flex-col h-[80vh] bg-white">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b">
-                    <div className="text-lg font-semibold">Chat with {mode === "consumer" ? "provider" : "consumer"}</div>
+                    <div className="text-lg font-semibold">Chat
+                        with {mode === "consumer" ? "provider" : "consumer"}</div>
                     <div className="space-x-4">
-                        <button>📞</button>
-                        <button>📹</button>
                         <OfferActionButton/>
                     </div>
                 </div>
@@ -166,7 +165,11 @@ export default function MainContent() {
                                 className={`flex items-start gap-2 ${isSender ? "justify-end" : ""}`}
                             >
                                 {!isSender && (
-                                    <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"/>
+                                    <img
+                                        src="https://randomuser.me/api/portraits/men/32.jpg"
+                                        alt="avatar"
+                                        className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                                    />
                                 )}
                                 <div>
                                     <div
@@ -190,7 +193,11 @@ export default function MainContent() {
                                     </div>
                                 </div>
                                 {isSender && (
-                                    <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0"/>
+                                    <img
+                                        src="https://randomuser.me/api/portraits/women/*.jpg"
+                                        alt="avatar"
+                                        className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                                    />
                                 )}
                             </div>
                         );

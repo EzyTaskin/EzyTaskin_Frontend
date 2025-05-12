@@ -21,7 +21,7 @@ export type SelectedType = {
 
 export type CompletedRequestType = {
     id: string;
-    consumer: string;
+    consumer: ConsumerProfileType;
     selected: SelectedType;
     title: string;
     description: string;
@@ -53,6 +53,7 @@ export type ConsumerProfileType = {
     account: string;
     requestsPosted: number;
     requestsCompleted: number;
+    name: string;
 };
 
 export type CommonDetailType = {
@@ -76,6 +77,11 @@ export type PaymentReceiveCardType = {
     cvv: string;
     name: string;
 };
+
+export type CategoryResponseType = {
+    id: string;
+    name: string;
+}
 
 export type TasksResponseType = {
     id: string;

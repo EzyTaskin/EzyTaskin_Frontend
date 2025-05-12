@@ -76,9 +76,23 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
         } else {
             return (
                 <>
-                    <h2 className="text-xl font-bold text-indigo-700 mb-4 flex items-center space-x-2">
-                        <span>You are not premium subscribed, the budget will be the offered price</span>
+                    <h2 className="text-xl font-bold text-indigo-700 mb-4 text-center flex items-center space-x-2">
+                        <span>You are not subscribed to premium, the budget will be the offered price</span>
                     </h2>
+                    <div className="flex justify-end mt-6 space-x-4">
+                        <button
+                            onClick={() => setShowOfferModal(false)}
+                            className="text-black font-medium"
+                        >
+                            Close
+                        </button>
+                        <button
+                            onClick={handleConfirmOffer}
+                            className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-indigo-700 transition"
+                        >
+                            Confirm
+                        </button>
+                    </div>
                 </>
             )
         }
