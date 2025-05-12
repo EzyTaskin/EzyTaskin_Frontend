@@ -5,8 +5,13 @@ export default function LandingLayout({children}) {
     return (
         <>
             <Header/>
-            {children}
-            <Footer/>
+            <div className="min-h-screen flex flex-col">
+                <main className="flex-grow">
+                    {children}
+                </main>
+
+                <Footer/>
+            </div>
         </>
     );
 }

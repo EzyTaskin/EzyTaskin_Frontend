@@ -13,7 +13,6 @@ const Header = () => {
         {href: "/home", label: "Home"},
         {href: "/browse-task", label: "Browse task"},
         {href: "/my-tasks", label: "My task"},
-        {href: "/find-providers", label: "Find Providers"},
     ];
 
     return (
@@ -51,21 +50,13 @@ const Header = () => {
 
             {/* Icons */}
             <div className="text-xl flex gap-8 items-center">
-                <Image
-                    src="/bell-notifications.svg"
-                    alt="Icon Notification"
-                    width={0}
-                    height={0}
-                    className="w-8 h-8"
-                    unoptimized
-                />
-                <Link href="/chat">
+                <Link href="/profile?subpage=notifications">
                     <Image
-                        src="/chat.svg"
-                        alt="Chat"
+                        src="/bell-notifications.svg"
+                        alt="Icon Notification"
                         width={0}
                         height={0}
-                        className="w-10 h-10"
+                        className="w-8 h-8"
                         unoptimized
                     />
                 </Link>

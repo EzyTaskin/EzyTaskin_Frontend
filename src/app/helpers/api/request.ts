@@ -13,7 +13,7 @@ export async function fetchApi({
     returnUrl?: string;
     data?: Record<string, any> | string;
 }) {
-    const url = getApiUrl(path, {returnUrl});
+    let url = getApiUrl(path, {returnUrl});
     console.log("🔍 Request URL:", url);
     console.log("📦 Request Method:", method);
     console.log("🧾 Form Data:", data);
@@ -21,6 +21,31 @@ export async function fetchApi({
     let body: BodyInit | undefined;
     const headers: HeadersInit = {};
 
+    // If GET method, append data as query params (skip undefined values)
+    if (method === "GET" && data && typeof data === "object") {
+        const params = new URLSearchParams();
+        for (const key in data) {
+            const value = data[key];
+            if (value === undefined || value === null || value == "") continue; // Skip undefined/null values
+
+            if (Array.isArray(value)) {
+                value.forEach(item => {
+                    if (item !== undefined && item !== null) {
+                        params.append(key, item);
+                    }
+                });
+            } else {
+                params.append(key, value);
+            }
+        }
+
+        const queryString = params.toString();
+        if (queryString) {
+            url += (url.includes('?') ? '&' : '?') + queryString;
+        }
+    }
+
+    // For non-GET methods, handle body as before
     if (method !== "GET") {
         if (typeof data === "string") {
             body = JSON.stringify(data);
@@ -29,9 +54,13 @@ export async function fetchApi({
             const formData = new FormData();
             for (const key in data) {
                 const value = data[key];
+                if (value === undefined || value === null) continue; // Skip undefined/null
+
                 if (Array.isArray(value)) {
                     value.forEach((item) => {
-                        formData.append(key, item);
+                        if (item !== undefined && item !== null) {
+                            formData.append(key, item);
+                        }
                     });
                 } else {
                     formData.append(key, value);
@@ -50,4 +79,3 @@ export async function fetchApi({
 
     return res;
 }
-
