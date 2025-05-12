@@ -21,11 +21,7 @@ export type SelectedType = {
 
 export type CompletedRequestType = {
     id: string;
-<<<<<<<< HEAD:src/app/constants/type.tsx
     consumer: ConsumerProfileType;
-========
-    consumer: string;
->>>>>>>> 661c302 (Update UI and cases):src/app/constants/type.ts
     selected: SelectedType;
     title: string;
     description: string;
@@ -57,10 +53,7 @@ export type ConsumerProfileType = {
     account: string;
     requestsPosted: number;
     requestsCompleted: number;
-<<<<<<<< HEAD:src/app/constants/type.tsx
     name: string;
-========
->>>>>>>> 661c302 (Update UI and cases):src/app/constants/type.ts
 };
 
 export type CommonDetailType = {
@@ -70,7 +63,6 @@ export type CommonDetailType = {
     phoneNumber: string;
     address: string;
 };
-
 export type PaymentSendCardType = {
     number: string;
     expiry: string;
@@ -212,11 +204,3 @@ export type UpdateAccountType = {
     phoneNumber: string;
     address: string;
 };
-
-export type NotificationResponseType = {
-    id: string;
-    timestamp: string;
-    account: string;
-    title: string;
-    content: string;
-}

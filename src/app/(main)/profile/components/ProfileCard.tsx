@@ -43,13 +43,7 @@ const ProfileCard = ({
     return (
         <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border border-gray-200">
             <div className="flex flex-col items-center">
-                <div className="w-24 h-24 bg-gray-300 rounded-full mb-4 overflow-hidden">
-                    <img
-                        src={`https://randomuser.me/api/portraits/men/32.jpg`} // Replace with real avatar if available
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                    />
-                </div>
+                <div className="w-24 h-24 bg-gray-300 rounded-full mb-4"/>
                 <h2 className="text-xl font-semibold">{commonDetail.fullName}</h2>
 
                 {profileType === "provider" && (
@@ -76,11 +70,6 @@ const ProfileCard = ({
     );
 };
 
-const handleLogout = () => {
-    logOut();
-    redirect("/");
-};
-
 const ProviderContent = ({
                              providerProfile,
                              isEditing,
@@ -94,6 +83,10 @@ const ProviderContent = ({
     subpage: string;
     onSubpageChange: (value: string) => void;
 }) => {
+    const handleLogout = () => {
+        logOut();
+        redirect("/");
+    };
 
     return (
         <>
@@ -135,10 +128,9 @@ const ProviderContent = ({
             </div>
 
             <div className="mt-6 text-base text-gray-700 flex flex-col items-start w-full gap-4">
-                <div onClick={() => onSubpageChange("dashboard")}
-                     className="text-indigo-600 font-medium hover:underline">
+                <a href="#" className="text-indigo-600 font-medium hover:underline">
                     My dashboard
-                </div>
+                </a>
                 <Link
                     href={{
                         pathname: "/profile/your-plan",
@@ -150,22 +142,7 @@ const ProviderContent = ({
                 >
                     <div>Premium Subscriptions</div>
                 </Link>
-                <div className={`cursor-pointer ${
-                    subpage === "performance"
-                        ? "text-[var(--color-primary)]"
-                        : "text-gray-700"
-                }`} onClick={() => onSubpageChange("performance")}>Performance
-                </div>
-                <div
-                    className={`cursor-pointer ${
-                        subpage === "payment-methods"
-                            ? "text-[var(--color-primary)]"
-                            : "text-gray-700"
-                    }`}
-                    onClick={() => onSubpageChange("payment-methods")}
-                >
-                    Payment methods
-                </div>
+                <div onClick={() => onSubpageChange("Performance")}>Performance</div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log out
                 </div>
@@ -260,9 +237,6 @@ const ConsumerContent = ({
                     onClick={() => onSubpageChange("notifications")}
                 >
                     Notifications
-                </div>
-                <div onClick={handleLogout} className="cursor-pointer">
-                    Log out
                 </div>
             </div>
 
