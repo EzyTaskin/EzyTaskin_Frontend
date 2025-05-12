@@ -6,6 +6,7 @@ import ProfileDetails from "src/app/(main)/profile/components/ProfileDetails";
 import {useEffect, useState} from "react";
 import {ProfileType} from "src/app/constants/type";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
+import {useSearchParams} from "next/navigation";
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -15,6 +16,17 @@ export default function Profile() {
         }
         return "provider";
     });
+
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const subpageParam = searchParams.get("subpage");
+        if (subpageParam === "notifications") {
+            setProfileType("consumer");
+            setSubpage("notifications");
+        }
+    }, [searchParams]);
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             localStorage.setItem("profileType", profileType);

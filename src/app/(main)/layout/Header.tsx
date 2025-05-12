@@ -13,7 +13,6 @@ const Header = () => {
         {href: "/home", label: "Home"},
         {href: "/browse-task", label: "Browse task"},
         {href: "/my-tasks", label: "My task"},
-        {href: "/find-providers", label: "Find Providers"},
     ];
 
     return (

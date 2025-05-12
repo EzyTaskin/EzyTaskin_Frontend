@@ -20,7 +20,7 @@ export default function CompletedTasks({completedTasks}: {
                 COMPLETED TASKS
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {visibleTasks.map((task, index) => (
+                {visibleTasks.length != 0 ? visibleTasks.map((task, index) => (
                     <div key={index} className="bg-white rounded-2xl shadow-md p-6">
                         <div className="flex justify-between items-start">
                             <div>
@@ -45,7 +45,7 @@ export default function CompletedTasks({completedTasks}: {
                             </Link>
                         </div>
                     </div>
-                ))}
+                )) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No completed task </h1>}
             </div>
 
             {completedTasks.length > 4 && (
