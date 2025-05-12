@@ -43,7 +43,13 @@ const ProfileCard = ({
     return (
         <div className="max-w-sm bg-white rounded-2xl shadow-md p-6 border border-gray-200">
             <div className="flex flex-col items-center">
-                <div className="w-24 h-24 bg-gray-300 rounded-full mb-4"/>
+                <div className="w-24 h-24 bg-gray-300 rounded-full mb-4 overflow-hidden">
+                    <img
+                        src={`https://randomuser.me/api/portraits/men/32.jpg`} // Replace with real avatar if available
+                        alt="Profile"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
                 <h2 className="text-xl font-semibold">{commonDetail.fullName}</h2>
 
                 {profileType === "provider" && (
@@ -144,6 +150,16 @@ const ProviderContent = ({
                     <div>Premium Subscriptions</div>
                 </Link>
                 <div onClick={() => onSubpageChange("performance")}>Performance</div>
+                <div
+                    className={`cursor-pointer ${
+                        subpage === "payment-methods"
+                            ? "text-[var(--color-primary)]"
+                            : "text-gray-700"
+                    }`}
+                    onClick={() => onSubpageChange("payment-methods")}
+                >
+                    Payment methods
+                </div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log out
                 </div>

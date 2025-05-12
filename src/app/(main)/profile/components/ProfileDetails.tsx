@@ -17,8 +17,9 @@ import {LineChart, Line, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import {ArrowUpRight} from 'lucide-react';
 import dayjs from "dayjs";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import useQueryNotifications from "src/app/hooks/useQueryNotifications";
 
 const ProfileDetails = ({
                             providerProfile,
@@ -105,6 +106,7 @@ const ProviderProfile = ({
             prevCategories.filter((cat) => cat !== category)
         );
     };
+    const {cards} = useQueryPayment("payment-methods");
 
     if (subpage == "dashboard") {
         return <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
@@ -249,8 +251,16 @@ const ProviderProfile = ({
                 </div>
             )}
         </div>
-    } else if (subpage === "performance") {
+    }
+
+    if (subpage === "performance") {
         return <DashboardPerformance/>
+    }
+
+    if (subpage === "payment-methods") {
+        return (
+            <PaymentMethods cards={cards}/>
+        );
     }
 };
 
@@ -275,26 +285,10 @@ const ConsumerProfile = ({
         bio: "I'm a professional looking for reliable service providers for my projects. I value quality work and timely delivery.",
     });
 
-    const notifications = [
-        {
-            user: "vane Y.",
-            task: "House Cleaning",
-            userLink: "#",
-            taskLink: "#",
-        },
-        {
-            user: "Theologos G.",
-            task: "Moving House",
-            userLink: "#",
-            taskLink: "#",
-        },
-    ];
+    const {notifications} = useQueryNotifications();
+
     const updateAccount = useMutateAccount();
     const {cards} = useQueryPayment("payment-methods");
-
-    const maskCardNumber = (cardNumber: string) => {
-        return `•••• ${cardNumber.slice(-4)}`;
-    };
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -314,114 +308,89 @@ const ConsumerProfile = ({
         console.log("Account deletion requested");
     };
 
-    if (subpage == "profile") {
-        return (
-            <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
-                <div>
-                    <h2 className="text-2xl font-semibold">Personal Information</h2>
-                    <p className="text-gray-500">Manage your personal details</p>
-                </div>
+    if (subpage == "profile") return (
+        <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl shadow space-y-8 border border-gray-200">
+            <div>
+                <h2 className="text-2xl font-semibold">Personal Information</h2>
+                <p className="text-gray-500">Manage your personal details</p>
+            </div>
 
-                <div className="space-y-2">
-                    <div>
-                        <label className="block font-medium">Full Name</label>
+            <div className="space-y-5">
+                {/* Full Name */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Full Name</label>
+                    {isEditing ? (
                         <input
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleChange}
-                            className="w-full mt-1 px-4 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none"
+                            className="w-full mt-1 px-4 py-2 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                    </div>
+                    ) : (
+                        <p className="mt-1 text-gray-900">{formData.fullName || "-"}</p>
+                    )}
+                </div>
 
-                    <div>
-                        <label className="block font-medium">Email Address</label>
-                        <input
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full mt-1 px-4 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none"
-                            type="email"
-                            disabled
-                        />
-                    </div>
+                {/* Email (always view mode) */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Email Address</label>
+                    <p className="mt-1 text-gray-900">{formData.email || "-"}</p>
+                </div>
 
-                    <div>
-                        <label className="block font-medium">Phone number</label>
+                {/* Phone Number */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+                    {isEditing ? (
                         <input
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
-                            className="w-full mt-1 px-4 py-2 rounded-md bg-gray-100 border border-gray-300 focus:outline-none"
+                            className="w-full mt-1 px-4 py-2 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                    </div>
+                    ) : (
+                        <p className="mt-1 text-gray-900">{formData.phone || "-"}</p>
+                    )}
+                </div>
 
-                    <div>
-                        <label className="block font-medium">Address</label>
-                        <div className="flex items-center bg-gray-100 border border-gray-300 rounded-md px-4 py-2 mt-1">
-                            <MapPin className="text-gray-500 mr-2 h-5 w-5"/>
+                {/* Address */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700">Address</label>
+                    {isEditing ? (
+                        <div
+                            className="flex items-center rounded-md border border-gray-300 px-4 py-2 mt-1 focus-within:ring-indigo-500 focus-within:border-indigo-500">
+                            <MapPin className="text-gray-400 mr-2 h-5 w-5"/>
                             <input
                                 name="address"
                                 value={formData.address}
                                 onChange={handleChange}
-                                className="bg-transparent w-full focus:outline-none"
+                                className="w-full bg-transparent focus:outline-none"
                             />
                         </div>
-                    </div>
+                    ) : (
+                        <div className="flex items-center mt-1 text-gray-900">
+                            <MapPin className="text-gray-400 mr-2 h-5 w-5"/>
+                            <span>{formData.address || "-"}</span>
+                        </div>
+                    )}
                 </div>
+            </div>
 
-                <div className="flex justify-between pt-4">
-                    <button
-                        onClick={handleDelete}
-                        className="px-6 py-2 bg-orange-500 text-white font-medium rounded-md hover:bg-orange-600"
-                    >
-                        Delete account
-                    </button>
+            {isEditing && (
+                <div className="flex justify-end pt-6">
                     <button
                         onClick={handleSave}
-                        className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700"
+                        className="px-6 py-2 rounded-md font-medium bg-indigo-600 text-white hover:bg-indigo-700"
                     >
                         Save Profile
                     </button>
                 </div>
-            </div>
-        );
-    }
+            )}
+        </div>
+    )
 
     if (subpage === "payment-methods") {
         return (
-            <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
-                <h2 className="text-2xl font-bold mb-1">Payment methods</h2>
-                <p className="text-gray-500 mb-6">How you will pay and get money</p>
-
-                {/* Render each fetched card */}
-                {cards.map((card, index) => (
-                    <div
-                        key={index}
-                        className="flex items-center justify-between bg-gray-100 rounded-lg p-4 mb-4 hover:bg-gray-200 cursor-pointer transition"
-                    >
-                        <div className="flex items-center space-x-3">
-                            <Image
-                                src="./mastercard-logo.svg"
-                                alt="Card"
-                                width={25}
-                                height={25}
-                            />
-                            <span className="text font-medium">
-                {card.name} {maskCardNumber(card.number)}
-              </span>
-                        </div>
-                        <ChevronRight className="text-gray-400"/>
-                    </div>
-                ))}
-
-                {/* Add Payment Method */}
-                <Link href="/add-payment-method">
-                    <button
-                        className="w-full py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 cursor-pointer transition">
-                        + Add payment method
-                    </button>
-                </Link>
-            </div>
+            <PaymentMethods cards={cards}/>
         );
     }
 
@@ -432,23 +401,20 @@ const ConsumerProfile = ({
 
                 <div className="space-y-4">
                     {notifications.map((item, index) => (
-                        <div key={index} className="flex items-center space-x-4">
-                            <div className="w-10 h-10 rounded-full bg-gray-300"/>
-                            <p className="text-gray-800">
-                                <a
-                                    href={item.userLink}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    {item.user}
-                                </a>{" "}
-                                has made an offer on{" "}
-                                <a
-                                    href={item.taskLink}
-                                    className="text-blue-600 hover:underline"
-                                >
-                                    {item.task}
-                                </a>
-                            </p>
+                        <div key={item.id} className="flex items-start space-x-4">
+                            <div className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 rounded-full overflow-hidden">
+                                <img
+                                    src={`https://randomuser.me/api/portraits/men/${1}.jpg`} // Replace with real avatar if available
+                                    alt="Profile"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+
+                            <div>
+                                <p className="text-gray-800 font-medium">{item.title}</p>
+                                <p className="text-gray-600 text-sm">{item.content}</p>
+                                <p className="text-gray-400 text-xs mt-1">{dayjs(item.timestamp).format('MMM D, YYYY HH:mm')}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -606,6 +572,51 @@ function DashboardPerformance() {
             </div>
         </div>
     );
+}
+
+function PaymentMethods({cards}: {
+    cards: PaymentReceiveCardType[]
+}) {
+
+    const maskCardNumber = (cardNumber: string) => {
+        return `•••• ${cardNumber.slice(-4)}`;
+    };
+
+    return (
+        <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+            <h2 className="text-2xl font-bold mb-1">Payment methods</h2>
+            <p className="text-gray-500 mb-6">How you will pay and get money</p>
+
+            {/* Render each fetched card */}
+            {cards.map((card, index) => (
+                <div
+                    key={index}
+                    className="flex items-center justify-between bg-gray-100 rounded-lg p-4 mb-4 hover:bg-gray-200 cursor-pointer transition"
+                >
+                    <div className="flex items-center space-x-3">
+                        <Image
+                            src="./mastercard-logo.svg"
+                            alt="Card"
+                            width={25}
+                            height={25}
+                        />
+                        <span className="text font-medium">
+                {card.name} {maskCardNumber(card.number)}
+              </span>
+                    </div>
+                    <ChevronRight className="text-gray-400"/>
+                </div>
+            ))}
+
+            {/* Add Payment Method */}
+            <Link href="/add-payment-method">
+                <button
+                    className="w-full py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 cursor-pointer transition">
+                    + Add payment method
+                </button>
+            </Link>
+        </div>
+    )
 }
 
 export default ProfileDetails;
