@@ -7,7 +7,6 @@ import JobListing from "src/app/(main)/browse-task/components/JobListing";
 import React, {useState} from "react";
 import useQueryTasks from "src/app/hooks/useQueryTasks";
 import {TasksResponseType} from "src/app/constants/type";
-import {CATEGORIES} from "src/app/constants/list";
 import {useQueryCategories} from "src/app/hooks/useQueryCategories";
 
 export default function Browser() {
