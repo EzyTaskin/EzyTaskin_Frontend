@@ -73,7 +73,7 @@ export default function AddPaymentMethod() {
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <MdOutlineMail className="text-gray-500 text-[22px]"/>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="0123 4567 8987 6543"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.number}
@@ -91,7 +91,7 @@ export default function AddPaymentMethod() {
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <MdOutlineMail className="text-gray-500 text-[22px]"/>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="12/25"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.expiry}
