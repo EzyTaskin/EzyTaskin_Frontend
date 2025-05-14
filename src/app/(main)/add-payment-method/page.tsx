@@ -9,6 +9,8 @@ import {PaymentSendCardType} from "src/app/constants/type";
 import useMutateCard from "src/app/hooks/useMutateCard";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import {redirect} from "next/navigation";
+import InputMask from 'react-input-mask';
+import Cleave from 'cleave.js/react';
 
 export default function AddPaymentMethod() {
     const [showPassword, setShowPassword] = useState(false);
@@ -72,13 +74,12 @@ export default function AddPaymentMethod() {
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <MdOutlineMail className="text-gray-500 text-[22px]"/>
-                            <input
-                                type="password"
-                                placeholder="0123 4567 8987 6543"
+                            <Cleave
+                                options={{ creditCard: true }}
+                                placeholder="0123 4567 8901 2345"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.number}
                                 onChange={(e) => handleInputChange("number", e.target.value)}
-                                required
                             />
                         </div>
                     </div>
@@ -90,13 +91,12 @@ export default function AddPaymentMethod() {
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <MdOutlineMail className="text-gray-500 text-[22px]"/>
-                            <input
-                                type="password"
+                            <Cleave
+                                options={{ date: true, datePattern: ['m', 'y'] }}
                                 placeholder="12/25"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.expiry}
                                 onChange={(e) => handleInputChange("expiry", e.target.value)}
-                                required
                             />
                         </div>
                     </div>

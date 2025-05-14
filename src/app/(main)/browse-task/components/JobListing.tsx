@@ -9,6 +9,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import useQueryProvider from "src/app/hooks/useQueryProvider";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import {redirect} from "next/navigation";
+import {useQueryCards} from "src/app/hooks/useQueryCards";
 
 dayjs.extend(relativeTime);
 
@@ -17,6 +18,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [offerValue, setOfferValue] = useState(task.budget);
     const {providerProfile} = useQueryProvider();
+    const {cards} = useQueryCards();
     const offerer = useMutateOffers();
 
     const handleConfirmOffer = () => {
@@ -34,6 +36,23 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
     };
 
     const OfferModalContent = () => {
+        if (cards.length === 0) {
+            return (
+                <>
+                    <h2 className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
+                        <span>You have no payment method. Please add one before making offers</span>
+                    </h2>
+                    <div className="flex justify-end mt-6 space-x-4">
+                        <button
+                            onClick={() => setShowOfferModal(false)}
+                            className="text-black font-medium"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </>
+            )
+        }
         if (providerProfile.isSubscriptionActive) {
             return (
                 <>
@@ -166,7 +185,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 <h2 className="text-xl font-bold text-indigo-700 mb-2">
                     Your deal has been submitted successfully!
                 </h2>
-                <p className="text-black text-base mb-6">Wait for acceptance...</p>
+                <p className="text-black text-base mb-6">Please wait for acceptance from the poster</p>
 
                 <div className="flex justify-end space-x-4">
                     <button

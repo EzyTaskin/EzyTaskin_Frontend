@@ -31,7 +31,7 @@ export default function Profile() {
                     {/* Avatar */}
                     <div className="w-40 h-40 bg-gray-300 rounded-full mx-auto md:mx-0 overflow-hidden">
                         <img
-                            src={`https://randomuser.me/api/portraits/men/32.jpg`} // Replace with real avatar if available
+                            src={`https://www.gravatar.com/avatar/?d=mp`}
                             alt="Profile"
                             className="w-full h-full object-cover"
                         />

@@ -166,7 +166,7 @@ export default function MainContent() {
                             >
                                 {!isSender && (
                                     <img
-                                        src="https://randomuser.me/api/portraits/men/32.jpg"
+                                        src="https://www.gravatar.com/avatar/?d=mp"
                                         alt="avatar"
                                         className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                                     />
@@ -194,7 +194,7 @@ export default function MainContent() {
                                 </div>
                                 {isSender && (
                                     <img
-                                        src="https://randomuser.me/api/portraits/women/22.jpg"
+                                        src="https://www.gravatar.com/avatar/?d=mp"
                                         alt="avatar"
                                         className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                                     />
