@@ -45,7 +45,7 @@ const ProfileCard = ({
             <div className="flex flex-col items-center">
                 <div className="w-24 h-24 bg-gray-300 rounded-full mb-4 overflow-hidden">
                     <img
-                        src={`https://randomuser.me/api/portraits/men/32.jpg`} // Replace with real avatar if available
+                        src={`https://www.gravatar.com/avatar/?d=mp`}
                         alt="Profile"
                         className="w-full h-full object-cover"
                     />

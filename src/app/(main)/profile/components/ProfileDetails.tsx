@@ -12,7 +12,6 @@ import Image from "next/image";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import {useMutateProvider} from "src/app/hooks/useMutateProvider";
 import {useMutateAccount} from "src/app/hooks/useMutateAccount";
-import useQueryPayment from "src/app/hooks/useQueryPayment";
 import {LineChart, Line, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import {ArrowUpRight} from 'lucide-react';
 import dayjs from "dayjs";
@@ -20,6 +19,7 @@ import useQueryProfile from "src/app/hooks/useQueryProfile";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import useQueryNotifications from "src/app/hooks/useQueryNotifications";
+import {useQueryCards} from "src/app/hooks/useQueryCards";
 
 const ProfileDetails = ({
                             providerProfile,
@@ -106,7 +106,7 @@ const ProviderProfile = ({
             prevCategories.filter((cat) => cat !== category)
         );
     };
-    const {cards} = useQueryPayment("payment-methods");
+    const {cards} = useQueryCards();
 
     if (subpage == "dashboard") {
         return <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
@@ -288,7 +288,7 @@ const ConsumerProfile = ({
     const {notifications} = useQueryNotifications();
 
     const updateAccount = useMutateAccount();
-    const {cards} = useQueryPayment("payment-methods");
+    const {cards} = useQueryCards();
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -402,9 +402,10 @@ const ConsumerProfile = ({
                 <div className="space-y-4">
                     {notifications.map((item, index) => (
                         <div key={item.id} className="flex items-start space-x-4">
-                            <div className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 rounded-full overflow-hidden">
+                            <div
+                                className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 rounded-full overflow-hidden">
                                 <img
-                                    src={`https://randomuser.me/api/portraits/men/${1}.jpg`} // Replace with real avatar if available
+                                    src={`https://www.gravatar.com/avatar/?d=mp`}
                                     alt="Profile"
                                     className="w-full h-full object-cover"
                                 />

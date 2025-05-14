@@ -16,9 +16,10 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
         <div className="bg-[#F3F3FF] p-6 rounded-3xl max-w-7xl mx-auto">
             <div className="flex justify-between items-start mb-6">
                 <h2 className="text-2xl font-bold">{task.title}</h2>
-                <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
+                {!task.completedDate &&
+                    <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
           OPEN
-        </span>
+        </span>}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">

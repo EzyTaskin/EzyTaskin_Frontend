@@ -3,13 +3,14 @@
 import DescribeTask from "src/app/(main)/post/components/DescribeTask";
 import LocationBudget from "src/app/(main)/post/components/LocationBudget";
 import Review from "src/app/(main)/post/components/Review";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import useMutateTasks from "src/app/hooks/useMutateTasks";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc'
 import {redirect} from "next/navigation";
+import {useQueryCards} from "src/app/hooks/useQueryCards";
 
 dayjs.extend(utc)
 dayjs.extend(customParseFormat)
@@ -29,6 +30,7 @@ export default function PostTask() {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const tasker = useMutateTasks();
+    const {cards} = useQueryCards();
 
     const handleContinue = () => {
         setStep(step + 1);
@@ -53,6 +55,14 @@ export default function PostTask() {
 
     const handleCloseModal = () => {
         redirect('/my-tasks');
+    }
+
+    if (cards.length == 0) {
+        return (
+            <section className="py-28 ">
+                <h1 className="text-xl font-bold text-red-500 leading-20 text-center"> You have no payment method. Please add at least one before posting request.</h1>
+            </section>
+        )
     }
 
     return (
