@@ -6,9 +6,9 @@ import React from "react";
 import CompletedTasks from "src/app/(main)/my-tasks/components/CompletedTasks";
 
 export default function MyTasks() {
-    const {myTasks} = useQueryMyTasks('provider');
+    const {myTasks} = useQueryMyTasks();
 
-    if (!myTasks) return <h1> Loading My requests </h1>
+    if (!myTasks) return <h1> Loading My tasks </h1>
 
     const openTasks = myTasks.filter((task) => !task.completedDate);
     const completeTasks = myTasks.filter((task) => task.completedDate);

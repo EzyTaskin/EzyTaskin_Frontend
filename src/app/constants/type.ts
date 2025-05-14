@@ -39,6 +39,7 @@ export type ProviderProfileType = {
     account: string;
     description: string;
     averageRating: number;
+    address: string;
     totalRating: number;
     reviewCount: number;
     isPremium: boolean;
@@ -117,7 +118,7 @@ export type TasksRequestType = {
     title: string;
     location: string;
     description: string;
-    dueDate: string;
+    dueDate?: string;
     budget: number;
     remoteEligible: boolean;
     categories: string[];

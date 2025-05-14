@@ -2,14 +2,19 @@
 import React, {useState} from "react";
 import {Star, MapPin, CheckCircle, Circle} from "lucide-react";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
+import {useSearchParams} from "next/navigation";
 
 export default function Profile() {
     const [showAllJobs, setShowAllJobs] = useState(false);
     const [showAllReviews, setShowAllReviews] = useState(false);
+    const searchParams = useSearchParams();
+    const userId = searchParams.get('userId');
 
-    const {providerProfile, consumerProfile, commonDetail} = useQueryProfile();
+    const {providerProfile, consumerProfile} = useQueryProfile(
+        userId
+    );
 
-    if (!providerProfile || !consumerProfile || !commonDetail) {
+    if (!providerProfile || !consumerProfile) {
         return <div>Loading...</div>;
     }
 
@@ -70,7 +75,7 @@ export default function Profile() {
                     {/* Name & Info */}
                     <div>
                         <h1 className="text-5xl font-bold text-gray-900">
-                            {commonDetail.fullName}
+                            {consumerProfile.name}
                         </h1>
                         <p className="text-[var(--color-primary)] text-xl font-medium">
                             {providerProfile.isPremium ? "Premium Provider" : "Service Provider"}
@@ -85,7 +90,7 @@ export default function Profile() {
                             </div>
                             <div className="flex items-center gap-2 text-gray-700 text-lg">
                                 <MapPin className="w-5 h-5 text-red-500"/>
-                                {commonDetail.address}
+                                {providerProfile.address}
                             </div>
                             <div className="flex items-center gap-2 text-gray-700 text-lg">
                                 <Circle className="w-5 h-5 text-green-500 fill-green-500"/>

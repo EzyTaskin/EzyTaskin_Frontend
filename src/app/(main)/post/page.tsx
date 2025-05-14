@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc'
 import {redirect} from "next/navigation";
 import {useQueryCards} from "src/app/hooks/useQueryCards";
+import {TasksRequestType} from "src/app/constants/type";
 
 dayjs.extend(utc)
 dayjs.extend(customParseFormat)
@@ -41,17 +42,23 @@ export default function PostTask() {
     }
 
     const handleSubmit = () => {
-        tasker.postTask({
+        const taskData: TasksRequestType = {
             title: title,
             location: location,
             description: description,
-            dueDate: dayjs(dueDate, 'DD/MM/YYYY').toISOString(),
             budget: budget,
             remoteEligible: remoteEligible,
             categories: categories,
-        })
-        setShowModal(true)
-    }
+        };
+
+        if (dueDate) {
+            taskData.dueDate = dayjs(dueDate, 'DD/MM/YYYY').toISOString();
+        }
+
+        tasker.postTask(taskData);
+        setShowModal(true);
+    };
+
 
     const handleCloseModal = () => {
         redirect('/my-tasks');
@@ -60,7 +67,8 @@ export default function PostTask() {
     if (cards.length == 0) {
         return (
             <section className="py-28 ">
-                <h1 className="text-xl font-bold text-red-500 leading-20 text-center"> You have no payment method. Please add at least one before posting request.</h1>
+                <h1 className="text-xl font-bold text-red-500 leading-20 text-center"> You have no payment method.
+                    Please add at least one before posting request.</h1>
             </section>
         )
     }

@@ -29,11 +29,6 @@ const Footer = () => {
             </li>
             <li>
               <a href="#" className="hover:underline">
-                Browse Categories
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:underline">
                 How it works
               </a>
             </li>

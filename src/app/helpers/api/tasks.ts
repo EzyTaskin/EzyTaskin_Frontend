@@ -24,9 +24,12 @@ export async function getTask({requestId}: { requestId: string }) {
     return null;
 }
 
-export async function getMyTasks() {
+export async function getMyTasks(type?: string) {
     const res = await fetchApi({
         path: "/Request",
+        data: {
+            type,
+        }
     });
 
     if (res.status == 200) return await res.json();
