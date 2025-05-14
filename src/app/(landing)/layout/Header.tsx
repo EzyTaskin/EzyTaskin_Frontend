@@ -30,7 +30,7 @@ const Header = () => {
                     href="#how-it-works"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
-                    How it works
+                    How It Works
                 </Link>
                 <Link
                     href="/Account/Login"
@@ -42,7 +42,7 @@ const Header = () => {
                     href="/Account/Register"
                     className="font-medium hover:text-[var(--color-secondary)] text-lg"
                 >
-                    Sign up
+                    Sign Up
                 </Link>
             </div>
 
