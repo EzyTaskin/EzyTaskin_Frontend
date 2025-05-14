@@ -66,12 +66,6 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     })}
                 </div>
             </div>
-
-            <div className="mt-6 text-right">
-                <a href="#" className="text-indigo-600 font-medium underline">
-                    More details
-                </a>
-            </div>
         </div>
     );
 }

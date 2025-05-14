@@ -23,7 +23,7 @@ export default function OpenTasks({openTasks}: {
                             status = "Open";
                         } else {
                             statusColor = "yellow";
-                            status = "Assigned;"
+                            status = "Assigned"
                         }
                         return (
                             <div key={index} className="bg-white rounded-2xl shadow-md p-6">

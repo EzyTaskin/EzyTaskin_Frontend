@@ -63,7 +63,7 @@ export default function Review(
                             <p>{location}</p>
 
                             <p className="font-medium text-gray-500">Budget</p>
-                            <p>{budget}</p>
+                            <p>${budget}</p>
 
                             <p className="font-medium text-gray-500">Due date</p>
                             <p>{date}</p>

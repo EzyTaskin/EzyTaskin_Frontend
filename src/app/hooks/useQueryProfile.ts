@@ -5,9 +5,9 @@ import useQueryProvider from "./useQueryProvider";
 import useQueryConsumer from "./useQueryConsumer";
 import useQueryCommonDetail from "./useQueryCommonDetail";
 
-export default function useQueryProfile() {
-  const { providerProfile } = useQueryProvider();
-  const { consumerProfile } = useQueryConsumer();
+export default function useQueryProfile(userId?: string) {
+  const { providerProfile } = useQueryProvider(userId);
+  const { consumerProfile } = useQueryConsumer(userId);
   const { commonDetail } = useQueryCommonDetail();
 
   return {

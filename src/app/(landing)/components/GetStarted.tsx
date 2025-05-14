@@ -18,22 +18,6 @@ export default function GetStarted() {
           </p>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-30 pt-12">
-        <PrimaryButton
-          bgColor="bg-white"
-          width="w-3xs"
-          textColor="text-[var(--color-primary)]"
-          fontStyle="font-bold"
-        />
-        <PrimaryButton
-          label="Become A Provider"
-          width="w-3xs"
-          bgColor="bg-[var(--color-primary)]"
-          borderStyle="border border-white"
-          textColor="text-white"
-          fontStyle="font-bold"
-        />
-      </div>
     </section>
   );
 }

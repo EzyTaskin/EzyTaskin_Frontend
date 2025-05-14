@@ -24,7 +24,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
     const handleConfirmOffer = () => {
         setShowOfferModal(false);
         setShowSuccessModal(true);
-        if (providerProfile.isSubscriptionActive)
+        if (providerProfile.isPremium)
             offerer.postOffer({
                 requestId: task.id,
                 price: offerValue
@@ -53,7 +53,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 </>
             )
         }
-        if (providerProfile.isSubscriptionActive) {
+        if (providerProfile.isPremium) {
             return (
                 <>
                     <h2 className="text-xl font-bold text-indigo-700 mb-4 flex items-center space-x-2">

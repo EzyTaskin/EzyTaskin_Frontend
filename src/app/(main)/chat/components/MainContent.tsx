@@ -8,6 +8,8 @@ import useMutateMessages from "src/app/hooks/useMutateMessages";
 import useMutateOffers from "src/app/hooks/useMutateOffers";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import useQueryTask from "src/app/hooks/useQueryTask";
+import Link from "next/link";
+import {ArrowRight} from "lucide-react";
 
 export default function MainContent() {
     const searchParams = useSearchParams();
@@ -88,18 +90,40 @@ export default function MainContent() {
         if (mode === "consumer") {
             if (taskState == "assigned") {
                 if (task.selected.provider.account == peerId) return (
-                    <button
-                        className="px-4 py-2 bg-(--color-primary) text-white rounded"
-                    >
-                        You have assigned this request to this provider
-                    </button>
+                    <>
+                        <button
+                            className="px-4 py-2 bg-(--color-primary) text-white rounded"
+                        >
+                            You have assigned this request to this provider
+                        </button>
+                        <Link href={`/profile/public?userId=${peerId}`}>
+                            <button
+                                type="button"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-yellow-500 text-white font-medium shadow-sm hover:bg-indigo-700 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                View Assigned Provider
+                                <ArrowRight className="h-4 w-4"/>
+                            </button>
+                        </Link>
+                    </>
                 );
                 else return (
-                    <button
-                        className="px-4 py-2 bg-(--color-primary) text-white rounded"
-                    >
-                        You have assigned this request to another provider
-                    </button>
+                    <>
+                        <button
+                            className="px-4 py-2 bg-(--color-primary) text-white rounded"
+                        >
+                            You have assigned this request to another provider
+                        </button>
+                        <Link href={`/profile/public?userId=${peerId}`}>
+                            <button
+                                type="button"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-yellow-500 text-white font-medium shadow-sm hover:bg-indigo-700 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                View Assigned Provider
+                                <ArrowRight className="h-4 w-4"/>
+                            </button>
+                        </Link>
+                    </>
                 );
             }
             return (
