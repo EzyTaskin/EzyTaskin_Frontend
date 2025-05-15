@@ -1,6 +1,6 @@
 'use client'
 
-import TaskDetailCard from "src/app/(main)/my-tasks/details/components/TaskDetailCard";
+import TaskDetailCard from "src/app/(main)/my-requests/details/components/TaskDetailCard";
 import {useSearchParams} from 'next/navigation';
 import useQueryTask from "src/app/hooks/useQueryTask";
 

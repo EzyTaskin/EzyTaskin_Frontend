@@ -213,3 +213,9 @@ export type NotificationResponseType = {
     title: string;
     content: string;
 }
+
+export type ReviewRequestType = {
+    requestId: string;
+    rating: number;
+    description?: string;
+}

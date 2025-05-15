@@ -1,9 +1,9 @@
 'use client'
 
-import OpenTasks from "src/app/(main)/my-tasks/components/OpenTasks";
+import OpenTasks from "src/app/(main)/my-requests/components/OpenTasks";
 import useQueryMyTasks from "src/app/hooks/useQueryMyTasks";
 import React from "react";
-import CompletedTasks from "src/app/(main)/my-tasks/components/CompletedTasks";
+import CompletedTasks from "src/app/(main)/my-requests/components/CompletedTasks";
 
 export default function MyTasks() {
     const {myTasks} = useQueryMyTasks();
