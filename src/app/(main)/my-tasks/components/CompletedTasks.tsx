@@ -34,7 +34,7 @@ export default function CompletedTasks({completedTasks}: {
                                     {dayjs(task.dueDate).fromNow()}
                                 </div>}
                             </div>
-                            <div className="text-lg font-bold">{task.budget}</div>
+                            <div className="text-lg font-bold">${task.budget}</div>
                         </div>
                         <div className="mt-4">
                             <Link href={`/my-tasks/details?taskId=${task.id}`}>
