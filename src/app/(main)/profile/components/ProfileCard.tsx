@@ -165,7 +165,7 @@ const ProviderContent = ({
                     }`}
                     onClick={() => onSubpageChange("payment-methods")}
                 >
-                    Payment methods
+                    Payment Methods
                 </div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log out
@@ -250,7 +250,7 @@ const ConsumerContent = ({
                     }`}
                     onClick={() => onSubpageChange("payment-methods")}
                 >
-                    Payment methods
+                    Payment Methods
                 </div>
                 <div
                     className={`cursor-pointer ${

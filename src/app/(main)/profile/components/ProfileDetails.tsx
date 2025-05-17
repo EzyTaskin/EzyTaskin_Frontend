@@ -585,7 +585,7 @@ function PaymentMethods({cards}: {
 
     return (
         <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
-            <h2 className="text-2xl font-bold mb-1">Payment methods</h2>
+            <h2 className="text-2xl font-bold mb-1">Payment Methods</h2>
             <p className="text-gray-500 mb-6">How you will pay and get money</p>
 
             {/* Render each fetched card */}
