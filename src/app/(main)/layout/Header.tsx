@@ -10,10 +10,10 @@ const Header = () => {
     const pathname = usePathname();
 
     const navLinks = [
-        {href: "/home", label: "Home"},
-        {href: "/browse-task", label: "Browse Tasks"},
-        {href: "/my-tasks", label: "My Tasks"},
-        {href: "/my-requests", label: "My Requests"},
+        {href: "/home", label: "Home", description: "Return to the homepage and discover tasks"},
+        {href: "/browse-task", label: "Browse Tasks", description: "Explore available tasks and apply"},
+        {href: "/my-tasks", label: "My Tasks", description: "View tasks you've taken as a provider"},
+        {href: "/my-requests", label: "My Requests", description: "Manage tasks you've posted"},
     ];
 
     return (
@@ -27,20 +27,24 @@ const Header = () => {
                 </div>
             </Link>
 
-            {/* Navigation Links */}
+            {/* Navigation Links with Tooltips */}
             <div className="text-xl flex gap-12">
                 {navLinks.map((link) => (
-                    <Link
-                        key={link.href}
-                        href={link.href}
-                        className={`font-medium text-lg hover:text-[var(--color-secondary)] ${
-                            pathname === link.href
-                                ? "text-[var(--color-primary)]"
-                                : "text-black"
-                        }`}
-                    >
-                        {link.label}
-                    </Link>
+                    <div key={link.href} className="relative group">
+                        <Link
+                            href={link.href}
+                            className={`font-medium text-lg hover:text-[var(--color-secondary)] ${
+                                pathname === link.href
+                                    ? "text-[var(--color-primary)]"
+                                    : "text-black"
+                            }`}
+                        >
+                            {link.label}
+                        </Link>
+                        <div className="absolute top-full mt-2 left-0 w-max max-w-3xl px-4 py-2 text-sm text-white bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition whitespace-normal text-left z-10">
+                            {link.description}
+                        </div>
+                    </div>
                 ))}
             </div>
 
@@ -52,14 +56,14 @@ const Header = () => {
             {/* Icons */}
             <div className="text-xl flex gap-8 items-center">
                 <Link href="/profile?subpage=notifications">
-                <Image
-                    src="/bell-notifications.svg"
-                    alt="Icon Notification"
-                    width={0}
-                    height={0}
-                    className="w-8 h-8"
-                    unoptimized
-                />
+                    <Image
+                        src="/bell-notifications.svg"
+                        alt="Icon Notification"
+                        width={0}
+                        height={0}
+                        className="w-8 h-8"
+                        unoptimized
+                    />
                 </Link>
                 <Link href="/profile">
                     <Image

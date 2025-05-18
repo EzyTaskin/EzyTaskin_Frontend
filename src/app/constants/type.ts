@@ -132,6 +132,9 @@ export type TaskResponseType = {
     id: string;
     title: string;
     location: string;
+    name: string;
+    address: string;
+    email: string;
     description: string;
     dueDate: string;
     budget: number;
@@ -164,7 +167,8 @@ export type TaskResponseType = {
         request: string,
         price: number
     }
-    completedDate?: string
+    completedDate?: string;
+    consumer: ConsumerProfileType
 }
 
 export type TaskState = 'opened' | 'offered' | 'assigned' | 'completed'
@@ -214,7 +218,12 @@ export type NotificationResponseType = {
     content: string;
 }
 
-export type ReviewRequestType = {
+export type GetReviewRequestType = {
+    requestId: string;
+    providerId: string;
+}
+
+export type PostReviewRequestType = {
     requestId: string;
     rating: number;
     description?: string;

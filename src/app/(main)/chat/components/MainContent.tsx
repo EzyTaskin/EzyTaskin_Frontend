@@ -19,6 +19,7 @@ export default function MainContent() {
     const mode = searchParams.get('mode');
 
     const [showAcceptOfferModal, setShowAcceptOfferModal] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
 
     const {userId: currentUserId} = useAuth();
     const {messages} = useQueryMessage({peerId})
@@ -34,6 +35,11 @@ export default function MainContent() {
     const reversedMessage = messages.toReversed();
 
     const handleSend = () => {
+        if (mode == "provider" && messages.length == 0 && task.selected?.provider.account != currentUserId) {
+            setShowErrorModal(true);
+            return;
+        }
+
         if (!inputMessage.trim()) return;
 
         messenger.postMessage(
@@ -181,11 +187,24 @@ export default function MainContent() {
         <>
             <div className="flex-1 flex flex-col h-[80vh] bg-white">
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b">
-                    <div className="text-lg font-semibold">Chat
-                        with {mode === "consumer" ? "provider" : "consumer"}</div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between p-4 border-b space-y-2 md:space-y-0">
+                    <div>
+                        <div className="text-lg font-semibold">
+                            Chat with {mode === "consumer" ? `provider` : `consumer`}
+                        </div>
+                        <div className="text-sm text-gray-600 flex flex-wrap gap-x-2">
+                            <span><span className="font-medium">Task:</span> {task.title}</span>
+                            <span><span className="font-medium">Budget:</span> ${task.budget}</span>
+                            {task.dueDate && (
+                                <span>
+          <span className="font-medium">Due:</span> {new Date(task.dueDate).toLocaleDateString()}
+        </span>
+                            )}
+                        </div>
+                    </div>
+
                     <div className="space-x-4">
-                        <OfferActionButton/>
+                        <OfferActionButton />
                     </div>
                 </div>
 
@@ -254,6 +273,9 @@ export default function MainContent() {
             </div>
             <PrimaryModal showModal={showAcceptOfferModal} setShowModal={setShowAcceptOfferModal}>
                 <h1> Offer Accepted </h1>
+            </PrimaryModal>
+            <PrimaryModal showModal={showErrorModal} setShowModal={setShowErrorModal}>
+                <h1> You can not message a client if they have not sent you any messages and your offer has not been accepted. </h1>
             </PrimaryModal>
         </>
     );
