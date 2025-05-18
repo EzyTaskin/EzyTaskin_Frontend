@@ -70,11 +70,6 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     </div>
                 </div>
 
-                <div className="flex items-center text-base mb-4">
-                    <Eye className="mr-1" size={18}/>
-                    20 views
-                </div>
-
                 <div className="mb-4">
                     <p className="font-semibold mb-1">Applicants</p>
                     <div className="flex space-x-2 mb-3">

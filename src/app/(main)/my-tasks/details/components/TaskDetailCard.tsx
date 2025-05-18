@@ -16,10 +16,18 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
         <div className="bg-[#F3F3FF] p-6 rounded-3xl max-w-7xl mx-auto">
             <div className="flex justify-between items-start mb-6">
                 <h2 className="text-2xl font-bold">{task.title}</h2>
-                {!task.completedDate &&
-                    <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
+                <div className="flex space-x-2">
+                    <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
+                    <span
+                        className="block bg-(--color-primary) text-white text-sm font-medium px-4 py-2 rounded-full shadow">
+          DETAILS
+        </span>
+                    </Link>
+                    {!task.completedDate &&
+                        <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
           OPEN
         </span>}
+                </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
@@ -48,20 +56,12 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                 </div>
             </div>
 
-            <div className="flex items-center text-base mb-4">
-                <Eye className="mr-1" size={18}/>
-                20 views
-            </div>
-
             <div className="mb-4">
                 <p className="font-semibold mb-1">Applicants</p>
                 <div className="flex space-x-2 mb-3">
                     {task.offers.map((offer) => {
                         return (
-                            <Link key={offer.id}
-                                  href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}>
-                                <div className="w-7 h-7 rounded-full bg-indigo-600"></div>
-                            </Link>
+                            <div key={offer.id} className="w-7 h-7 rounded-full bg-indigo-600"></div>
                         )
                     })}
                 </div>

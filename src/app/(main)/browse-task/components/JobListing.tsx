@@ -35,6 +35,11 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
             })
     };
 
+    const handleMakeAnOffer = (budget: number) => {
+        setOfferValue(budget)
+        setShowOfferModal(true)
+    }
+
     const OfferModalContent = () => {
         if (cards.length === 0) {
             return (
@@ -152,7 +157,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     <span className="text-sm text-gray-600 font-medium block">BUDGET</span>
                     <h2 className="text-2xl font-bold text-black mt-1">${task.budget}</h2>
                     <button
-                        onClick={() => setShowOfferModal(true)}
+                        onClick={() => handleMakeAnOffer(task.budget)}
                         className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
                     >
                         Make an offer
