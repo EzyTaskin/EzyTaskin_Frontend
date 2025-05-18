@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl h-[9rem] mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
         {/* Company Info */}
         <div>
-          <p className="font-bold text-xl">Ezytaskin</p>
+          <p className="font-bold text-xl">EzyTaskin</p>
           <p className="mt-2 text-lg">
             Connect with trusted service providers for all your needs.
           </p>

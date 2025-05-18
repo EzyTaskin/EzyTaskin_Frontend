@@ -111,7 +111,7 @@ const ProviderProfile = ({
     if (subpage == "dashboard") {
         return <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
             <div className="flex flex-col">
-                <h3 className="font-semibold text-lg mb-4">About me</h3>
+                <h3 className="font-semibold text-lg mb-4">About Me</h3>
 
                 <div className="border border-gray-200 rounded-xl p-4 shadow-sm flex flex-col justify-between relative">
                     {isEditing ? (
@@ -145,7 +145,7 @@ const ProviderProfile = ({
 
             {/* Completed Tasks */}
             <div className="lex flex-col">
-                <h3 className="font-semibold text-lg mb-4">Completed tasks</h3>
+                <h3 className="font-semibold text-lg mb-4">Completed Tasks</h3>
                 <div className="border border-gray-200 rounded-xl p-4 shadow-sm w-full overflow-x-auto">
                     <table className="table-auto w-full text-sm text-left">
                         <thead className="text-gray-600 border-b">
@@ -236,7 +236,7 @@ const ProviderProfile = ({
             ) : (
                 <div>
                     <h3 className="font-semibold text-lg mb-2 flex items-center">
-                        <span className="mr-2">🏷️</span>Service categories
+                        <span className="mr-2">🏷️</span>Service Categories
                     </h3>
                     <div className="flex flex-wrap gap-3">
                         {categories.map((category, index) => (
@@ -585,7 +585,7 @@ function PaymentMethods({cards}: {
 
     return (
         <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
-            <h2 className="text-2xl font-bold mb-1">Payment methods</h2>
+            <h2 className="text-2xl font-bold mb-1">Payment Methods</h2>
             <p className="text-gray-500 mb-6">How you will pay and get money</p>
 
             {/* Render each fetched card */}

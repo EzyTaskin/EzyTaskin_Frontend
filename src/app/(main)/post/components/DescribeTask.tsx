@@ -53,7 +53,7 @@ export default function DescribeTask({
                         <div className="text-white w-6 h-6 flex items-center justify-center bg-[var(--color-primary)] rounded-full">
                             1
                         </div>
-                        <span className="text-[var(--color-primary)]">Task details</span>
+                        <span className="text-[var(--color-primary)]">Task Details</span>
                     </div>
                     <div className="h-px flex-1 bg-gray-300 mx-2" />
                     <div className="flex items-center gap-2">

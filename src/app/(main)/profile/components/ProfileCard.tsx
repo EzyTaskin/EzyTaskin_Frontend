@@ -110,10 +110,10 @@ const ProviderContent = ({
                     <span>
             {providerProfile.averageRating === undefined ||
             providerProfile.averageRating === 0
-                ? "0 Average rating"
+                ? "0 Average Rating"
                 : providerProfile.averageRating === 1
-                    ? "1 Average rating"
-                    : `${providerProfile.averageRating} Average ratings`}
+                    ? "1 Average Rating"
+                    : `${providerProfile.averageRating} Average Rating`}
           </span>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -137,7 +137,7 @@ const ProviderContent = ({
             <div className="mt-6 text-base text-gray-700 flex flex-col items-start w-full gap-4">
                 <div onClick={() => onSubpageChange("dashboard")}
                      className="text-indigo-600 font-medium hover:underline">
-                    My dashboard
+                    My Dashboard
                 </div>
                 <Link
                     href={{
@@ -165,10 +165,10 @@ const ProviderContent = ({
                     }`}
                     onClick={() => onSubpageChange("payment-methods")}
                 >
-                    Payment methods
+                    Payment Methods
                 </div>
                 <div onClick={handleLogout} className="cursor-pointer">
-                    Log out
+                    Log Out
                 </div>
             </div>
 
@@ -184,7 +184,7 @@ const ProviderContent = ({
                         height={16}
                         unoptimized
                     />
-                    <span className="font-medium">Edit profile</span>
+                    <span className="font-medium">Edit Profile</span>
                 </button>
 
                 <Link
@@ -198,7 +198,7 @@ const ProviderContent = ({
                         height={16}
                         unoptimized
                     />
-                    <span className="font-medium">View public profile</span>
+                    <span className="font-medium">View Public Profile</span>
                 </Link>
             </div>
         </>
@@ -223,11 +223,11 @@ const ConsumerContent = ({
             <div className="mt-4 text-sm text-gray-700 flex flex-col items-start w-full mt-5 gap-2">
                 <div className="flex items-center mb-1 justify-center gap-1">
                     <ClipboardList size={18} className="text-yellow-500"/>
-                    <span> {consumerProfile.requestsPosted}{" "} {consumerProfile.requestsPosted === 1 ? "task" : "tasks"} posted </span>
+                    <span> {consumerProfile.requestsPosted}{" "} {consumerProfile.requestsPosted === 1 ? "Task" : "Tasks"} Posted </span>
                 </div>
                 <div className="flex items-center gap-1">
                     <CheckCircle size={16} className="text-green-600"/>
-                    <span>{consumerProfile.requestsCompleted} completed</span>
+                    <span>{consumerProfile.requestsCompleted} Completed</span>
                 </div>
             </div>
 
@@ -250,7 +250,7 @@ const ConsumerContent = ({
                     }`}
                     onClick={() => onSubpageChange("payment-methods")}
                 >
-                    Payment methods
+                    Payment Methods
                 </div>
                 <div
                     className={`cursor-pointer ${
@@ -263,7 +263,7 @@ const ConsumerContent = ({
                     Notifications
                 </div>
                 <div onClick={handleLogout} className="cursor-pointer">
-                    Log out
+                    Log Out
                 </div>
             </div>
 
@@ -279,7 +279,7 @@ const ConsumerContent = ({
                         height={16}
                         unoptimized
                     />
-                    <span className="font-medium">Edit profile</span>
+                    <span className="font-medium">Edit Profile</span>
                 </button>
             </div>
         </>

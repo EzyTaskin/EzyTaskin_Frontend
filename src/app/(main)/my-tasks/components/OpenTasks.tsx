@@ -46,13 +46,13 @@ export default function OpenTasks({openTasks}: {
                                     <Link href={`/my-tasks/details?taskId=${task.id}`}>
                                         <button
                                             className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-full shadow">
-                                            Task details
+                                            Task Details
                                         </button>
                                     </Link>
                                 </div>
                             </div>
                         )
-                    }) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No open task </h1>}
+                    }) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No open tasks </h1>}
             </div>
             <hr className="my-12 border-t border-gray-300"/>
         </div>

@@ -40,7 +40,7 @@ export default function CompletedTasks({completedTasks}: {
                             <Link href={`/my-requests/details?taskId=${task.id}`}>
                                 <button
                                     className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-full shadow">
-                                    Task details
+                                    Task Details
                                 </button>
                             </Link>
                         </div>
