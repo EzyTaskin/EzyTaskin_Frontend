@@ -14,11 +14,13 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
+    const [reviewDescription, setReviewDescription] = useState("");
     const reviewer = useMutateReviews();
     console.log(task)
     const handleConfirm = () => {
         reviewer.postReview({
             requestId: task.id,
+            description: reviewDescription,
             rating
         })
         setShowReviewModal(false);
@@ -105,6 +107,13 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
             <PrimaryModal showModal={showReviewModal} setShowModal={setShowReviewModal} showCloseButton={false}>
                 <div>
                     <h3 className="text-lg font-semibold mb-3">Rate Your Experience</h3>
+                    <textarea
+                        value={reviewDescription}
+                        onChange={(e) => setReviewDescription(e.target.value)}
+                        placeholder="Share your experience"
+                        rows={4}
+                        className="w-full px-4 py-3 border-2 border-indigo-500 rounded-xl shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-400 transition placeholder-gray-400 resize-none"
+                    />
 
                     <div className="flex space-x-1 mb-4 justify-center">
                         {[1, 2, 3, 4, 5].map((star) => (

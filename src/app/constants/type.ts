@@ -227,5 +227,5 @@ export type GetReviewRequestType = {
 export type PostReviewRequestType = {
     requestId: string;
     rating: number;
-    description?: string;
+    description: string;
 }

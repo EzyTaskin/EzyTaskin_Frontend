@@ -11,6 +11,7 @@ import useQueryTask from "src/app/hooks/useQueryTask";
 import Link from "next/link";
 import {ArrowRight} from "lucide-react";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
+import {useRef, useEffect} from "react";
 
 export default function MainContent() {
     const searchParams = useSearchParams();
@@ -31,10 +32,25 @@ export default function MainContent() {
         requestId: taskId
     });
     const peerProfile = useQueryProfile(peerId);
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+    const reversedMessage = messages ? messages.toReversed() : [];
+
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const isNearBottom =
+            container.scrollHeight - container.scrollTop - container.clientHeight < 100;
+
+        console.log(container.scrollHeight - container.scrollTop - container.clientHeight)
+
+        if (isNearBottom) {
+            container.scrollTop = container.scrollHeight;
+        }
+    }, [reversedMessage]);
 
     if (!messages || !task || !peerProfile) return "LOADING"
-
-    const reversedMessage = messages.toReversed();
 
     const handleSend = () => {
         if (mode == "provider" && messages.length == 0 && task.selected?.provider.account != currentUserId) {
@@ -210,7 +226,8 @@ export default function MainContent() {
                 </div>
 
                 {/* Messages */}
-                <div className="flex-1 overflow-y-auto p-6 space-y-4">
+                <div ref={scrollContainerRef}
+                     className="flex-1 overflow-y-auto p-6 space-y-4">
                     {reversedMessage.map((msg) => {
                         const isSender = msg.sender === currentUserId;
 
@@ -230,8 +247,8 @@ export default function MainContent() {
                                     <div
                                         className={`p-3 rounded-xl max-w-md ${
                                             isSender
-                                                ? "bg-gray-200 text-black"
-                                                : "bg-indigo-600 text-white"
+                                                ? "bg-indigo-600 text-white"
+                                                : "bg-gray-200 text-black"
                                         }`}
                                     >
                                         {msg.content}
@@ -257,6 +274,7 @@ export default function MainContent() {
                             </div>
                         );
                     })}
+                    <div ref={bottomRef}/>
                 </div>
 
                 {/* Input */}
