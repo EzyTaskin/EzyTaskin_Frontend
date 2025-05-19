@@ -10,12 +10,14 @@ import useQueryProvider from "src/app/hooks/useQueryProvider";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import {redirect} from "next/navigation";
 import {useQueryCards} from "src/app/hooks/useQueryCards";
+import useAuth from "src/app/hooks/useAuth";
 
 dayjs.extend(relativeTime);
 
 const JobListing = ({task}: { task: TasksResponseType }) => {
     const [showOfferModal, setShowOfferModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const {userId: currentUserId} = useAuth();
     const [offerValue, setOfferValue] = useState(task.budget);
     const {providerProfile} = useQueryProvider();
     const {cards} = useQueryCards();
@@ -167,12 +169,21 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
 
             {/* Hiring person */}
             <div className="mt-8">
-                <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
-                    <button
-                        className="bg-(--color-primary) text-white font-semibold text-lg px-6 py-2 rounded-2xl shadow-md hover:bg-blue-700 transition duration-300">
-                        Meet the hiring person
-                    </button>
-                </Link>
+                {task.consumer.account != currentUserId ?
+                    <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
+                        <button
+                            className="bg-(--color-primary) text-white font-semibold text-lg px-6 py-2 rounded-2xl shadow-md hover:bg-blue-700 transition duration-300">
+                            Meet the hiring person
+                        </button>
+                    </Link>
+                    :
+                    <Link href={`/my-requests/details?taskId=${task.id}`}>
+                        <button
+                            className="bg-(--color-primary) text-white font-semibold text-lg px-6 py-2 rounded-2xl shadow-md hover:bg-blue-700 transition duration-300">
+                            See task details
+                        </button>
+                    </Link>
+                }
                 {/* Placeholder */}
             </div>
 

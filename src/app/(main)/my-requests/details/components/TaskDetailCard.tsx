@@ -42,7 +42,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <h2 className="text-2xl font-bold">{task.title}</h2>
                     {!task.completedDate &&
                         <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
-          OPEN
+                            {task.selected ? "ASSIGNED" : "OPEN"}
         </span>}
                 </div>
 
@@ -92,14 +92,15 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                             href={`/chat?peerId=${task.selected.provider.account}&taskId=${task.id}&mode=consumer`}>
                             <div className="w-7 h-7 rounded-full bg-indigo-600"></div>
                         </Link>
-                        <button
-                            onClick={handleReview}
-                            className="px-3 py-1.5 bg-yellow-400 text-yellow-900 font-semibold rounded-md shadow-sm
+                        {task.completedDate &&
+                            <button
+                                onClick={handleReview}
+                                className="px-3 py-1.5 bg-yellow-400 text-yellow-900 font-semibold rounded-md shadow-sm
              hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300
              transition duration-200 ease-in-out text-sm"
-                        >
-                            Review
-                        </button>
+                            >
+                                Review
+                            </button>}
                     </div>
                 </div>}
             </div>

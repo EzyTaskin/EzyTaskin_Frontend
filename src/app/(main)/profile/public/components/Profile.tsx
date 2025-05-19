@@ -23,9 +23,9 @@ export default function Profile() {
         : providerProfile.completedRequests.slice(0, 4);
 
     const visibleReviews = showAllReviews
-        ? providerProfile.reviewCount // You should replace this with real review data source.
+        ? providerProfile.reviewCount
         : providerProfile.reviewCount > 3
-            ? Array.from({length: 3}) // Placeholder for example
+            ? Array.from({length: 3})
             : Array.from({length: providerProfile.reviewCount});
 
     return (
