@@ -69,7 +69,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
 
                     <div className="flex justify-between mb-2 text-sm text-black">
                         <span>{`$0`}</span>
-                        <span>${offerValue}</span>
+                        <span className="text-gray-500"> <span className="bg-grey-200">Offer: </span> ${offerValue}</span>
                         <span>{`$${task.budget}`}</span>
                     </div>
 
