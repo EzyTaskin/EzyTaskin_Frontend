@@ -122,7 +122,7 @@ export type TasksRequestType = {
     dueDate?: string;
     budget: number;
     remoteEligible: boolean;
-    categories: string[];
+    category: string[];
 }
 
 export type TaskRequestType = {

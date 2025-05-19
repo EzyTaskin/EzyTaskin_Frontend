@@ -48,7 +48,7 @@ export default function PostTask() {
             description: description,
             budget: budget,
             remoteEligible: remoteEligible,
-            categories: categories,
+            category: categories,
         };
 
         if (dueDate) {
