@@ -37,6 +37,7 @@ export type CompletedRequestType = {
 export type ProviderProfileType = {
     id: string;
     account: string;
+    name: string;
     description: string;
     averageRating: number;
     address: string;

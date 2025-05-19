@@ -10,6 +10,7 @@ import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import useQueryTask from "src/app/hooks/useQueryTask";
 import Link from "next/link";
 import {ArrowRight} from "lucide-react";
+import useQueryProfile from "src/app/hooks/useQueryProfile";
 
 export default function MainContent() {
     const searchParams = useSearchParams();
@@ -29,8 +30,9 @@ export default function MainContent() {
     const {task, taskState} = useQueryTask({
         requestId: taskId
     });
+    const peerProfile = useQueryProfile(peerId);
 
-    if (!messages) return "LOADING"
+    if (!messages || !task || !peerProfile) return "LOADING"
 
     const reversedMessage = messages.toReversed();
 
@@ -80,8 +82,6 @@ export default function MainContent() {
     }
 
     const OfferActionButton = () => {
-        if (!task) return null;
-
         if (!taskState) return null;
 
         if (taskState == "completed") return (
@@ -190,7 +190,8 @@ export default function MainContent() {
                     className="flex flex-col md:flex-row md:items-center justify-between p-4 border-b space-y-2 md:space-y-0">
                     <div>
                         <div className="text-lg font-semibold">
-                            Chat with {mode === "consumer" ? `provider` : `consumer`}
+                            Chat
+                            with {mode === "consumer" ? `provider ${peerProfile.providerProfile.name}` : `consumer ${peerProfile.consumerProfile.name}`}
                         </div>
                         <div className="text-sm text-gray-600 flex flex-wrap gap-x-2">
                             <span><span className="font-medium">Task:</span> {task.title}</span>
