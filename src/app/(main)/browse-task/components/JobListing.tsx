@@ -11,17 +11,20 @@ import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import {redirect} from "next/navigation";
 import {useQueryCards} from "src/app/hooks/useQueryCards";
 import useAuth from "src/app/hooks/useAuth";
+import useQueryTask from "src/app/hooks/useQueryTask";
 
 dayjs.extend(relativeTime);
 
 const JobListing = ({task}: { task: TasksResponseType }) => {
+    const {userId: currentUserId} = useAuth();
     const [showOfferModal, setShowOfferModal] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const {userId: currentUserId} = useAuth();
+    const [showErrorModal, setShowErrorModal] = useState(false);
     const [offerValue, setOfferValue] = useState(task.budget);
     const {providerProfile} = useQueryProvider();
     const {cards} = useQueryCards();
     const offerer = useMutateOffers();
+    const taskQuery = useQueryTask({});
 
     const handleConfirmOffer = () => {
         setShowOfferModal(false);
@@ -37,7 +40,16 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
             })
     };
 
-    const handleMakeAnOffer = (budget: number) => {
+    const handleMakeAnOffer = async (budget: number, taskId: string) => {
+        const currentTask = await taskQuery.getTask({
+            requestId: taskId
+        });
+        const offers = currentTask.offers;
+        const hasMatch = offers.some(offer => offer.provider.account.includes(currentUserId));
+        if (hasMatch) {
+            setShowErrorModal(true)
+            return;
+        }
         setOfferValue(budget)
         setShowOfferModal(true)
     }
@@ -69,7 +81,8 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
 
                     <div className="flex justify-between mb-2 text-sm text-black">
                         <span>{`$0`}</span>
-                        <span className="text-gray-500"> <span className="bg-grey-200">Offer: </span> ${offerValue}</span>
+                        <span className="text-gray-500"> <span
+                            className="bg-grey-200">Offer: </span> ${offerValue}</span>
                         <span>{`$${task.budget}`}</span>
                     </div>
 
@@ -146,6 +159,10 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                         <span className="font-bold text-s">LOCATION</span>
                         <p>{task.location}</p>
                     </div>
+                    <div>
+                        <span className="font-bold text-s">POSTED BY</span>
+                        <p>{task.consumer.name}</p>
+                    </div>
                     {task.dueDate &&
                         <div>
                             <span className="font-bold text-s">TO BE DONE ON</span>
@@ -159,7 +176,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     <span className="text-sm text-gray-600 font-medium block">BUDGET</span>
                     <h2 className="text-2xl font-bold text-black mt-1">${task.budget}</h2>
                     <button
-                        onClick={() => handleMakeAnOffer(task.budget)}
+                        onClick={() => handleMakeAnOffer(task.budget, task.id)}
                         className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
                     >
                         Make an offer
@@ -219,6 +236,9 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                         View task
                     </button>
                 </div>
+            </PrimaryModal>
+            <PrimaryModal showModal={showErrorModal} setShowModal={setShowErrorModal}>
+                <h1> You have already offer to this request</h1>
             </PrimaryModal>
         </div>
     );

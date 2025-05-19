@@ -1,5 +1,5 @@
 import React from "react";
-import {MapPin, Calendar, User, Eye, DollarSign} from "lucide-react";
+import {MapPin, Calendar, Eye, DollarSign, User} from "lucide-react";
 import {TaskResponseType} from "src/app/constants/type";
 import Link from "next/link";
 import dayjs from 'dayjs';
@@ -52,6 +52,14 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <div>
                         <p className="text-base text-gray-500">BUDGET</p>
                         <p className="font-semibold">{task.budget}</p>
+                    </div>
+                </div>
+
+                <div className="flex items-baseline space-x-1">
+                    <User className="text-gray-500 mt-1" size={15}/>
+                    <div>
+                        <p className="text-base text-gray-500">POSTED BY</p>
+                        <p className="font-semibold">{task.consumer.name}</p>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,8 @@ import {useEffect, useState} from "react";
 import {ProfileType} from "src/app/constants/type";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
 import {useSearchParams} from "next/navigation";
+import {useNotifications} from "src/app/hooks/useNotifications";
+import {useRouter} from "next/navigation";
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -16,6 +18,10 @@ export default function Profile() {
         }
         return "provider";
     });
+
+    const router = useRouter();
+
+    const {markAllAsSeen} = useNotifications();
 
     const searchParams = useSearchParams();
 
@@ -27,6 +33,7 @@ export default function Profile() {
         }
     }, [searchParams]);
 
+
     useEffect(() => {
         if (typeof window !== "undefined") {
             localStorage.setItem("profileType", profileType);
@@ -36,9 +43,16 @@ export default function Profile() {
     const [subpage, setSubpage] = useState<string>(profileType == "consumer" ? "profile" : "dashboard");
     const {providerProfile, consumerProfile, commonDetail} = useQueryProfile();
 
+    useEffect(() => {
+        if (subpage == "notifications") {
+            markAllAsSeen()
+        }
+    }, [markAllAsSeen, router, subpage]);
+
     if (!providerProfile || !consumerProfile || !commonDetail) {
         return <div>Loading profile...</div>;
     }
+
 
     return (
         <section className="py-28 border-b border-black-100">

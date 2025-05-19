@@ -1,13 +1,18 @@
 "use client";
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {usePathname} from "next/navigation";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import useQueryNotifications from "src/app/hooks/useQueryNotifications";
+import {useNotifications} from "src/app/hooks/useNotifications";
 
 const Header = () => {
     const pathname = usePathname();
+    const {unseenCount} = useNotifications();
+
+    console.log(unseenCount)
 
     const navLinks = [
         {href: "/home", label: "Home", description: "Return to the homepage and discover tasks"},
@@ -41,7 +46,8 @@ const Header = () => {
                         >
                             {link.label}
                         </Link>
-                        <div className="absolute top-full mt-2 left-0 w-max max-w-3xl px-4 py-2 text-sm text-white bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition whitespace-normal text-left z-10">
+                        <div
+                            className="absolute top-full mt-2 left-0 w-max max-w-3xl px-4 py-2 text-sm text-white bg-gray-800 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition whitespace-normal text-left z-10">
                             {link.description}
                         </div>
                     </div>
@@ -56,14 +62,22 @@ const Header = () => {
             {/* Icons */}
             <div className="text-xl flex gap-8 items-center">
                 <Link href="/profile?subpage=notifications">
-                    <Image
-                        src="/bell-notifications.svg"
-                        alt="Icon Notification"
-                        width={0}
-                        height={0}
-                        className="w-8 h-8"
-                        unoptimized
-                    />
+                    <div className="relative">
+                        <Image
+                            src="/bell-notifications.svg"
+                            alt="Icon Notification"
+                            width={0}
+                            height={0}
+                            className="w-8 h-8"
+                            unoptimized
+                        />
+                        {unseenCount > 0 && (
+                            <span
+                                className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+                {unseenCount}
+            </span>
+                        )}
+                    </div>
                 </Link>
                 <Link href="/profile">
                     <Image
