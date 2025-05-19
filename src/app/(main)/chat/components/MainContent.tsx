@@ -79,10 +79,9 @@ export default function MainContent() {
         window.location.reload();
     }
 
-    console.log(task)
-    console.log(currentUserId)
-
     const OfferActionButton = () => {
+        if (!task) return null;
+
         if (!taskState) return null;
 
         if (taskState == "completed") return (
@@ -187,7 +186,8 @@ export default function MainContent() {
         <>
             <div className="flex-1 flex flex-col h-[80vh] bg-white">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between p-4 border-b space-y-2 md:space-y-0">
+                <div
+                    className="flex flex-col md:flex-row md:items-center justify-between p-4 border-b space-y-2 md:space-y-0">
                     <div>
                         <div className="text-lg font-semibold">
                             Chat with {mode === "consumer" ? `provider` : `consumer`}
@@ -204,7 +204,7 @@ export default function MainContent() {
                     </div>
 
                     <div className="space-x-4">
-                        <OfferActionButton />
+                        <OfferActionButton/>
                     </div>
                 </div>
 
@@ -275,7 +275,8 @@ export default function MainContent() {
                 <h1> Offer Accepted </h1>
             </PrimaryModal>
             <PrimaryModal showModal={showErrorModal} setShowModal={setShowErrorModal}>
-                <h1> You can not message a client if they have not sent you any messages and your offer has not been accepted. </h1>
+                <h1> You can not message a client if they have not sent you any messages and your offer has not been
+                    accepted. </h1>
             </PrimaryModal>
         </>
     );
