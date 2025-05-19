@@ -59,6 +59,7 @@ const ProfileCard = ({
                         onIsEditingChange={onIsEditingChange}
                         subpage={subpage}
                         onSubpageChange={onSubpageChange}
+                        onProfileTypeChange={onProfileTypeChange}
                     />
                 )}
 
@@ -87,12 +88,14 @@ const ProviderContent = ({
                              onIsEditingChange,
                              subpage,
                              onSubpageChange,
+                             onProfileTypeChange
                          }: {
     providerProfile: ProviderProfileType;
     isEditing: boolean;
     onIsEditingChange: (value: boolean) => void;
     subpage: string;
     onSubpageChange: (value: string) => void;
+    onProfileTypeChange: (profileType: ProfileType) => void;
 }) => {
 
     return (
@@ -135,8 +138,11 @@ const ProviderContent = ({
             </div>
 
             <div className="mt-6 text-base text-gray-700 flex flex-col items-start w-full gap-4">
-                <div onClick={() => onSubpageChange("dashboard")}
-                     className="text-indigo-600 font-medium hover:underline">
+                <div className={`cursor-pointer ${
+                    subpage === "dashboard"
+                        ? "text-[var(--color-primary)]"
+                        : "text-gray-700"
+                }`} onClick={() => onSubpageChange("dashboard")}>
                     My Dashboard
                 </div>
                 <Link
@@ -166,6 +172,19 @@ const ProviderContent = ({
                     onClick={() => onSubpageChange("payment-methods")}
                 >
                     Payment Methods
+                </div>
+                <div
+                    className={`cursor-pointer ${
+                        subpage === "payment-methods"
+                            ? "text-[var(--color-primary)]"
+                            : "text-gray-700"
+                    }`}
+                    onClick={() => {
+                        onProfileTypeChange("consumer")
+                        onSubpageChange("profile")
+                    }}
+                >
+                    Profile
                 </div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log Out
