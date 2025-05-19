@@ -175,7 +175,7 @@ const ProviderContent = ({
                 </div>
                 <div
                     className={`cursor-pointer ${
-                        subpage === "payment-methods"
+                        subpage === "profile"
                             ? "text-[var(--color-primary)]"
                             : "text-gray-700"
                     }`}
@@ -184,7 +184,7 @@ const ProviderContent = ({
                         onSubpageChange("profile")
                     }}
                 >
-                    Profile
+                    Personal Information
                 </div>
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log Out
