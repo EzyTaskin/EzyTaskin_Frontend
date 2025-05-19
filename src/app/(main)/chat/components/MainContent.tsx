@@ -50,7 +50,7 @@ export default function MainContent() {
         }
     }, [reversedMessage]);
 
-    if (!messages || !task || !peerProfile) return "LOADING"
+    if (!messages || !task || !peerProfile.providerProfile || !peerProfile.consumerProfile) return "LOADING"
 
     const handleSend = () => {
         if (mode == "provider" && messages.length == 0 && task.selected?.provider.account != currentUserId) {
