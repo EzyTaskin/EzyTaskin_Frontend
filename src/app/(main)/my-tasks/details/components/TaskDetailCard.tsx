@@ -20,7 +20,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
                     <span
                         className="block bg-(--color-primary) text-white text-sm font-medium px-4 py-2 rounded-full shadow">
-          DETAILS
+          CONTACT
         </span>
                     </Link>
                     {!task.completedDate &&
@@ -61,17 +61,6 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                         <p className="text-base text-gray-500">POSTED BY</p>
                         <p className="font-semibold">{task.consumer.name}</p>
                     </div>
-                </div>
-            </div>
-
-            <div className="mb-4">
-                <p className="font-semibold mb-1">Applicants</p>
-                <div className="flex space-x-2 mb-3">
-                    {task.offers.map((offer) => {
-                        return (
-                            <div key={offer.id} className="w-7 h-7 rounded-full bg-indigo-600"></div>
-                        )
-                    })}
                 </div>
             </div>
         </div>

@@ -108,6 +108,12 @@ const ProviderProfile = ({
     };
     const {cards} = useQueryCards();
 
+    function handleCancel() {
+        setDescription(providerProfile.description || "");
+        setCategories(providerProfile.categories?.map(c => c.name) || []);
+        onIsEditingChange(false);
+    }
+
     if (subpage == "dashboard") {
         return <div className="max-w-xl mx-auto p-4 space-y-8 text-gray-800">
             <div className="flex flex-col">
@@ -153,8 +159,8 @@ const ProviderProfile = ({
                             <th className="pr-8 pb-4">Task</th>
                             <th className="pr-8 pb-4">Client</th>
                             <th className="pr-8 pb-4">Date</th>
-                            <th className="pr-8 pb-4">Earnings</th>
                             <th className="pr-8 pb-4">Location</th>
+                            <th className="pr-8 pb-4">Earnings</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -221,17 +227,25 @@ const ProviderProfile = ({
                             Add
                         </button>
                     </div>
-                    <button
-                        onClick={() => {
-                            updateProviderInfo.updateProviderProfile({
-                                description,
-                                categories,
-                            });
-                        }}
-                        className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                    >
-                        Update Profile
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleCancel}
+                            className="flex-1 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            onClick={() => {
+                                updateProviderInfo.updateProviderProfile({
+                                    description,
+                                    categories,
+                                });
+                            }}
+                            className="flex-1 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                        >
+                            Update Profile
+                        </button>
+                    </div>
                 </div>
             ) : (
                 <div>
@@ -308,6 +322,21 @@ const ConsumerProfile = ({
         console.log("Account deletion requested");
     };
 
+    function handleCancel() {
+        if (!commonDetail) return;
+
+        setFormData({
+            fullName: commonDetail.fullName ?? "",
+            email: commonDetail.email ?? "",
+            phone: commonDetail.phoneNumber ?? "",
+            address: commonDetail.address ?? "",
+            bio: "I'm a professional looking for reliable service providers for my projects. I value quality work and timely delivery.",
+        });
+
+        onIsEditingChange(false);
+    }
+
+
     if (subpage == "profile") return (
         <div className="max-w-xl mx-auto p-8 bg-white rounded-2xl shadow space-y-8 border border-gray-200">
             <div>
@@ -334,7 +363,17 @@ const ConsumerProfile = ({
                 {/* Email (always view mode) */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Email Address</label>
-                    <p className="mt-1 text-gray-900">{formData.email || "-"}</p>
+
+                    {isEditing ? (
+                        <input
+                            disabled
+                            defaultValue={formData.email || "-"}
+                            className="w-full mt-1 px-4 py-2 rounded-md border border-gray-200 bg-gray-100 text-gray-500 cursor-not-allowed"
+                        />
+                    ) : (
+                        <p className="mt-1 text-gray-900">{formData.email || "-"}</p>
+                    )}
+
                 </div>
 
                 {/* Phone Number */}
@@ -376,7 +415,13 @@ const ConsumerProfile = ({
             </div>
 
             {isEditing && (
-                <div className="flex justify-end pt-6">
+                <div className="flex justify-end pt-6 gap-4">
+                    <button
+                        onClick={handleCancel}
+                        className="px-6 py-2 rounded-md font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    >
+                        Cancel
+                    </button>
                     <button
                         onClick={handleSave}
                         className="px-6 py-2 rounded-md font-medium bg-indigo-600 text-white hover:bg-indigo-700"
@@ -399,26 +444,28 @@ const ConsumerProfile = ({
             <div className="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
                 <h2 className="text-2xl font-bold mb-6">Notifications</h2>
 
-                <div className="space-y-4">
-                    {notifications.map((item, index) => (
-                        <div key={item.id} className="flex items-start space-x-4">
-                            <div
-                                className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 rounded-full overflow-hidden">
-                                <img
-                                    src={`https://www.gravatar.com/avatar/?d=mp`}
-                                    alt="Profile"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
+                {notifications.length != 0 ?
 
-                            <div>
-                                <p className="text-gray-800 font-medium">{item.title}</p>
-                                <p className="text-gray-600 text-sm">{item.content}</p>
-                                <p className="text-gray-400 text-xs mt-1">{dayjs(item.timestamp).format('MMM D, YYYY HH:mm')}</p>
+                    <div className="space-y-4">
+                        {notifications.map((item, index) => (
+                            <div key={item.id} className="flex items-start space-x-4">
+                                <div
+                                    className="w-10 h-10 rounded-full bg-gray-300 flex-shrink-0 rounded-full overflow-hidden">
+                                    <img
+                                        src={`https://www.gravatar.com/avatar/?d=mp`}
+                                        alt="Profile"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                <div>
+                                    <p className="text-gray-800 font-medium">{item.title}</p>
+                                    <p className="text-gray-600 text-sm">{item.content}</p>
+                                    <p className="text-gray-400 text-xs mt-1">{dayjs(item.timestamp).format('MMM D, YYYY HH:mm')}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div> : <h1> No notifications </h1>}
             </div>
         );
     }
@@ -497,24 +544,27 @@ function DashboardPerformance() {
                 <div className="p-6 border rounded-xl shadow-sm space-y-2">
                     <p className="text-sm text-gray-400">Statistics</p>
                     <p className="text-lg font-medium">Total Booking</p>
-                    <div className="text-3xl font-bold">{totalBookings}</div>
-                    <div
-                        className={`flex items-center text-sm ${bookingGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
-                        {bookingGrowth >= 0 ? <ArrowUpRight size={14} className="mr-1"/> :
-                            <ArrowDownRight size={14} className="mr-1"/>}
-                        <span>{bookingGrowth.toFixed(1)}%</span>
-                    </div>
-                    <ResponsiveContainer width="100%" height={60}>
-                        <LineChart data={bookingData}>
-                            <Line
-                                type="monotone"
-                                dataKey="value"
-                                stroke="#3b82f6"
-                                strokeWidth={2}
-                                dot={false}
-                            />
-                        </LineChart>
-                    </ResponsiveContainer>
+                    {totalBookings != 0 ?
+                        <>
+                            <div className="text-3xl font-bold">{totalBookings}</div>
+                            <div
+                                className={`flex items-center text-sm ${bookingGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                {bookingGrowth >= 0 ? <ArrowUpRight size={14} className="mr-1"/> :
+                                    <ArrowDownRight size={14} className="mr-1"/>}
+                                <span>{bookingGrowth.toFixed(1)}%</span>
+                            </div>
+                            <ResponsiveContainer width="100%" height={60}>
+                                <LineChart data={bookingData}>
+                                    <Line
+                                        type="monotone"
+                                        dataKey="value"
+                                        stroke="#3b82f6"
+                                        strokeWidth={2}
+                                        dot={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer> </> : <h1> No booking yet </h1>
+                    }
                 </div>
 
                 <div className="p-6 border rounded-xl shadow-sm space-y-2 flex flex-col items-center justify-center">
@@ -543,33 +593,35 @@ function DashboardPerformance() {
                 <p className="text-sm text-gray-400">Statistics</p>
                 <p className="text-lg font-medium">Total Revenue</p>
                 <div className="text-4xl font-bold flex items-center space-x-2">
-                    <span>${totalRevenue.toLocaleString()}</span>
-                    <span
-                        className={`text-base flex items-center ${revenueGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
+                    {totalRevenue != 0 ?
+                        <>
+                            <span>${totalRevenue.toLocaleString()}</span>
+                            <span
+                                className={`text-base flex items-center ${revenueGrowth >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                         {revenueGrowth >= 0 ? <ArrowUpRight size={16} className="mr-1"/> :
                             <ArrowDownRight size={16} className="mr-1"/>}
-                        {revenueGrowth.toFixed(1)}%
+                                {revenueGrowth.toFixed(1)}%
                     </span>
+                            <ResponsiveContainer width="100%" height={150}>
+                                <LineChart data={revenueData}>
+                                    <XAxis
+                                        dataKey="name"
+                                        axisLine={false}
+                                        tickLine={false}
+                                        tick={{fontSize: 12, fill: '#6b7280'}}
+                                    />
+                                    <Tooltip contentStyle={{borderRadius: '0.5rem'}}/>
+                                    <Line
+                                        type="monotone"
+                                        dataKey="value"
+                                        stroke="#3b82f6"
+                                        strokeWidth={2}
+                                        dot={{r: 5, stroke: '#fff', strokeWidth: 2}}
+                                        activeDot={{r: 7}}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer> </> : <h1> No revenues yet </h1>}
                 </div>
-                <ResponsiveContainer width="100%" height={150}>
-                    <LineChart data={revenueData}>
-                        <XAxis
-                            dataKey="name"
-                            axisLine={false}
-                            tickLine={false}
-                            tick={{fontSize: 12, fill: '#6b7280'}}
-                        />
-                        <Tooltip contentStyle={{borderRadius: '0.5rem'}}/>
-                        <Line
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#3b82f6"
-                            strokeWidth={2}
-                            dot={{r: 5, stroke: '#fff', strokeWidth: 2}}
-                            activeDot={{r: 7}}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
             </div>
         </div>
     );

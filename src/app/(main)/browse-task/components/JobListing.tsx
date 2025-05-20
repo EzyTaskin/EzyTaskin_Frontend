@@ -175,12 +175,20 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 <div className="bg-[#E7E4E4] p-4 rounded-xl text-center shadow-sm h-[8rem] mt-12 w-4xs">
                     <span className="text-sm text-gray-600 font-medium block">BUDGET</span>
                     <h2 className="text-2xl font-bold text-black mt-1">${task.budget}</h2>
-                    <button
-                        onClick={() => handleMakeAnOffer(task.budget, task.id)}
-                        className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
-                    >
-                        Make an offer
-                    </button>
+                    {task.consumer.account != currentUserId ?
+                        <button
+                            onClick={() => handleMakeAnOffer(task.budget, task.id)}
+                            className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
+                        >
+                            Make an offer
+                        </button>
+                        :
+                        <button
+                            className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
+                        >
+                            This is your request
+                        </button>
+                    }
                 </div>
             </div>
 

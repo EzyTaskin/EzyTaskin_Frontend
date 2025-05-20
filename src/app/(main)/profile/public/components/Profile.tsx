@@ -10,13 +10,20 @@ export default function Profile() {
     const searchParams = useSearchParams();
     const userId = searchParams.get('userId');
 
-    const {providerProfile, consumerProfile} = useQueryProfile(
+    const {providerProfile, consumerProfile, providerProfileSuccess, consumerProfileSuccess} = useQueryProfile(
         userId
     );
+
+    if (!providerProfileSuccess || !consumerProfileSuccess) return <h1 className="text-center text-red-500 text-xl font-bold">
+        Invalid profile
+    </h1>
 
     if (!providerProfile || !consumerProfile) {
         return <div>Loading...</div>;
     }
+
+    console.log(providerProfile);
+    console.log(consumerProfile);
 
     const visibleJobs = showAllJobs
         ? providerProfile.completedRequests

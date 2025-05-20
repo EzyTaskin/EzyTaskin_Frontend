@@ -81,11 +81,11 @@ const Header = () => {
                 </Link>
                 <Link href="/profile">
                     <Image
-                        src="/icon-user.svg"
+                        src={pathname === '/profile' ? "/icon-user-blue.svg" : "/icon-user.svg"}
                         alt="User Icon"
                         width={0}
                         height={0}
-                        className="w-8 h-8"
+                        className={`w-8 h-8`}
                         unoptimized
                     />
                 </Link>

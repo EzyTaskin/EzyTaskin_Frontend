@@ -12,6 +12,9 @@ import utc from 'dayjs/plugin/utc'
 import {redirect} from "next/navigation";
 import {useQueryCards} from "src/app/hooks/useQueryCards";
 import {TasksRequestType} from "src/app/constants/type";
+import Link from "next/link";
+import PrimaryButton from "src/app/components/buttons/PrimaryButton";
+import {ArrowRight} from "lucide-react";
 
 dayjs.extend(utc)
 dayjs.extend(customParseFormat)
@@ -25,6 +28,7 @@ export default function PostTask() {
     const [budget, setBudget] = useState<number>(50);
     const [remoteEligible, setRemoteEligible] = useState<boolean>(false);
     const [dueDate, setDueDate] = useState<string>("");
+    const [taskId, setTaskId] = useState<string>("");
 
     const [step, setStep] = useState<number>(0);
 
@@ -41,7 +45,7 @@ export default function PostTask() {
         setStep(step - 1);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const taskData: TasksRequestType = {
             title: title,
             location: location,
@@ -55,7 +59,8 @@ export default function PostTask() {
             taskData.dueDate = dayjs(dueDate, 'DD/MM/YYYY').toISOString();
         }
 
-        tasker.postTask(taskData);
+        const task = await tasker.postTask(taskData);
+        setTaskId(task.id);
         setShowModal(true);
     };
 
@@ -67,8 +72,19 @@ export default function PostTask() {
     if (cards.length == 0) {
         return (
             <section className="py-28 ">
-                <h1 className="text-xl font-bold text-red-500 leading-20 text-center"> You have no payment method.
-                    Please add at least one before posting request.</h1>
+                <div className="text-center">
+                    <h1 className="text-xl font-bold text-red-500 leading-20"> You have no payment method.
+                        Please add at least one before posting request.</h1>
+                    <Link href='/add-payment-method'>
+                        <button
+                            type="button"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-500 text-white font-medium shadow-sm hover:bg-indigo-700 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                            Add payment method
+                            <ArrowRight className="h-4 w-4"/>
+                        </button>
+                    </Link>
+                </div>
             </section>
         )
     }
@@ -90,10 +106,27 @@ export default function PostTask() {
                 <Review title={title} categories={categories} location={location} budget={budget} date={dueDate}
                         description={description} onBack={handleBack} onSubmit={handleSubmit}/>}
 
-            {showModal &&
-                <PrimaryModal showModal={showModal} setShowModal={setShowModal} onCloseModal={handleCloseModal}>
-                    <h1> Post task success </h1>
-                </PrimaryModal>}
+            <PrimaryModal showModal={showModal} setShowModal={setShowModal} onCloseModal={handleCloseModal}
+                          showCloseButton={false}>
+                <h1 className="font-semibold text-purple-600"> Task is posted successfully! </h1>
+                <br/>
+                <p> Your task has been created and is now visible to providers.</p>
+                <div className="flex justify-end mt-6 space-x-4">
+                    <button
+                        onClick={() => setShowModal(false)}
+                        className="text-black font-medium"
+                    >
+                        Close
+                    </button>
+                    <Link href={`/my-requests/details?taskId=${taskId}`}>
+                        <button
+                            className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-indigo-700 transition"
+                        >
+                            View Task
+                        </button>
+                    </Link>
+                </div>
+            </PrimaryModal>
         </section>
     );
 }

@@ -35,6 +35,7 @@ export type CompletedRequestType = {
 };
 
 export type ProviderProfileType = {
+    status?: number;
     id: string;
     account: string;
     name: string;

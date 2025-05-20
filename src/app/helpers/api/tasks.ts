@@ -38,9 +38,10 @@ export async function getMyTasks(type?: string) {
 
 
 export async function postTask(data: TasksRequestType) {
-    await fetchApi({
+    const res = await fetchApi({
         path: "/Request",
         method: "POST",
         data: data
     });
+    return await res.json();
 }
