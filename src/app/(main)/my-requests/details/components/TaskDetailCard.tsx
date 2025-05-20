@@ -35,6 +35,16 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
         setShowReviewModal(true);
     }
 
+    const sortedOffers = [...task.offers].sort((a, b) => {
+        if (a.provider.isPremium && !b.provider.isPremium) return -1;
+        if (!a.provider.isPremium && b.provider.isPremium) return 1;
+
+        const priceA = a.price === null ? Infinity : a.price;
+        const priceB = b.price === null ? Infinity : b.price;
+
+        return priceA - priceB;
+    });
+
     return (
         <>
             <div className="bg-[#F3F3FF] p-6 rounded-3xl max-w-7xl mx-auto">
@@ -75,13 +85,16 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                 <div className="mb-4">
                     <p className="font-semibold mb-1">Applicants</p>
                     <div className="flex space-x-2 mb-3">
-                        {task.offers.map((offer) => {
+                        {sortedOffers.map((offer) => {
+                            const colorClass = offer.provider.isPremium ? 'bg-yellow-500' : 'bg-indigo-600';
                             return (
-                                <Link key={offer.id}
-                                      href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}>
-                                    <div className="w-7 h-7 rounded-full bg-indigo-600"></div>
+                                <Link
+                                    key={offer.id}
+                                    href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}
+                                >
+                                    <div className={`w-7 h-7 rounded-full ${colorClass}`}></div>
                                 </Link>
-                            )
+                            );
                         })}
                     </div>
                 </div>
@@ -90,7 +103,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <div className="flex space-x-2 mb-3">
                         <Link
                             href={`/chat?peerId=${task.selected.provider.account}&taskId=${task.id}&mode=consumer`}>
-                            <div className="w-7 h-7 rounded-full bg-indigo-600"></div>
+                            <div className={`w-7 h-7 rounded-full ${task.selected.provider.isPremium ? 'bg-yellow-500' : 'bg-indigo-600'}`}></div>
                         </Link>
                         {task.completedDate &&
                             <button
