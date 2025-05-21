@@ -2,12 +2,11 @@
 
 import {useState, useEffect} from "react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
-import {MdOutlineMail} from "react-icons/md";
 import {useSearchParams} from "next/navigation";
-import {getApiUrl} from "src/app/helpers/api/url";
 import Link from "next/link";
-import {useMutateAccount} from "src/app/hooks/useMutateAccount";
 import useQueryProfile from "src/app/hooks/useQueryProfile";
+import {useMutateAccount} from "src/app/hooks/useMutateAccount";
+import {getApiUrl} from "src/app/helpers/api/url";
 
 export default function EmailConfirm() {
     const [code, setCode] = useState("");
@@ -15,15 +14,14 @@ export default function EmailConfirm() {
     const [status, setStatus] = useState<"idle" | "success" | "error" | "loading">("idle");
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const {commonDetail} = useQueryProfile();
-
-    const accountWorker = useMutateAccount();
 
     const searchParams = useSearchParams();
+    const {commonDetail} = useQueryProfile();
+    const accountWorker = useMutateAccount();
+
     useEffect(() => {
         const error = searchParams.get("error");
         const codeParam = searchParams.get("code");
-        const userIdParam = searchParams.get("userId");
 
         if (error) {
             setErrorMessage(decodeURIComponent(error));
@@ -38,18 +36,13 @@ export default function EmailConfirm() {
                 setCode(codeParam);
             }
         }
-
-        if (userIdParam) {
-            console.log("User ID from query:", userIdParam);
-        }
     }, [searchParams]);
 
     const handleSendCode = async () => {
         setStatus("loading");
         try {
-            const res = await accountWorker.resendEmailConfirmation(commonDetail.email)
+            const res = await accountWorker.resendEmailConfirmation(commonDetail.email);
             if (!res.ok) throw new Error("Failed to send confirmation code.");
-
             setMessage("A verification code has been sent to your email.");
             setStatus("success");
         } catch (err: any) {
@@ -58,34 +51,13 @@ export default function EmailConfirm() {
         }
     };
 
-    const handleVerifyCode = async () => {
-        if (!code) {
-            setMessage("Please fill in both email and verification code.");
-            setStatus("error");
-            return;
-        }
-
-        setStatus("loading");
-        try {
-            const res = await accountWorker.confirmEmail(commonDetail.email, code)
-
-            if (!res.ok) throw new Error("Invalid code or confirmation failed.");
-
-            setMessage("Your email has been confirmed successfully.");
-            setStatus("success");
-        } catch (err: any) {
-            setMessage(err.message || "Confirmation failed.");
-            setStatus("error");
-        }
-    };
+    if (!commonDetail) return null;
 
     return (
         <div className="relative flex items-center justify-center min-h-screen bg-gray-100 px-4">
             <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleVerifyCode()
-                }}
+                method="POST"
+                action={getApiUrl("Account/ConfirmEmail", {returnUrl: "/home"})}
                 className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md z-10"
             >
                 <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
@@ -95,6 +67,9 @@ export default function EmailConfirm() {
                 <p className="text-gray-600 text-center text-base mb-6">
                     Enter your email and the code we sent to confirm your account.
                 </p>
+
+                {/* Email (Hidden field) */}
+                <input type="hidden" name="email" value={commonDetail.email || ""}/>
 
                 {/* Code Field */}
                 <div className="mb-4">
@@ -125,7 +100,7 @@ export default function EmailConfirm() {
 
                 {/* Submit Button */}
                 <PrimaryButton
-                    label={status === "loading" ? "Confirming..." : "Confirm Email"}
+                    label="Confirm Email"
                     width="w-full"
                     borderRadius="rounded-lg"
                 />
@@ -152,13 +127,11 @@ export default function EmailConfirm() {
                     </Link>
                 </div>
             </form>
-            {/* Error Modal with background */}
+
+            {/* Error Modal */}
             {showErrorModal && (
                 <>
-                    {/* Semi-transparent black background */}
                     <div className="fixed inset-0 bg-black/30 z-20"></div>
-
-                    {/* Modal itself */}
                     <div className="fixed inset-0 flex items-center justify-center z-30">
                         <div className="bg-white rounded-lg p-8 max-w-md mx-auto shadow-lg text-center">
                             <h2 className="text-2xl font-bold mb-4 text-red-600">Signup Error</h2>
