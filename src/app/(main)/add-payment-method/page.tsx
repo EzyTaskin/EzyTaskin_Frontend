@@ -11,8 +11,12 @@ import PrimaryModal from "src/app/components/modals/PrimaryModal";
 import {redirect} from "next/navigation";
 import InputMask from 'react-input-mask';
 import Cleave from 'cleave.js/react';
+import {MdCreditCard} from "react-icons/md";
+import {BsCalendar2Date} from "react-icons/bs";
+import {FaRegUser} from "react-icons/fa";
 
 export default function AddPaymentMethod() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState<PaymentSendCardType>({
         number: "",
@@ -37,22 +41,26 @@ export default function AddPaymentMethod() {
     }
 
     const handleSubmit = async () => {
-        const res = await handleAddPayment(formData);
-        console.log(res);
-        if (res.success) {
-            setFormModalMessage("Add Payment Method Successfully");
-            setIsSuccess(true);
-            setShowModal(true)
-        } else {
-            if (typeof res.message === "string") setFormModalMessage(res.message);
-            else {
-                let errorString = res.message.title;
-                for (const error in res.message.errors) {
-                    errorString += "\n" + error + ": " + res.message.errors[error];
+        if (isSubmitting) return;
+        setIsSubmitting(true);
+        try {
+            const res = await handleAddPayment(formData);
+            if (res.success) {
+                setFormModalMessage("Add Payment Method Successfully");
+                setIsSuccess(true);
+            } else {
+                if (typeof res.message === "string") setFormModalMessage(res.message);
+                else {
+                    let errorString = res.message.title;
+                    for (const error in res.message.errors) {
+                        errorString += "\n" + error + ": " + res.message.errors[error];
+                    }
+                    setFormModalMessage(errorString);
                 }
-                setFormModalMessage(errorString);
             }
-            setShowModal(true)
+            setShowModal(true);
+        } finally {
+            setIsSubmitting(false); // Always re-enable the button
         }
     };
 
@@ -73,9 +81,9 @@ export default function AddPaymentMethod() {
                             Card number *
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
-                            <MdOutlineMail className="text-gray-500 text-[22px]"/>
+                            <MdCreditCard className="text-gray-500 text-[22px]"/>
                             <Cleave
-                                options={{ creditCard: true }}
+                                options={{creditCard: true}}
                                 placeholder="0123 4567 8901 2345"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.number}
@@ -90,9 +98,9 @@ export default function AddPaymentMethod() {
                             Expiration Date *
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
-                            <MdOutlineMail className="text-gray-500 text-[22px]"/>
+                            <BsCalendar2Date className="text-gray-500 text-[22px]"/>
                             <Cleave
-                                options={{ date: true, datePattern: ['m', 'y'] }}
+                                options={{date: true, datePattern: ['m', 'y']}}
                                 placeholder="12/25"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.expiry}
@@ -134,7 +142,7 @@ export default function AddPaymentMethod() {
                             Cardholder Name *
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
-                            <MdOutlineMail className="text-gray-500 text-[22px]"/>
+                            <FaRegUser className="text-gray-500 text-[22px]"/>
                             <input
                                 type="text"
                                 placeholder="John Johnson"
@@ -152,6 +160,7 @@ export default function AddPaymentMethod() {
                             width="w-[150px]"
                             borderRadius="rounded-[10px]"
                             onClick={handleSubmit}
+                            disabled={isSubmitting}
                         />
                     </div>
                 </div>

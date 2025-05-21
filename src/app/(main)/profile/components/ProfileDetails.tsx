@@ -172,7 +172,7 @@ const ProviderProfile = ({
                                 <td className="font-medium py-3 pr-4">{item.location}</td>
                                 <td className="py-3 pr-4">
                     <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded-full whitespace-nowrap">
-                      {item.budget}
+                      ${item.budget}
                     </span>
                                 </td>
                             </tr>

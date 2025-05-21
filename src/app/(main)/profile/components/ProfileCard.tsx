@@ -132,7 +132,7 @@ const ProviderContent = ({
                 ? "0 Review"
                 : providerProfile.reviewCount === 1
                     ? "1 Review"
-                    : `${providerProfile.reviewCount} R   eviews`}
+                    : `${providerProfile.reviewCount} Reviews`}
           </span>
                 </div>
             </div>

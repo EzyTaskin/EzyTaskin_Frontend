@@ -11,6 +11,7 @@ const PrimaryButton = ({
                            fontStyle = "",
                            onClick = () => {
                            },
+                           disabled = false,
                        }: {
     label?: React.ReactNode;
     bgColor?: string;
@@ -21,11 +22,18 @@ const PrimaryButton = ({
     borderStyle?: string;
     fontStyle?: string;
     onClick?: () => void;
+    disabled?: boolean;
 }) => {
     return (
         <button
-            className={`${fontStyle} ${textSize} px-4 py-2 shadow-md ${bgColor} ${textColor} ${width} ${borderRadius} ${borderStyle} cursor-pointer hover:opacity-70 flex justify-center`}
+            className={`
+        ${fontStyle} ${textSize} px-4 py-2 shadow-md 
+        ${bgColor} ${textColor} ${width} ${borderRadius} ${borderStyle} 
+        flex justify-center 
+        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:opacity-70'}
+    `}
             onClick={onClick}
+            disabled={disabled}
         >
             {label}
         </button>
