@@ -95,7 +95,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     className="w-full accent-indigo-600"
                 />
 
-                {!providerProfile.isPremium ?
+                {providerProfile.isPremium ?
                     <div className="mt-6 text-sm text-black">
                         <div className="flex justify-between mb-1 text-gray-600">
                             <span>Transaction fee (Premium Provider)</span>

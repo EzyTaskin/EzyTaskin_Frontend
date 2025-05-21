@@ -35,15 +35,27 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
         setShowReviewModal(true);
     }
 
-    const sortedOffers = [...task.offers].sort((a, b) => {
-        if (a.provider.isPremium && !b.provider.isPremium) return -1;
-        if (!a.provider.isPremium && b.provider.isPremium) return 1;
+    const {premiumOffers, regularOffers} = task.offers.reduce(
+        (acc, offer) => {
+            if (offer.provider.isPremium) {
+                acc.premiumOffers.push(offer);
+            } else {
+                acc.regularOffers.push(offer);
+            }
+            return acc;
+        },
+        {premiumOffers: [], regularOffers: []}
+    );
 
-        const priceA = a.price === null ? Infinity : a.price;
-        const priceB = b.price === null ? Infinity : b.price;
+    const sortByPrice = (a: typeof task.offers[0], b: typeof task.offers[0]) => {
+        if (a.price === null) return 1;
+        if (b.price === null) return -1;
+        return a.price - b.price;
+    };
 
-        return priceA - priceB;
-    });
+    premiumOffers.sort(sortByPrice);
+    regularOffers.sort(sortByPrice);
+
 
     return (
         <>
@@ -82,28 +94,44 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     </div>
                 </div>
 
-                <div className="mb-4">
-                    <p className="font-semibold mb-1">Applicants</p>
+                {regularOffers.length != 0 &&
+                    <div className="mb-4">
+                        <p className="font-semibold mb-1">Applicants</p>
+                        <div className="flex space-x-2 mb-3">
+                            {regularOffers.map((offer) => {
+                                return (
+                                    <Link
+                                        key={offer.id}
+                                        href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}
+                                    >
+                                        <div className={`w-7 h-7 rounded-full bg-indigo-600`}></div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>}
+                {premiumOffers.length != 0 && <div className="mb-4">
+                    <p className="font-semibold mb-1">Top Applicants</p>
                     <div className="flex space-x-2 mb-3">
-                        {sortedOffers.map((offer) => {
-                            const colorClass = offer.provider.isPremium ? 'bg-yellow-500' : 'bg-indigo-600';
+                        {premiumOffers.map((offer) => {
                             return (
                                 <Link
                                     key={offer.id}
                                     href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}
                                 >
-                                    <div className={`w-7 h-7 rounded-full ${colorClass}`}></div>
+                                    <div className={`w-7 h-7 rounded-full bg-yellow-600`}></div>
                                 </Link>
                             );
                         })}
                     </div>
-                </div>
+                </div>}
                 {task.selected && <div className="mb-4">
                     <p className="font-semibold mb-1">Selected</p>
                     <div className="flex space-x-2 mb-3">
                         <Link
                             href={`/chat?peerId=${task.selected.provider.account}&taskId=${task.id}&mode=consumer`}>
-                            <div className={`w-7 h-7 rounded-full ${task.selected.provider.isPremium ? 'bg-yellow-500' : 'bg-indigo-600'}`}></div>
+                            <div
+                                className={`w-7 h-7 rounded-full ${task.selected.provider.isPremium ? 'bg-yellow-500' : 'bg-indigo-600'}`}></div>
                         </Link>
                         {task.completedDate &&
                             <button
