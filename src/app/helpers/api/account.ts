@@ -1,23 +1,46 @@
-import { UpdateAccountType } from "src/app/constants/type";
-import { fetchApi } from "./request";
+import {UpdateAccountType} from "src/app/constants/type";
+import {fetchApi} from "./request";
 
-export async function updateAccountInfo({ fullName, phoneNumber, address }: UpdateAccountType) {
-const response = await fetchApi({
-      path: "/Account",
-      method: "PATCH",
-      data: {
-        fullName: fullName,
-        phoneNumber: phoneNumber,
-        address: address,
-      },
+export async function updateAccountInfo({fullName, phoneNumber, address}: UpdateAccountType) {
+    const response = await fetchApi({
+        path: "/Account",
+        method: "PATCH",
+        data: {
+            fullName: fullName,
+            phoneNumber: phoneNumber,
+            address: address,
+        },
     });
 
     if (response.ok) {
-      console.log("Profile saved successfully!");
-      // Optionally redirect to the returnUrl
-      window.location.reload();
+        console.log("Profile saved successfully!");
+        window.location.reload();
     } else {
-      // Handle error
-      console.error("Error saving profile:", response.statusText);
+        console.error("Error saving profile:", response.statusText);
     }
+}
+
+export async function resendEmailConfirmation(email: string) {
+    const response = await fetchApi({
+        path: "/Account/ResendEmailConfirmation",
+        method: "POST",
+        data: {
+            email: email,
+        }
+    })
+
+    return response;
+}
+
+export async function confirmEmail(email: string, code: string) {
+    const response = await fetchApi({
+        path: "/Account/ConfirmEmail",
+        method: "POST",
+        data: {
+            email: email,
+            code: code,
+        }
+    })
+
+    return response;
 }
