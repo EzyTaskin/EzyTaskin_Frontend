@@ -218,7 +218,7 @@ export default function MainContent() {
                     <div>
                         <div className="text-lg font-semibold">
                             Chat
-                            with {mode === "consumer" ? `provider ${peerProfile.providerProfile.name}` : `consumer ${peerProfile.consumerProfile.name}`}
+                            with {mode === "consumer" ? `Provider ${peerProfile.providerProfile.name}` : `Consumer ${peerProfile.consumerProfile.name}`}
                         </div>
                         <div className="text-sm text-gray-600 flex flex-wrap gap-x-2">
                             <span><span className="font-medium">Task:</span> {task.title}</span>
