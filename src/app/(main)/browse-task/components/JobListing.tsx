@@ -54,87 +54,6 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
         setShowOfferModal(true)
     }
 
-    const OfferModalContent = () => {
-        if (cards.length === 0) {
-            return (
-                <>
-                    <h2 className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
-                        <span>You have no payment method. Please add one before making offers</span>
-                    </h2>
-                    <div className="flex justify-end mt-6 space-x-4">
-                        <button
-                            onClick={() => setShowOfferModal(false)}
-                            className="text-black font-medium"
-                        >
-                            Close
-                        </button>
-                    </div>
-                </>
-            )
-        }
-        return (
-            <div>
-                <h2 className="text-xl font-bold text-indigo-700 mb-4 flex items-center space-x-2">
-                    <span>Make Your Deal</span>
-                </h2>
-
-                <div className="flex justify-between mb-2 text-sm text-black">
-                    <span>{`$0`}</span>
-                    <span className="text-gray-500"> <span
-                        className="bg-grey-200">Offer: </span> ${offerValue}</span>
-                    <span>{`$${task.budget}`}</span>
-                </div>
-
-                <input
-                    type="range"
-                    min={0}
-                    max={task.budget}
-                    step="1"
-                    value={offerValue}
-                    onChange={(e) => setOfferValue(Number(e.target.value))}
-                    className="w-full accent-indigo-600"
-                />
-
-                {providerProfile.isPremium ?
-                    <div className="mt-6 text-sm text-black">
-                        <div className="flex justify-between mb-1 text-gray-600">
-                            <span>Transaction fee (Premium Provider)</span>
-                            <span>-$0.00</span>
-                        </div>
-                        <div className="flex justify-between font-bold text-lg">
-                            <span>You’ll receive</span>
-                            <span>${offerValue} </span>
-                        </div>
-                    </div> :
-                    <div className="mt-6 text-sm text-black">
-                        <div className="flex justify-between mb-1 text-gray-600">
-                            <span>Transaction fee</span>
-                            <span>{`-$${(offerValue * 0.1).toFixed(2)}`}</span>
-                        </div>
-                        <div className="flex justify-between font-bold text-lg">
-                            <span>You’ll receive</span>
-                            <span>{`$${(offerValue * 0.9).toFixed(2)}`}</span>
-                        </div>
-                    </div>}
-
-                <div className="flex justify-end mt-6 space-x-4">
-                    <button
-                        onClick={() => setShowOfferModal(false)}
-                        className="text-black font-medium"
-                    >
-                        Close
-                    </button>
-                    <button
-                        onClick={handleConfirmOffer}
-                        className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-indigo-700 transition"
-                    >
-                        Confirm
-                    </button>
-                </div>
-            </div>
-        )
-    }
-
     return (
         <div className="bg-[#F5F6FA] p-6 rounded-xl shadow-md max-w-lg mx-auto relative">
             {/* Header */}
@@ -217,7 +136,84 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
             </div>
 
             <PrimaryModal showModal={showOfferModal} setShowModal={setShowOfferModal} showCloseButton={false}>
-                <OfferModalContent/>
+                {
+                    cards.length === 0 ? (
+                            <>
+                                <h2 className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
+                                    <span>You have no payment method. Please add one before making offers</span>
+                                </h2>
+                                <div className="flex justify-end mt-6 space-x-4">
+                                    <button
+                                        onClick={() => setShowOfferModal(false)}
+                                        className="text-black font-medium"
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </>
+                        )
+                        : (
+                            <div>
+                                <h2 className="text-xl font-bold text-indigo-700 mb-4 flex items-center space-x-2">
+                                    <span>Make Your Deal</span>
+                                </h2>
+
+                                <div className="flex justify-between mb-2 text-sm text-black">
+                                    <span>{`$0`}</span>
+                                    <span className="text-gray-500"> <span
+                                        className="bg-grey-200">Offer: </span> ${offerValue}</span>
+                                    <span>{`$${task.budget}`}</span>
+                                </div>
+
+                                <input
+                                    type="range"
+                                    min={0}
+                                    max={task.budget}
+                                    step="1"
+                                    value={offerValue}
+                                    onChange={(e) => setOfferValue(Number(e.target.value))}
+                                    className="w-full accent-indigo-600"
+                                />
+
+                                {providerProfile.isPremium ?
+                                    <div className="mt-6 text-sm text-black">
+                                        <div className="flex justify-between mb-1 text-gray-600">
+                                            <span>Transaction fee (Premium Provider)</span>
+                                            <span>-$0.00</span>
+                                        </div>
+                                        <div className="flex justify-between font-bold text-lg">
+                                            <span>You’ll receive</span>
+                                            <span>${offerValue} </span>
+                                        </div>
+                                    </div> :
+                                    <div className="mt-6 text-sm text-black">
+                                        <div className="flex justify-between mb-1 text-gray-600">
+                                            <span>Transaction fee</span>
+                                            <span>{`-$${(offerValue * 0.1).toFixed(2)}`}</span>
+                                        </div>
+                                        <div className="flex justify-between font-bold text-lg">
+                                            <span>You’ll receive</span>
+                                            <span>{`$${(offerValue * 0.9).toFixed(2)}`}</span>
+                                        </div>
+                                    </div>}
+
+                                <div className="flex justify-end mt-6 space-x-4">
+                                    <button
+                                        onClick={() => setShowOfferModal(false)}
+                                        className="text-black font-medium"
+                                    >
+                                        Close
+                                    </button>
+                                    <button
+                                        onClick={handleConfirmOffer}
+                                        className="bg-indigo-600 text-white px-6 py-2 rounded-xl font-medium hover:bg-indigo-700 transition"
+                                    >
+                                        Confirm
+                                    </button>
+                                </div>
+                            </div>
+                        )
+                }
             </PrimaryModal>
 
             <PrimaryModal showModal={showSuccessModal} setShowModal={setShowSuccessModal} showCloseButton={false}>

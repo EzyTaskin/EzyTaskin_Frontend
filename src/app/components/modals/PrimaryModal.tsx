@@ -41,10 +41,11 @@ export default function PrimaryModal({
                     >
                         <div
                             ref={modalRef}
-                            className="flex justify-center bg-[#f3f6fb] p-6 rounded-2xl shadow-xl w-[90%] max-w-3xl"
+                            className="flex justify-center bg-[#f3f6fb] p-6 rounded-2xl shadow-xl w-3xl"
                         >
-                            {children}
-
+                            <div className="w-full">
+                                {children}
+                            </div>
                             {showCloseButton && (
                                 <div className="flex justify-end space-x-4 mt-4">
                                     <button
