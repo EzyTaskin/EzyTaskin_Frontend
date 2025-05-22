@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import React, {useState} from "react";
 import {MdOutlineMail} from "react-icons/md";
 import {CiLock} from "react-icons/ci";
 import {GoEye, GoEyeClosed} from "react-icons/go";
@@ -13,6 +13,7 @@ import Cleave from 'cleave.js/react';
 import {MdCreditCard} from "react-icons/md";
 import {BsCalendar2Date} from "react-icons/bs";
 import {FaRegUser} from "react-icons/fa";
+import Link from "next/link";
 
 export default function AddPaymentMethod() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -168,8 +169,19 @@ export default function AddPaymentMethod() {
                     </div>
                 </div>
             </div>
-            <PrimaryModal showModal={showModal} setShowModal={setShowModal} onCloseModal={handleCloseModal}>
-                <h1 className="whitespace-pre-line">{formModalMessage}</h1>
+            <PrimaryModal showModal={showModal} setShowModal={setShowModal} onCloseModal={handleCloseModal} showCloseButton={false}>
+                <div className="flex flex-col items-center text-center px-4 py-6">
+                    {/* Modal Message */}
+                    <h1 className="text-gray-600 text-base whitespace-pre-line">{formModalMessage}</h1>
+                </div>
+                <div className="flex justify-end space-x-4">
+                    <button
+                        onClick={() => setShowModal(false)}
+                        className="text-black font-medium"
+                    >
+                        Close
+                    </button>
+                </div>
             </PrimaryModal>
         </>
     );
