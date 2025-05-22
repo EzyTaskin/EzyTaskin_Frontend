@@ -8,8 +8,7 @@ import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import {PaymentSendCardType} from "src/app/constants/type";
 import useMutateCard from "src/app/hooks/useMutateCard";
 import PrimaryModal from "src/app/components/modals/PrimaryModal";
-import {redirect} from "next/navigation";
-import InputMask from 'react-input-mask';
+import {redirect, useSearchParams} from "next/navigation";
 import Cleave from 'cleave.js/react';
 import {MdCreditCard} from "react-icons/md";
 import {BsCalendar2Date} from "react-icons/bs";
@@ -29,6 +28,10 @@ export default function AddPaymentMethod() {
     const [showModal, setShowModal] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
+    const searchParams = useSearchParams();
+    const returnUrl = searchParams.get('returnUrl');
+
+
     const handleInputChange = (
         field: keyof PaymentSendCardType,
         value: string
@@ -37,7 +40,7 @@ export default function AddPaymentMethod() {
     };
 
     const handleCloseModal = () => {
-        if (isSuccess) redirect('/profile');
+        if (isSuccess) redirect(returnUrl ?? '/profile');
     }
 
     const handleSubmit = async () => {

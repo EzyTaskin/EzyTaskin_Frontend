@@ -543,7 +543,7 @@ function DashboardPerformance() {
                 {/* Total Bookings */}
                 <div className="p-6 border rounded-xl shadow-sm space-y-2">
                     <p className="text-sm text-gray-400">Statistics</p>
-                    <p className="text-lg font-medium">Total Booking</p>
+                    <p className="text-lg font-medium">Total Completed Task</p>
                     {totalBookings != 0 ?
                         <>
                             <div className="text-3xl font-bold">{totalBookings}</div>

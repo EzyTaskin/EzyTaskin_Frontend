@@ -4,13 +4,24 @@ import {TaskResponseType} from "src/app/constants/type";
 import Link from "next/link";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import useMutateOffers from "src/app/hooks/useMutateOffers";
 
 dayjs.extend(relativeTime);
 
 export default function TaskDetailCard({task}: { task: TaskResponseType }) {
+    const offerer = useMutateOffers();
+
     if (!task) return <h1>
         Loading...
     </h1>
+
+    const handleCompleteRequest = () => {
+
+        offerer.completeRequest({
+            requestId: task.id,
+        })
+        window.location.reload();
+    }
 
     return (
         <div className="bg-[#F3F3FF] p-6 rounded-3xl max-w-7xl mx-auto">
@@ -23,9 +34,11 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
           CONTACT
         </span>
                     </Link>
-                    {!task.completedDate &&
+                    {!task.completedDate ?
                         <span className="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-full shadow">
                             {task.selected ? "ASSIGNED" : "OPEN"}
+        </span> : <span className="bg-(--color-secondary) text-black text-sm font-medium px-4 py-2 rounded-full shadow">
+                            DONE
         </span>}
                 </div>
             </div>
@@ -42,7 +55,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                 <div className="flex items-baseline space-x-1">
                     <Calendar className="text-gray-500 mt-1" size={15}/>
                     <div>
-                        <p className="text-base text-gray-500">TO BE DONE ON</p>
+                        <p className="text-base text-gray-500">TO BE DONE</p>
                         <p className="font-semibold">{dayjs(task.dueDate).fromNow()}</p>
                     </div>
                 </div>
@@ -61,6 +74,16 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                         <p className="text-base text-gray-500">POSTED BY</p>
                         <p className="font-semibold">{task.consumer.name}</p>
                     </div>
+                </div>
+            </div>
+
+            <div className="flex justify-between items-end justify-end mb-6">
+                <div className="flex space-x-2">
+                    {!task.completedDate &&
+                        <button onClick={handleCompleteRequest}
+                              className="bg-(--color-primary) text-white text-sm font-medium px-4 py-2 rounded-full shadow cursor-pointer">
+                            COMPLETE REQUEST
+                        </button>}
                 </div>
             </div>
         </div>

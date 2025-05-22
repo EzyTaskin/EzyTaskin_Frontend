@@ -80,7 +80,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                     <div className="flex items-baseline space-x-1">
                         <Calendar className="text-gray-500 mt-1" size={15}/>
                         <div>
-                            <p className="text-base text-gray-500">TO BE DONE ON</p>
+                            <p className="text-base text-gray-500">TO BE DONE</p>
                             <p className="font-semibold">{dayjs(task.dueDate).fromNow()}</p>
                         </div>
                     </div>
@@ -119,7 +119,7 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                                     key={offer.id}
                                     href={`/chat?peerId=${offer.provider.account}&offerId=${offer.id}&taskId=${task.id}&mode=consumer`}
                                 >
-                                    <div className={`w-7 h-7 rounded-full bg-yellow-600`}></div>
+                                    <div className={`w-7 h-7 rounded-full bg-indigo-600`}></div>
                                 </Link>
                             );
                         })}

@@ -281,11 +281,7 @@ const ConsumerContent = ({
                 >
                     Notifications
                 </div>
-                <Link href='/Account/ConfirmEmail'>
-                    <div className="cursor-pointer">
-                        Confirm Email
-                    </div>
-                </Link>
+
                 <div onClick={handleLogout} className="cursor-pointer">
                     Log Out
                 </div>

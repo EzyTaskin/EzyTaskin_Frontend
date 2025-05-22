@@ -89,7 +89,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     type="range"
                     min={0}
                     max={task.budget}
-                    step="10"
+                    step="1"
                     value={offerValue}
                     onChange={(e) => setOfferValue(Number(e.target.value))}
                     className="w-full accent-indigo-600"
@@ -244,7 +244,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 </div>
             </PrimaryModal>
             <PrimaryModal showModal={showErrorModal} setShowModal={setShowErrorModal}>
-                <h1> You have already offer to this request</h1>
+                <h1 className="px-8"> You have already offer to this request</h1>
             </PrimaryModal>
         </div>
     );
