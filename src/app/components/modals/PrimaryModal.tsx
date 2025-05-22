@@ -1,4 +1,4 @@
-import {ReactNode, useRef} from "react";
+import {ReactNode, useCallback, useRef} from "react";
 
 export default function PrimaryModal({
                                          children,
@@ -15,17 +15,19 @@ export default function PrimaryModal({
 }) {
     const modalRef = useRef<HTMLDivElement>(null);
 
-    // Close modal on outside click
-    const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-            handleCloseModal()
-        }
-    };
-
-    const handleCloseModal = () => {
+    const handleCloseModal = useCallback(() => {
+        debugger;
         setShowModal(false);
         if (onCloseModal) onCloseModal();
-    }
+    }, [setShowModal, onCloseModal]);
+
+    // Close modal on outside click
+    const handleOverlayClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+        debugger;
+        if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+            handleCloseModal();
+        }
+    }, [modalRef, handleCloseModal]);
 
     return (
         <>

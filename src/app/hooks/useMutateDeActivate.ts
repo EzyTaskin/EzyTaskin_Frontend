@@ -1,5 +1,5 @@
 import * as plan from "src/app/helpers/api/plan";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useQuerySubscription from "./useQuerySubscription";
 import { useQueryCards } from "./useQueryCards";
 
@@ -8,7 +8,7 @@ export default function useMutateDeActivate() {
   const { loadSubscription } = useQuerySubscription();
   const { loadCards } = useQueryCards();
 
-  const handlePlanChange = async (newStatus: boolean) => {
+  const handlePlanChange = useCallback(async (newStatus: boolean) => {
     if (newStatus) {
       await loadCards();
       setShouldShowModal(true);
@@ -18,10 +18,15 @@ export default function useMutateDeActivate() {
       setShouldShowModal(false);
       window.location.reload();
     }
-  };
+  }, [setShouldShowModal]);
+
+  const cancelPlanChange = useCallback(() => {
+    setShouldShowModal(false);
+  }, [setShouldShowModal]);
 
   return {
     handlePlanChange,
+    cancelPlanChange,
     shouldShowModal,
   };
 }

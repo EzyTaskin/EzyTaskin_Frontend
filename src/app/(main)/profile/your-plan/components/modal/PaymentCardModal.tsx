@@ -27,14 +27,14 @@ export default function PaymentCardModal({
                 </button>
 
                 <h2 className="text-xl font-semibold mb-4 text-center">
-                    Choose a payment card
+                    Choose a Payment Method
                 </h2>
 
                 {/* Card List */}
                 <div className="space-y-3 max-h-60 overflow-y-auto">
                     {cards.length === 0 && (
                         <p className="text-gray-500 text-sm text-center">
-                            No saved cards found.
+                            No saved cards found. Please add one to continue.
                         </p>
                     )}
 

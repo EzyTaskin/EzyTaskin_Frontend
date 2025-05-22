@@ -34,7 +34,7 @@ export default function Login() {
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6 z-10"
                 action={getApiUrl("Account/Login", {returnUrl: "/home"})}
             >
-                <h2 className="text-[48px] font-bold text-center">Log in</h2>
+                <h2 className="text-[48px] font-bold text-center">Log In</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
                     Enter your credentials to access your account
                 </p>
@@ -82,7 +82,7 @@ export default function Login() {
                 {/* Button */}
                 <div className="my-10 flex justify-center">
                     <PrimaryButton
-                        label="Log in"
+                        label="Log In"
                         width="w-[150px]"
                         borderRadius="rounded-[10px]"
                     />

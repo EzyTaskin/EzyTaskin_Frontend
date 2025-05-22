@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import PaymentCardModal from "./modal/PaymentCardModal";
@@ -28,19 +28,20 @@ export default function YourPlan() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const { isSubscriptionActive } = useQuerySubscription();
   const { cards } = useQueryCards();
-  const { handlePlanChange, shouldShowModal } = useMutateDeActivate();
+  const { handlePlanChange, cancelPlanChange, shouldShowModal } = useMutateDeActivate();
   const { handleCardSelect } = useActivatePremium();
 
-  const onSubscribe = async () => {
+  const onSubscribe = useCallback(async () => {
     await handlePlanChange(true);
-  };
+  }, [handlePlanChange]);
 
-  const onDowngrade = async () => {
+  const onDowngrade = useCallback(async () => {
     await handlePlanChange(false);
     setShowCancelModal(false); // hide cancel modal directly after deactivation
-  };
+  }, [handlePlanChange, setShowCancelModal]);
 
   useEffect(() => {
+    console.log(shouldShowModal);
     setShowModal(shouldShowModal);
   }, [shouldShowModal]);
 
@@ -66,9 +67,9 @@ export default function YourPlan() {
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-2">Upgrade your plan</h1>
+      <h1 className="text-2xl font-bold mb-2">Upgrade your Plan</h1>
       <p className="text-muted-foreground mb-8">
-        Choose the right plan for your needs and take advantage of our premium
+        Choose the right plan for your needs and take advantage of our Premium
         features.
       </p>
 
@@ -84,7 +85,7 @@ export default function YourPlan() {
           <div className="flex flex-col justify-center items-center">
             <p className="text-3xl text-gray-700 font-semibold">Standard</p>
             <p className="text-base text-muted-foreground">
-              Perfect for beginners
+              Perfect for Beginners
             </p>
             <p className="text-5xl font-bold mt-2">Free</p>
           </div>
@@ -148,7 +149,7 @@ export default function YourPlan() {
           <div className="flex flex-col justify-center items-center">
             <p className="text-3xl text-gray-700 font-semibold">Premium</p>
             <p className="text-sm text-muted-foreground">
-              Great for regular users
+              Great for Regular Users
             </p>
             <p className="text-5xl font-bold mt-2">
               $8.99/<span className="text-base font-semibold">monthly</span>
@@ -182,7 +183,7 @@ export default function YourPlan() {
       {showModal && (
         <PaymentCardModal
           cards={cards}
-          onClose={() => setShowModal(false)}
+          onClose={() => cancelPlanChange()}
           onSelect={handleCardSelect}
         />
       )}

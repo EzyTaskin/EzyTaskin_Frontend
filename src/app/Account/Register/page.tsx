@@ -36,7 +36,7 @@ export default function Signup() {
                 className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2/5 z-10"
                 action={getApiUrl("Account/Register", {returnUrl: "/home"})}
             >
-                <h2 className="text-[48px] font-bold text-center">Create an account</h2>
+                <h2 className="text-[48px] font-bold text-center">Create an Account</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
                     Enter your information to create an account
                 </p>
@@ -103,7 +103,7 @@ export default function Signup() {
                 {/* Confirm Password */}
                 <div className="mb-6">
                     <label className="block text-[22px] font-medium mb-1">
-                        Confirm password
+                        Confirm Password
                     </label>
                     <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                         <CiLock className="text-gray-600 text-[25px]" />
@@ -133,7 +133,7 @@ export default function Signup() {
                 {/* Create Account Button */}
                 <div className="mt-10 flex justify-center">
                     <PrimaryButton
-                        label="Create account"
+                        label="Create Account"
                         width="w-[200px]"
                         borderRadius="rounded-[10px]"
                     />

@@ -141,9 +141,12 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 {
                     cards.length === 0 ? (
                             <>
-                                <h2 className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
-                                    <span>You have no connected payment methods. Please add one before making an offer.</span>
-                                </h2>
+                                <div className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
+                                    <h2 className="w-full">
+                                        <span>You have no connected payment methods.<br/></span>
+                                        <span>Please add one before making an offer.</span>
+                                    </h2>
+                                </div>
                                 <div className="flex justify-end mt-6 space-x-4">
                                     <button
                                         onClick={() => setShowOfferModal(false)}

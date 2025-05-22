@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {MdOutlineMail} from "react-icons/md";
 import {CiLock} from "react-icons/ci";
 import {GoEye, GoEyeClosed} from "react-icons/go";
@@ -40,9 +40,9 @@ export default function AddPaymentMethod() {
         setFormData((prev) => ({...prev, [field]: value}));
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = useCallback(() => {
         if (isSuccess) redirect(returnUrl ?? '/profile');
-    }
+    }, [isSuccess, returnUrl])
 
     const handleSubmit = async () => {
         if (isSubmitting) return;
@@ -181,7 +181,7 @@ export default function AddPaymentMethod() {
                 </div>
                 <div className="flex justify-end space-x-4">
                     <button
-                        onClick={() => setShowModal(false)}
+                        onClick={handleCloseModal}
                         className="text-black font-medium"
                     >
                         Close
