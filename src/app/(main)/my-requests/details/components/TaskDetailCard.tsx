@@ -197,28 +197,30 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
                 </div>
             </PrimaryModal>
             <PrimaryModal showModal={showSuccessModal} setShowModal={setShowSuccessModal} showCloseButton={false}>
-                <div className="p-6 max-w-sm w-full text-center">
-                    <div className="mb-4">
-                        <svg
-                            className="mx-auto h-12 w-12 text-green-500"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
-                        </svg>
-                    </div>
-                    <h2 className="text-lg font-semibold mb-2 text-gray-900">Success!</h2>
-                    <p className="mb-6 text-gray-700">Review Submitted Success</p>
-                    <button
-                        onClick={() => setShowSuccessModal(false)}
-                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600
+                <div className="flex justify-center">
+                    <div className="p-6 max-w-sm w-full text-center">
+                        <div className="mb-4">
+                            <svg
+                                className="mx-auto h-12 w-12 text-green-500"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                viewBox="0 0 24 24"
+                                aria-hidden="true"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h2 className="text-lg font-semibold mb-2 text-gray-900">Success!</h2>
+                        <p className="mb-6 text-gray-700">Review Submitted Success</p>
+                        <button
+                            onClick={() => setShowSuccessModal(false)}
+                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600
                      focus:outline-none focus:ring-2 focus:ring-green-400 transition"
-                    >
-                        Close
-                    </button>
+                        >
+                            Close
+                        </button>
+                    </div>
                 </div>
             </PrimaryModal>
         </>
