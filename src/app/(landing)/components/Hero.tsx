@@ -8,7 +8,7 @@ import Link from "next/link";
 
 export default function Hero() {
     return (
-        <section className="bg-[#EEEEFF]/70 h-[600] py-20 border-b border-black-100">
+        <section className="bg-[#EEEEFF]/70 h-[600] py-20 border-b border-black-100 flex justify-center">
             <div className="container grid grid-cols-1 md:grid-cols-2 items-center gap-8 mx-6 my-6">
                 <div className="text-center md:text-left space-y-6">
                     <h1 className="text-6xl font-bold text-gray-900 leading-20">
