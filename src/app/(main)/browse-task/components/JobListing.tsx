@@ -54,6 +54,8 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
         setShowOfferModal(true)
     }
 
+    if (!providerProfile) return null;
+
     return (
         <div className="bg-[#F5F6FA] p-6 rounded-xl shadow-md max-w-lg mx-auto relative">
             {/* Header */}
