@@ -101,7 +101,7 @@ export default function Profile() {
                             </div>
                             <div className="flex items-center gap-2 text-gray-700 text-lg">
                                 <Circle className="w-5 h-5 text-green-500 fill-green-500"/>
-                                {providerProfile.isSubscriptionActive ? "Available" : "Inactive"}
+                                Available
                             </div>
                         </div>
                     </div>
