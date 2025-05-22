@@ -73,14 +73,14 @@ export default function PostTask() {
         return (
             <section className="py-28 ">
                 <div className="text-center">
-                    <h1 className="text-xl font-bold text-red-500 leading-20"> You have no payment method.
-                        Please add at least one before posting request.</h1>
+                    <h1 className="text-xl font-bold text-red-500 leading-20"> You have no connected payment methods.
+                        Please add one before posting a request.</h1>
                     <Link href='/add-payment-method?returnUrl=/post'>
                         <button
                             type="button"
                             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-500 text-white font-medium shadow-sm hover:bg-indigo-700 hover:shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         >
-                            Add payment method
+                            Add Payment Method
                             <ArrowRight className="h-4 w-4"/>
                         </button>
                     </Link>

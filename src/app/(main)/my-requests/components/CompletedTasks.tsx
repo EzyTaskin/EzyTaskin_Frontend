@@ -45,7 +45,7 @@ export default function CompletedTasks({completedTasks}: {
                             </Link>
                         </div>
                     </div>
-                )) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No completed task </h1>}
+                )) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No completed tasks. </h1>}
             </div>
 
             {completedTasks.length > 4 && (
@@ -54,7 +54,7 @@ export default function CompletedTasks({completedTasks}: {
                         className="text-indigo-600 font-medium underline"
                         onClick={() => setShowAll(!showAll)}
                     >
-                        {showAll ? "View less" : "View more"}
+                        {showAll ? "View Less" : "View More"}
                     </button>
                 </div>
             )}

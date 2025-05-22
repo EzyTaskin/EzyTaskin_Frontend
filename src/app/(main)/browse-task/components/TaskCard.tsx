@@ -51,7 +51,7 @@ export default function TaskCard({
 
             <div className="flex justify-end mt-4">
                 <PrimaryButton
-                    label="View more"
+                    label="View More"
                     width="w-4xs"
                     textSize="text-sm"
                     onClick={onClick}

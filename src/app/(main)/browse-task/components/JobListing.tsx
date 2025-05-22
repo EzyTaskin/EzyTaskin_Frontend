@@ -94,18 +94,18 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                 <div className="bg-[#E7E4E4] p-4 rounded-xl text-center shadow-sm h-[8rem] mt-12 w-4xs">
                     <span className="text-sm text-gray-600 font-medium block">BUDGET</span>
                     <h2 className="text-2xl font-bold text-black mt-1">${task.budget}</h2>
-                    {task.consumer.account != currentUserId ?
+                    {task.consumer.account !== currentUserId ?
                         <button
                             onClick={() => handleMakeAnOffer(task.budget, task.id)}
                             className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
                         >
-                            Make an offer
+                            Make an Offer
                         </button>
                         :
                         <button
                             className="mt-3 bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm font-medium px-4 py-2 rounded-full shadow-md"
                         >
-                            This is your request
+                            This is your Request
                         </button>
                     }
                 </div>
@@ -117,14 +117,14 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     <Link href={`/chat?peerId=${task.consumer.account}&taskId=${task.id}&mode=provider`}>
                         <button
                             className="bg-(--color-primary) text-white font-semibold text-lg px-6 py-2 rounded-2xl shadow-md hover:bg-blue-700 transition duration-300">
-                            Meet the hiring person
+                            Meet the Hiring Person
                         </button>
                     </Link>
                     :
                     <Link href={`/my-requests/details?taskId=${task.id}`}>
                         <button
                             className="bg-(--color-primary) text-white font-semibold text-lg px-6 py-2 rounded-2xl shadow-md hover:bg-blue-700 transition duration-300">
-                            See task details
+                            See Task Details
                         </button>
                     </Link>
                 }
@@ -133,7 +133,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
 
             {/* About the job */}
             <div className="mt-8">
-                <h2 className="font-semibold text-black text-lg mb-2">About the job</h2>
+                <h2 className="font-semibold text-black text-lg mb-2">About the Job</h2>
                 <p className="text-sm text-gray-700 leading-relaxed">{task.description}</p>
             </div>
 
@@ -142,7 +142,7 @@ const JobListing = ({task}: { task: TasksResponseType }) => {
                     cards.length === 0 ? (
                             <>
                                 <h2 className="text-xl font-bold text-red-500 mb-4 text-center flex items-center space-x-2">
-                                    <span>You have no payment method. Please add one before making offers</span>
+                                    <span>You have no connected payment methods. Please add one before making an offer.</span>
                                 </h2>
                                 <div className="flex justify-end mt-6 space-x-4">
                                     <button

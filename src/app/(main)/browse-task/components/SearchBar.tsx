@@ -59,44 +59,57 @@ export default function SearchBar({
             {/* Dropdown Filters */}
             <div className="flex flex-wrap gap-4 justify-center shrink-0">
                 {/* Category Filter */}
-                <select
-                    value={category}
-                    onChange={(e) => onCategoryChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                <div
+                    className="flex px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
                 >
-                    <option value="">Categories</option>
-                    {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>
-                            {cat.name}
-                        </option>
-                    ))}
-                </select>
+                    <select
+                        value={category}
+                        onChange={(e) => onCategoryChange(e.target.value)}
+                        className="border-none outline-none flex-grow"
+                    >
+                        <option value="">Categories</option>
+                        {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
 
                 {/* Location Filter */}
-                <select
-                    value={location}
-                    onChange={(e) => onLocationChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                <div
+                    className="flex px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
                 >
-                    <option value="">Location</option>
-                    {locations.map((loc) => (
-                        <option key={loc} value={loc}>
-                            {loc}
-                        </option>
-                    ))}
-                </select>
+                    <select
+                        value={location}
+                        onChange={(e) => onLocationChange(e.target.value)}
+                        className="border-none outline-none flex-grow"
+                    >
+                        <option value="">Location</option>
+                        {locations.map((loc) => (
+                            <option key={loc} value={loc}>
+                                {loc}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
 
                 {/* Sort By Filter */}
-                <select
-                    value={sortBy}
-                    onChange={(e) => onSortByChange(e.target.value)}
-                    className="px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
+                <div
+                    className="flex px-4 py-2 rounded-full shadow-sm bg-[#767680]/12 text-gray-700 font-medium hover:bg-gray-50 basis-32 sm:basis-40 md:basis-48 lg:basis-52 shrink-0"
                 >
-                    <option value="">Sort by</option>
-                    <option value="newest">Newest</option>
-                    <option value="price_low_high">Price: Low to High</option>
-                    <option value="price_high_low">Price: High to Low</option>
-                </select>
+                    <select
+                        value={sortBy}
+                        onChange={(e) => onSortByChange(e.target.value)}
+                        className="border-none outline-none flex-grow"
+                    >
+                        <option value="">Sort By</option>
+                        <option value="newest">Newest</option>
+                        <option value="price_low_high">Price: Low to High</option>
+                        <option value="price_high_low">Price: High to Low</option>
+                    </select>
+                </div>
             </div>
         </div>
     );

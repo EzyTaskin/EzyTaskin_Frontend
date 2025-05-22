@@ -133,7 +133,7 @@ export default function Profile() {
                                 onClick={() => setShowAllJobs(!showAllJobs)}
                                 className="text-sm text-[var(--color-primary)] font-medium mt-2"
                             >
-                                {showAllJobs ? "▲ Show less" : "▼ View more jobs"}
+                                {showAllJobs ? "▲ Show Less" : "▼ View More Jobs"}
                             </button>
                         )}
                     </div>

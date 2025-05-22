@@ -5,11 +5,13 @@ import Link from "next/link";
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import useMutateOffers from "src/app/hooks/useMutateOffers";
+import useAuth from "src/app/hooks/useAuth";
 
 dayjs.extend(relativeTime);
 
 export default function TaskDetailCard({task}: { task: TaskResponseType }) {
     const offerer = useMutateOffers();
+    const {userId: currentUserId} = useAuth();
 
     if (!task) return <h1>
         Loading...
@@ -79,11 +81,22 @@ export default function TaskDetailCard({task}: { task: TaskResponseType }) {
 
             <div className="flex justify-between items-end justify-end mb-6">
                 <div className="flex space-x-2">
-                    {!task.completedDate &&
+                    {!task.completedDate && (task.selected?.provider.account === currentUserId ?
                         <button onClick={handleCompleteRequest}
-                              className="bg-(--color-primary) text-white text-sm font-medium px-4 py-2 rounded-full shadow cursor-pointer">
-                            COMPLETE REQUEST
-                        </button>}
+                              className="bg-(--color-primary) text-white font-medium px-4 py-2 rounded-full shadow cursor-pointer">
+                            Complete Request
+                        </button> : (task.selected?.provider.account ?
+                        <button
+                            disabled
+                              className="bg-(--color-secondary) font-medium px-4 py-2 rounded-full shadow cursor-pointer">
+                            Offer Not Selected
+                        </button> :
+                        <button
+                            disabled
+                              className="bg-(--color-secondary) font-medium px-4 py-2 rounded-full shadow cursor-pointer">
+                            Offer Pending
+                        </button>
+                    ))}
                 </div>
             </div>
         </div>

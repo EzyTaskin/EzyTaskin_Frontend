@@ -665,7 +665,7 @@ function PaymentMethods({cards}: {
             <Link href="/add-payment-method">
                 <button
                     className="w-full py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-100 cursor-pointer transition">
-                    + Add payment method
+                    + Add Payment Method
                 </button>
             </Link>
         </div>

@@ -89,7 +89,7 @@ export default function Browser() {
             {filteredTasks.length != 0 ? <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 max-w-6xl mx-auto">
                 <div className="space-y-4">
                     {filteredTasks.length === 0 ? (
-                        <p>No tasks found</p>
+                        <p>No tasks found.</p>
                     ) : (
                         filteredTasks.map((task, idx) => (
                             <TaskCard
@@ -106,7 +106,7 @@ export default function Browser() {
                 <div className="hidden md:block sticky top-32 self-start">
                     <JobListing task={filteredTasks[selectedTaskIndex] || filteredTasks[0]}/>
                 </div>
-            </div> : <h1 className="pt-16 text-xl font-bold text-gray-900 text-center"> No task found </h1>}
+            </div> : <h1 className="pt-16 text-xl font-bold text-gray-900 text-center"> No tasks found. </h1>}
         </section>
     );
 }

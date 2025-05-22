@@ -177,15 +177,26 @@ export default function MainContent() {
         )
 
         if (mode === "provider") {
-            if (task.selected.provider.account == currentUserId) {
-                return (
-                    <button
-                        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-                        onClick={handleCompleteRequest}
-                    >
-                        Complete Request
-                    </button>
-                )
+            if (task.selected?.provider.account === currentUserId) {
+                if (!task.completedDate) {
+                    return (
+                        <button
+                            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                            onClick={handleCompleteRequest}
+                        >
+                            Complete Request
+                        </button>
+                    )
+                } else {
+                    return (
+                        <button
+                            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                            disabled
+                        >
+                            This request is already complete
+                        </button>
+                    )
+                }
             } else {
                 return (
                     <button
@@ -294,8 +305,7 @@ export default function MainContent() {
                 <h1> Offer Accepted </h1>
             </PrimaryModal>
             <PrimaryModal showModal={showErrorModal} setShowModal={setShowErrorModal}>
-                <h1> You can not message a client if they have not sent you any messages and your offer has not been
-                    accepted. </h1>
+                <h1> You cannot contact a consumer without prior messages or an accepted offer. </h1>
             </PrimaryModal>
         </>
     );

@@ -73,7 +73,7 @@ export default function AddPaymentMethod() {
             <div className="py-28 flex items-center justify-center min-h-screen">
                 <div className="bg-(--color-tertiary) p-8 rounded-[15px] shadow-lg w-2.5/6">
                     <h2 className="text-[48px] font-bold text-center">
-                        Add payment method
+                        Add Payment Method
                     </h2>
                     <p className="text-center text-gray-700 text-[20px] mb-6">
                         Note: Some payment providers issue a temporary authorization charge.
@@ -82,11 +82,13 @@ export default function AddPaymentMethod() {
                     {/* Card Number */}
                     <div className="mb-4">
                         <label className="block text-[22px] font-medium mb-1">
-                            Card number *
+                            Card Number *
                         </label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <MdCreditCard className="text-gray-500 text-[22px]"/>
                             <Cleave
+                                name="number"
+                                type="tel"
                                 options={{creditCard: true}}
                                 placeholder="0123 4567 8901 2345"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
@@ -104,6 +106,7 @@ export default function AddPaymentMethod() {
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <BsCalendar2Date className="text-gray-500 text-[22px]"/>
                             <Cleave
+                                name="expiry"
                                 options={{date: true, datePattern: ['m', 'y']}}
                                 placeholder="12/25"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
@@ -118,8 +121,10 @@ export default function AddPaymentMethod() {
                         <label className="block text-[22px] font-medium mb-1">CVC *</label>
                         <div className="flex items-center border border-gray-300 rounded-lg px-3 py-2 bg-gray-50">
                             <CiLock className="text-gray-600 text-[25px]"/>
-                            <input
-                                type={showPassword ? "text" : "password"}
+                            <Cleave
+                                name="cvv"
+                                options={{blocks: [3], numericOnly: true}}
+                                type={showPassword ? "number" : "password"}
                                 placeholder="123"
                                 className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                                 value={formData.cvv}

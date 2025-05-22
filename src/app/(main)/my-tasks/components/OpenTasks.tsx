@@ -52,7 +52,7 @@ export default function OpenTasks({openTasks}: {
                                 </div>
                             </div>
                         )
-                    }) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No open tasks </h1>}
+                    }) : <h1 className="text-xl font-bold text-gray-900 leading-20"> No open tasks. </h1>}
             </div>
             <hr className="my-12 border-t border-gray-300"/>
         </div>

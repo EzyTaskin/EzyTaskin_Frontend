@@ -3,6 +3,7 @@ import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import dayjs from "dayjs";
 import {useState} from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import Cleave from 'cleave.js/react';
 
 dayjs().format();
 dayjs.extend(customParseFormat);
@@ -78,7 +79,7 @@ export default function LocationBudget({
                     {/* Location */}
                     <div className="mb-6 relative">
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Task location
+                            Task Location
                         </label>
                         <div className="relative">
                             <input
@@ -120,11 +121,12 @@ export default function LocationBudget({
                     {/* Date */}
                     <div className="mb-6 relative">
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Due date (optional)
+                            Due Date (Optional)
                         </label>
                         <div className="relative">
-                            <input
+                            <Cleave
                                 type="text"
+                                options={{date: true, datePattern: ['d', 'm', 'Y']}}
                                 placeholder="DD/MM/YYYY"
                                 value={date}
                                 onChange={(e) => {
