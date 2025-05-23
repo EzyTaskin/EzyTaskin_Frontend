@@ -4,10 +4,16 @@ import { MdOutlineMail } from "react-icons/md";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import Link from "next/link";
 import { getApiUrl } from "src/app/helpers/api/url";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ForgotPassword() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [apiUrl, setApiUrl] = useState("");
+
+  useEffect(() => {
+    setApiUrl(getApiUrl("Account/ForgotPassword", {returnUrl: "/Account/Login"}));
+  });
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -20,7 +26,7 @@ export default function ForgotPassword() {
 
         <form
           method="POST"
-          action={getApiUrl("Account/ForgotPassword", {returnUrl: "/Account/Login"})}
+          action={apiUrl}
         >
           <div className="mb-4">
             <label className="block text-[22px] font-medium mb-1">Email</label>
