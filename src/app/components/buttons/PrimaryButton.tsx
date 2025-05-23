@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
 const PrimaryButton = ({
                            label = "Post A Task", // default can be string
@@ -21,15 +21,15 @@ const PrimaryButton = ({
     textSize?: string;
     borderStyle?: string;
     fontStyle?: string;
-    onClick?: () => void;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
     disabled?: boolean;
 }) => {
     return (
         <button
             className={`
-        ${fontStyle} ${textSize} px-4 py-2 shadow-md 
-        ${bgColor} ${textColor} ${width} ${borderRadius} ${borderStyle} 
-        flex justify-center 
+        ${fontStyle} ${textSize} px-4 py-2 shadow-md
+        ${bgColor} ${textColor} ${width} ${borderRadius} ${borderStyle}
+        flex justify-center
         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:opacity-70'}
     `}
             onClick={onClick}

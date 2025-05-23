@@ -91,10 +91,10 @@ export default function Login() {
                 {/* Links */}
                 <div className="text-center mt-4">
                     <Link
-                        href="/Account/forgot-password"
+                        href="/Account/ForgotPassword"
                         className="text-[18px] text-[var(--color-primary)] hover:underline"
                     >
-                        Forgot your password?
+                        Forgot your Password?
                     </Link>
                 </div>
 
@@ -104,7 +104,7 @@ export default function Login() {
                         href="/Account/Register"
                         className="text-[var(--color-primary)] font-medium hover:underline"
                     >
-                        Sign up
+                        Sign Up
                     </Link>
                 </div>
             </form>

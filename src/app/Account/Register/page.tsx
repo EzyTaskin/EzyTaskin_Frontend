@@ -38,7 +38,7 @@ export default function Signup() {
             >
                 <h2 className="text-[48px] font-bold text-center">Create an Account</h2>
                 <p className="text-center text-gray-700 text-[20px] mb-6">
-                    Enter your information to create an account
+                    Enter your information to create an account.
                 </p>
 
                 {/* Full Name */}
@@ -66,7 +66,7 @@ export default function Signup() {
                         <input
                             type="email"
                             name="email"
-                            placeholder="example@gmail.com"
+                            placeholder="somebody@example.com"
                             required
                             className="text-gray-700 ml-2 w-full outline-none bg-transparent text-[20px]"
                         />
@@ -146,7 +146,7 @@ export default function Signup() {
                         href="/Account/Login"
                         className="text-[var(--color-primary)] font-medium hover:underline"
                     >
-                        Log in
+                        Log In
                     </Link>
                 </div>
             </form>
@@ -160,7 +160,7 @@ export default function Signup() {
                     {/* Modal itself */}
                     <div className="fixed inset-0 flex items-center justify-center z-30">
                         <div className="bg-white rounded-lg p-8 max-w-md mx-auto shadow-lg text-center">
-                            <h2 className="text-2xl font-bold mb-4 text-red-600">Signup Error</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-red-600">Sign Up Error</h2>
                             <p className="text-gray-700 text-lg mb-6">{errorMessage}</p>
                             <button
                                 onClick={() => setShowErrorModal(false)}
