@@ -2,6 +2,7 @@
 
 import {useState, useEffect} from "react";
 import {MdOutlineMail} from "react-icons/md";
+import {FaGoogle, FaMicrosoft} from "react-icons/fa6";
 import {CiLock} from "react-icons/ci";
 import {GoEye, GoEyeClosed} from "react-icons/go";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
@@ -14,6 +15,7 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [externalUrls, setExternalUrls] = useState<Map<string, string>>(new Map());
 
     const searchParams = useSearchParams();
 
@@ -23,7 +25,21 @@ export default function Login() {
             setErrorMessage(decodeURIComponent(error));
             setShowErrorModal(true);
         }
-        setUrl(getApiUrl("Account/Login", {returnUrl: "/"}));
+        const returnUrl = searchParams.get("returnUrl") || "/";
+        setUrl(getApiUrl("Account/Login", {returnUrl: returnUrl}));
+
+        function getExternalUrl(provider: string) {
+            return getApiUrl("Account/ExternalLogin", {
+                provider: provider,
+                returnUrl: returnUrl,
+                referrer: window.location.href
+            });
+        }
+
+        setExternalUrls(new Map<string, string>([
+            ["Google", getExternalUrl("Google")],
+            ["Microsoft", getExternalUrl("Microsoft")]
+        ]));
     }, [searchParams]);
 
     return (
@@ -89,7 +105,7 @@ export default function Login() {
                 </div>
 
                 {/* Links */}
-                <div className="text-center mt-4">
+                <div className="text-center mt-2">
                     <Link
                         href="/Account/ForgotPassword"
                         className="text-[18px] text-[var(--color-primary)] hover:underline"
@@ -106,6 +122,23 @@ export default function Login() {
                     >
                         Sign Up
                     </Link>
+                </div>
+
+                <div className="my-4 flex items-center">
+                    <hr className="border-gray-300 flex-grow"/>
+                    <span className="mx-4">or</span>
+                    <hr className="border-gray-300 flex-grow"/>
+                </div>
+
+                <div className="my-4 flex flex-col items-center">
+                    <div className="flex items-center gap-8">
+                        <Link href={externalUrls.get("Google") || "#"}>
+                            <FaGoogle size={32} />
+                        </Link>
+                        <Link href={externalUrls.get("Microsoft") || "#"}>
+                            <FaMicrosoft size={32} />
+                        </Link>
+                    </div>
                 </div>
             </form>
 
