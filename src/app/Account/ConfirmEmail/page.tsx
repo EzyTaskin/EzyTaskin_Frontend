@@ -4,60 +4,30 @@ import {useState, useEffect} from "react";
 import PrimaryButton from "src/app/components/buttons/PrimaryButton";
 import {useSearchParams} from "next/navigation";
 import Link from "next/link";
-import useQueryProfile from "src/app/hooks/useQueryProfile";
-import {useMutateAccount} from "src/app/hooks/useMutateAccount";
 import {getApiUrl} from "src/app/helpers/api/url";
 
 export default function EmailConfirm() {
-    const [code, setCode] = useState("");
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<"idle" | "success" | "error" | "loading">("idle");
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const searchParams = useSearchParams();
-    const {commonDetail} = useQueryProfile();
-    const accountWorker = useMutateAccount();
 
     useEffect(() => {
         const error = searchParams.get("error");
-        const codeParam = searchParams.get("code");
 
         if (error) {
-            setErrorMessage(decodeURIComponent(error));
+            setErrorMessage(error);
             setShowErrorModal(true);
         }
-
-        if (codeParam) {
-            try {
-                const decodedCode = decodeURIComponent(codeParam);
-                setCode(decodedCode);
-            } catch {
-                setCode(codeParam);
-            }
-        }
     }, [searchParams]);
-
-    const handleSendCode = async () => {
-        setStatus("loading");
-        try {
-            const res = await accountWorker.resendEmailConfirmation(commonDetail.email);
-            if (!res.ok) throw new Error("Failed to send confirmation code.");
-            setMessage("A verification code has been sent to your email.");
-            setStatus("success");
-        } catch (err: any) {
-            setMessage(err.message || "Something went wrong.");
-            setStatus("error");
-        }
-    };
-
-    if (!commonDetail) return null;
 
     return (
         <div className="relative flex items-center justify-center min-h-screen bg-gray-100 px-4">
             <form
                 method="POST"
-                action={getApiUrl("Account/ConfirmEmail", {returnUrl: "/home"})}
+                action={getApiUrl("Account/ConfirmEmail", {returnUrl: searchParams.get("returnUrl") ?? "/Home"})}
                 className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md z-10"
             >
                 <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
@@ -65,37 +35,20 @@ export default function EmailConfirm() {
                 </h2>
 
                 <p className="text-gray-600 text-center text-base mb-6">
-                    Enter your email and the code we sent to confirm your account.
+                    Please click "Confirm Email" if you have created an EzyTaskin account
+                    using this email.
                 </p>
 
-                {/* Email (Hidden field) */}
-                <input type="hidden" name="email" value={commonDetail.email || ""}/>
-
-                {/* Code Field */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1 text-gray-700">
-                        Verification Code
-                    </label>
-                    <input
-                        type="text"
-                        name="code"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
-                        required
-                        placeholder="Enter the code here"
-                        className="w-full border border-gray-300 rounded-lg px-4 py-2 text-base text-gray-700 outline-none"
-                    />
-                </div>
-
-                {/* Send Code Button */}
-                <div className="flex justify-end mb-4">
-                    <button
-                        type="button"
-                        onClick={handleSendCode}
-                        className="text-sm text-blue-600 hover:underline font-medium"
-                    >
-                        Send/Resend Code
-                    </button>
+                {/* Hidden fields */}
+                <div className="none">
+                    <input hidden={true}
+                           readOnly={true}
+                           name="userId"
+                           value={searchParams.get("userId")} />
+                    <input hidden={true}
+                           readOnly={true}
+                           name="code"
+                           value={searchParams.get("code")} />
                 </div>
 
                 {/* Submit Button */}
@@ -120,8 +73,14 @@ export default function EmailConfirm() {
                     </div>
                 )}
 
-                {/* Back to Login */}
                 <div className="text-center mt-6">
+                    <Link href="/Account/ResendEmailConfirmation" className="text-sm text-[var(--color-primary)] hover:underline">
+                        Send/Resend Code
+                    </Link>
+                </div>
+
+                {/* Back to Login */}
+                <div className="text-center">
                     <Link href="/Account/Login" className="text-sm text-[var(--color-primary)] hover:underline">
                         Back to Login
                     </Link>
