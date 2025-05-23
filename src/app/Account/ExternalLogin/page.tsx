@@ -32,7 +32,7 @@ export default function ExternalLogin() {
           You have successfully authenticated with <b>{providerDisplayName}</b>.
         </p>
         <p className="text-center text-gray-700 text-[20px]">
-          Please click "Register" to create a new EzyTaskin account using the email <b>{email}</b>.
+          Please click {'"Register"'} to create a new EzyTaskin account using the email <b>{email}</b>.
         </p>
 
         <form
