@@ -14,7 +14,7 @@ export default function ResendEmailConfirmation() {
 
   useEffect(() => {
     setApiUrl(getApiUrl("Account/ResendEmailConfirmation", { returnUrl: "/Home" }));
-  });
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen">

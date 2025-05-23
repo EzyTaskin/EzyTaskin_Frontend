@@ -13,7 +13,7 @@ export default function ForgotPassword() {
 
   useEffect(() => {
     setApiUrl(getApiUrl("Account/ForgotPassword", {returnUrl: "/Account/Login"}));
-  });
+  }, []);
 
   return (
     <div className="flex items-center justify-center min-h-screen">

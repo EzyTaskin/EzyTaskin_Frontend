@@ -35,7 +35,7 @@ export default function EmailConfirm() {
                 </h2>
 
                 <p className="text-gray-600 text-center text-base mb-6">
-                    Please click "Confirm Email" if you have created an EzyTaskin account
+                    Please click {'"Confirm Email"'} if you have created an EzyTaskin account
                     using this email.
                 </p>
 
