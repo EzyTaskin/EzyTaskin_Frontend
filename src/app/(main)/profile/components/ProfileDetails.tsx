@@ -543,7 +543,7 @@ function DashboardPerformance() {
                 {/* Total Bookings */}
                 <div className="p-6 border rounded-xl shadow-sm space-y-2">
                     <p className="text-sm text-gray-400">Statistics</p>
-                    <p className="text-lg font-medium">Total Completed Task</p>
+                    <p className="text-lg font-medium">Total Completed Tasks</p>
                     {totalBookings != 0 ?
                         <>
                             <div className="text-3xl font-bold">{totalBookings}</div>
@@ -563,13 +563,13 @@ function DashboardPerformance() {
                                         dot={false}
                                     />
                                 </LineChart>
-                            </ResponsiveContainer> </> : <h1> No booking yet </h1>
+                            </ResponsiveContainer> </> : <h5> No tasks yet. </h5>
                     }
                 </div>
 
                 <div className="p-6 border rounded-xl shadow-sm space-y-2 flex flex-col items-center justify-center">
                     <p className="text-sm text-gray-400">Statistics</p>
-                    <p className="text-lg font-medium">Completion rate</p>
+                    <p className="text-lg font-medium">Completion Rate</p>
                     <div className="w-32 h-32 relative">
                         <CircularProgressbar
                             value={completionRate}
