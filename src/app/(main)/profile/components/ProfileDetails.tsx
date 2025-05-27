@@ -620,7 +620,7 @@ function DashboardPerformance() {
                                         activeDot={{r: 7}}
                                     />
                                 </LineChart>
-                            </ResponsiveContainer> </> : <h1> No revenues yet </h1>}
+                            </ResponsiveContainer> </> : <h5> No earnings yet. </h5>}
                 </div>
             </div>
         </div>
